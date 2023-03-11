@@ -1,2 +1,3 @@
-# dotfiles
-My personal dotfiles
+# dotfiles and configs
+
+My personal dotfiles and tool configs

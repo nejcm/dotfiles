@@ -1,0 +1,1 @@
+$DOTFILES/alacritty/alacritty.yml=%SystemDrive%/.config/alacritty/alacritty.yml

@@ -1,0 +1,12 @@
+{
+  "Utilility Function": {
+    "prefix": "fu",
+    "body": ["export const $1 = ($2) => {", "", "}"],
+    "description": "Utilility Function"
+  },
+  "console.log": {
+    "prefix": "cl",
+    "body": ["console.log($1)"],
+    "description": "console.log"
+  }
+}

@@ -1,0 +1,1 @@
+choco install adobereader alacritty brave discord ditto DotNet4.5.2 DotNet4.6.1 Firefox git gitextensions github-desktop GoogleChrome jre8 kdiff3 line make mysql.workbench neovim nordvpn notepadplusplus pgadmin4 python python3 spotify starship steam telegram vcredist140 vlc vscode windirstat winscp  -y
