@@ -1,0 +1,22 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\alacritty]
+@="Open Alacritty here"
+"Icon"="C:\\Program Files\\Alacritty\\alacritty.exe"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\alacritty\command]
+@="\"C:\\Program Files\\Alacritty\\alacritty.exe\" --working-directory \"%V"
+
+[HKEY_CLASSES_ROOT\Drive\shell\alacritty]
+@="Open Alacritty here"
+"Icon"="C:\\Program Files\\Alacritty\\alacritty.exe"
+
+[HKEY_CLASSES_ROOT\Drive\shell\alacritty\command]
+@="\"C:\\Program Files\\Alacritty\\alacritty.exe\" --working-directory \"%V"
+
+[HKEY_CLASSES_ROOT\Directory\shell\alacritty]
+@="Open Alacritty here"
+"Icon"="C:\\Program Files\\Alacritty\\alacritty.exe"
+
+[HKEY_CLASSES_ROOT\Directory\shell\alacritty\command]
+@="\"C:\\Program Files\\Alacritty\\alacritty.exe\" --working-directory \"%V"

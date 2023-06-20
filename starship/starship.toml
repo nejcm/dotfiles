@@ -22,16 +22,16 @@ truncate_to_repo = false
 success_symbol = "[❯](purple)"
 error_symbol = "[❯](red)"
 
-[git_branch]
-symbol = " "
-format = "[$symbol$branch]($style) "
-style = "bright-black"
-
 [jobs]
 symbol = ""
 style = "bold red"
 number_threshold = 1
 format = "[$symbol]($style)"
+
+[git_branch]
+symbol = " "
+format = "[$symbol$branch]($style) "
+style = "bright-black"
 
 [git_status]
 conflicted = "⚔️ "
@@ -58,16 +58,19 @@ disabled = false
 format = "[$duration]($style)"
 style = "yellow"
 
+[time]
+disabled = false
+style = "bold white"
+format = "[$time]($style)"
+
 [memory_usage]
 symbol = " "
 
 [rust]
 symbol = " "
 
-[time]
-disabled = false
-style = "bold white"
-format = "[$time]($style)"
+[aws]
+symbol = " "
 
 [bun]
 format = '\[[$symbol($version)]($style)\]'
@@ -88,6 +91,7 @@ format = '\[[$symbol($version \(OTP $otp_version\))]($style)\]'
 format = '\[[$symbol($version)]($style)\]'
 
 [golang]
+symbol = " "
 format = '\[[$symbol($version)]($style)\]'
 
 [nodejs]
