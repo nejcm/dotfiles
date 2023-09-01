@@ -23,11 +23,11 @@ font:
   size: 10
 
   normal:
-    family: Cousine NFM
+    family: Cousine Nerd Font Mono
     style: Regular
 
   bold:
-    family: Cousine NFM
+    family: Cousine Nerd Font Mono
     style: Regular
 
 # TokyoNight Alacritty Colors

@@ -4,7 +4,7 @@
     "body": [
       "import { ReactElement } from 'react';",
       "",
-      "export interface $1Props {",
+      "export type $1Props = {",
       "\t$2",
       "}",
       "",
@@ -21,7 +21,7 @@
     "body": [
       "import { ReactElement } from 'react';",
       "",
-      "export interface ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}Props {",
+      "export type ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}Props = {",
       "\t$1",
       "}",
       "",
@@ -38,7 +38,7 @@
     "body": [
       "import { ReactElement } from 'react';",
       "",
-      "export interface ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/}Props {",
+      "export type ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/}Props = {",
       "\t$1",
       "}",
       "",
@@ -53,10 +53,10 @@
   "Typescript React Hook - File name": {
     "prefix": "thf",
     "body": [
-      "export interface ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}Props {",
+      "export type ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}Props = {",
       "\t$1",
       "}",
-      "export interface ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}Response {",
+      "export type ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}Response = {",
       "\t$2",
       "}",
       "",
@@ -70,10 +70,10 @@
   "Typescript React Hook - Directory name": {
     "prefix": "thfd",
     "body": [
-      "export interface ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/}Props {",
+      "export type ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/}Props = {",
       "\t$1",
       "}",
-      "export interface ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/}Response {",
+      "export type ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/}Response = {",
       "\t$2",
       "}",
       "",
