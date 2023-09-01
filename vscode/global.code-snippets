@@ -84,6 +84,31 @@
     "description": "Typescript React Hook - Directory name",
     "scope": "typescript,typescriptreact"
   },
+  "Typescript Story Component - Directory name": {
+    "prefix": "tscd",
+    "body": [
+      "import { Meta, StoryObj } from '@storybook/react';",
+      "import ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/} from '.';",
+      "",
+      "const meta: Meta<typeof ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/}> = {",
+      "\ttitle: '$1',",
+      "\tcomponent: ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/},",
+      "\ttags: ['autodocs'],",
+      "\tdecorators: [],",
+      "};",
+      "",
+      "export default meta;",
+      "type Story = StoryObj<typeof ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/}>;",
+      "",
+      "export const Template: Story = {",
+      "\targs: {",
+      "\t\t$2",
+      "\t},",
+      "};"
+    ],
+    "description": "Typescript Story Component - Directory name",
+    "scope": "typescript,typescriptreact"
+  },
   "console.log": {
     "prefix": "cl",
     "body": ["console.log($1);"],
