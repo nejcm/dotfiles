@@ -1,8 +1,0 @@
-{
-  "files.eol": "\n",
-  "jestrunner.projectPath": ".",
-  "prettier.trailingComma": "all",
-  "editor.formatOnSave": true,
-  "editor.tabSize": 2,
-  "typescript.tsdk": "node_modules\\typescript\\lib"
-}

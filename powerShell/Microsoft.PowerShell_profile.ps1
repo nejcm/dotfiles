@@ -28,6 +28,7 @@ function gst  {git rev-parse --git-dir > /dev/null 2>&1 && git status || exa $ar
 function gu   {git reset --soft HEAD~1}
 
 function cua  {choco upgrade all -y}
+function ups   {winget install --id Microsoft.PowerShell --source winget}
 
 Remove-Alias gal -Force
 Remove-Alias gc -Force
