@@ -1,0 +1,156 @@
+#!/bin/bash
+
+# Fedora System Setup Script
+# This script automates the setup of a new Fedora installation with all specified apps and configurations
+
+# Ensure script is run as root
+if [ "$(id -u)" -ne 0 ]; then
+    echo "Please run this script as root or with sudo."
+    exit 1
+fi
+
+# Update system first
+echo "Updating system packages..."
+dnf update -y
+
+# Install basic utilities
+echo "Installing basic utilities..."
+dnf install -y curl wget git gnome-tweaks dconf-editor chrome-gnome-shell
+
+# Setup system preferences
+echo "Configuring system preferences..."
+
+# Enable fractional scaling
+gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
+
+# Enable dark mode
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'
+gsettings set org.gnome.desktop.interface document-font-name 'Cantarell 11'
+gsettings set org.gnome.desktop.interface enable-animations false
+gsettings set org.gnome.desktop.interface font-name 'Cantarell 11'
+
+# Install Flatpak apps from flatpak_apps.txt
+echo "Installing Flatpak applications..."
+while IFS= read -r line; do
+    flatpak install -y flathub $line
+done < flatpak_apps.txt
+
+# Install GNOME extensions
+echo "Installing GNOME extensions..."
+EXTENSIONS=(
+    "clipboard-history@alexsaveau.dev"   # Clipboard History
+    "dash-to-dock@micxgx.gmail.com"      # Dash to Dock
+    "tilingshell@ferrarodomenico.com"    # Tiling Shell
+)
+for EXT in "${EXTENSIONS[@]}"; do
+    sudo -u $SUDO_USER gnome-extensions install $EXT
+    sudo -u $SUDO_USER gnome-extensions enable $EXT
+done
+
+# Install TLP for power management
+echo "Installing and configuring TLP..."
+dnf install -y tlp tlp-rdw
+dnf remove tuned tuned-ppd
+systemctl enable tlp.service
+systemctl mask systemd-rfkill.service systemd-rfkill.socket
+
+# Configure TLP battery thresholds
+echo "Configuring TLP battery thresholds..."
+TLP_CONFIG="/etc/tlp.conf"
+sed -i 's/^#START_CHARGE_THRESH_BAT0=.*/START_CHARGE_THRESH_BAT0=75/' $TLP_CONFIG
+sed -i 's/^#STOP_CHARGE_THRESH_BAT0=.*/STOP_CHARGE_THRESH_BAT0=80/' $TLP_CONFIG
+sed -i 's/^#START_CHARGE_THRESH_BAT1=.*/START_CHARGE_THRESH_BAT1=75/' $TLP_CONFIG
+sed -i 's/^#STOP_CHARGE_THRESH_BAT1=.*/STOP_CHARGE_THRESH_BAT1=80/' $TLP_CONFIG
+systemctl start tlp.service
+tlp start
+tlp-stat -s
+
+# Install Ghostty terminal
+echo "Installing Ghostty terminal..."
+dnf copr enable -y pgdev/ghostty
+dnf install -y ghostty
+
+# Install Fish shell and Starship prompt
+echo "Installing Fish shell and Starship..."
+dnf install -y fish
+chsh -s /usr/bin/fish
+curl -sS https://starship.rs/install.sh | sh -s -- -y
+
+# Copy config files from this repo to config folder
+echo "Copying configuration files..."
+mkdir -p /home/$SUDO_USER/.config/fish
+mkdir -p /home/$SUDO_USER/.config/ghostty
+cp ../fish/config.fish /home/$SUDO_USER/.config/fish/config.fish
+cp ../starship/starship.toml /home/$SUDO_USER/.config/starship.toml
+cp ../ghostty/config /home/$SUDO_USER/.config/ghostty/config
+chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/.config/fish
+chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/.config/starship.toml
+chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/.config/ghostty
+
+# Install Ulauncher
+echo "Installing Ulauncher..."
+dnf install -y ulauncher
+
+# Install development tools
+echo "Installing development tools..."
+dnf install -y golang docker-cli containerd docker-compose
+
+# Enable and start Docker
+echo "Configuring Docker..."
+systemctl enable docker
+systemctl start docker
+usermod -aG docker $SUDO_USER
+
+# Install NordVPN
+echo "Installing NordVPN..."
+sh <(curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh)
+
+# Install Cursor editor
+echo "Installing Cursor editor..."
+wget https://download.cursor.sh/linux/appImage/x64/cursor.AppImage -O /opt/cursor.AppImage
+chmod +x /opt/cursor.AppImage
+
+# Create desktop entry for Cursor
+cat > /usr/share/applications/cursor.desktop <<EOL
+[Desktop Entry]
+Name=Cursor
+Exec=/opt/cursor.AppImage
+Icon=/opt/cursor.webp
+Type=Application
+Categories=Development;
+EOL
+
+# Copy webp icon from this repo
+cp ../cursor/cursor.webp /opt/cursor.webp
+
+# Install kdiff3 (already installed via Flatpak)
+# Configure git to use kdiff3
+echo "Configuring git with kdiff3..."
+sudo -u $SUDO_USER git config --global merge.tool kdiff3
+sudo -u $SUDO_USER git config --global mergetool.kdiff3.path "/usr/bin/flatpak"
+sudo -u $SUDO_USER git config --global mergetool.kdiff3.cmd "flatpak run org.kde.kdiff3 \$LOCAL \$BASE \$REMOTE -o \$MERGED"
+sudo -u $SUDO_USER git config --global diff.tool kdiff3
+sudo -u $SUDO_USER git config --global difftool.kdiff3.path "/usr/bin/flatpak"
+sudo -u $SUDO_USER git config --global difftool.kdiff3.cmd "flatpak run org.kde.kdiff3 \$LOCAL \$REMOTE"
+
+# Configure git credential storage
+echo "Configuring git credential storage..."
+sudo -u $SUDO_USER git config --global credential.credentialStore secretservice
+
+
+# Configure screenshot shortcut
+echo "Configuring screenshot shortcut..."
+sudo -u $SUDO_USER gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot '["<Shift><Super>s"]'
+
+# Final system update
+echo "Performing final system update..."
+dnf update -y
+
+echo ""
+echo "Setup complete! Some changes may require a reboot to take effect."
+echo "Recommended next steps:"
+echo "1. Reboot your system"
+echo "2. Log in to your applications (NordVPN, GitHub, etc.)"
+echo "3. Configure Cursor extensions through the app"
+echo "4. Customize GNOME extensions through gnome-tweaks"

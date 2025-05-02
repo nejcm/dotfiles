@@ -29,11 +29,15 @@ sudo dnf install tlp tlp-rdw
 sudo dnf remove tuned tuned-ppd
 sudo systemctl enable tlp.service
 sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket
+sudo systemctl start tlp.service
 sudo tlp start
 tlp-stat -s
 ```
 
 ** Config **
+
+# /etc/tlp.conf
+
 START_CHARGE_THRESH_BAT0=75
 STOP_CHARGE_THRESH_BAT0=80
 START_CHARGE_THRESH_BAT1=75
