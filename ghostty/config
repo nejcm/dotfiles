@@ -1,4 +1,7 @@
-# shell-integration = fish
+# Linux: ~/.config/ghostty/config
+
+shell-integration = fish
+command = /bin/fish --login --interactive
 
 # font-family = SFMono Nerd Font
 font-size = 11

@@ -1,14 +1,20 @@
+# Linux: ~/.config/fish/config.fish
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
+    starship init fish | source
 end
 
-starship init fish | source
-
+# TODO: fill env variables
 export GH_TOKEN=
 export FONTAWESOME_TOKEN=
 
+export ENCORE_INSTALL="/home/nejc/.encore"
+export PATH="$ENCORE_INSTALL/bin:$PATH"
+
 # ALIASES
 alias cls='clear'
+alias cd..='cd ..'
 # GIT LIASES
 alias ff='gpr && git pull --ff-only'
 alias ga='git add'
@@ -18,6 +24,7 @@ alias gbb='git-switchbranch'
 alias gbd='git branch -D'
 alias gc='git commit'
 alias gcm='git commit -m'
+alias gcmnv='git commit --no-verify -m'
 alias gca='git commit -a'
 alias gcan='git commit --amend --no-edit'
 alias gco='git checkout'
@@ -37,3 +44,5 @@ alias grd='git fetch origin && git rebase origin/master'
 alias grs='git restore --staged'
 alias gst='git rev-parse --git-dir > /dev/null 2>&1 && git status || exa'
 alias gu='git reset --soft HEAD~1'
+# OTHER
+alias lg='lazygit'

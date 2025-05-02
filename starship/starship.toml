@@ -1,4 +1,7 @@
 # Windows: /.starship/starship.toml
+# Linux: ~/.config/starship.toml
+
+command_timeout = 3000
 
 format = """
 $username\

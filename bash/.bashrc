@@ -1,4 +1,4 @@
-# .bashrc
+# Linux: ~/.bashrc
 
 eval "$(starship init bash)"
 source <(starship completions bash)
@@ -27,6 +27,7 @@ if [ -d ~/.bashrc.d ]; then
 fi
 unset rc
 
+# TODO: fill env variables
 export GH_TOKEN=
 export FONTAWESOME_TOKEN=
 
@@ -42,6 +43,7 @@ alias gbb='git-switchbranch'
 alias gbd='git branch -D'
 alias gc='git commit'
 alias gcm='git commit -m'
+alias gcmnv='git commit --no-verify -m'
 alias gca='git commit -a'
 alias gcan='git commit --amend --no-edit'
 alias gco='git checkout'
