@@ -1,1 +1,1 @@
-choco install alacritty brave chocolatey ditto flow-launcher git gitextensions github-desktop GoogleChrome jre8 kdiff3 make nodejs-lts pgadmin4 plexmediaserver python3 qbittorrent starship steam telegram vlc vscode winscp wiztree -y
+choco install brave chocolatey ditto flow-launcher git gitextensions github-desktop GoogleChrome jre8 kdiff3 make nodejs-lts pgadmin4 plexmediaserver python3 qbittorrent starship steam telegram vlc vscode winscp wiztree -y

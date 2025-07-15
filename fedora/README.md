@@ -1,125 +1,106 @@
-# Run script
+# Backup
 
-```base
+Backup script for creating a backup with all the data.
+
+**What it backs up:**
+
+- Personal data (Documents, Pictures, Videos, Music, Downloads, Desktop, Templates, Work)
+- Configuration files (.config, .bashrc, .gitconfig, .vscode)
+- Development environment (.npm, .yarn, .cursor, go/)
+- Security keys (.gnupg, .pki)
+- System files (/etc/hosts)
+- GNOME Desktop settings (dconf)
+- Package lists (Flatpak, NPM, pip, Docker, GNOME extensions)
+
+### Important Notes:
+
+1. Review the script before running it to ensure it meets your needs
+2. External storage - Consider copying the backup to external storage or cloud backup
+3. SSH keys - If you have SSH keys, you'll need to recreate them or back them up separately
+4. Passwords - The script doesn't back up passwords; you'll need to remember or have them stored securely
+
+### Additional Recommendations:
+
+1. Test the backup by checking the contents of ~/backup after running the script
+2. Create a bootable USB with the new Fedora version
+3. Document any custom configurations not covered by the script
+4. Consider using rsync for incremental backups if you run this multiple times
+
+# Restore
+
+### Key Features:
+
+1. Safety Checks:
+   - Verifies sudo privileges
+   - Checks if backup directory exists
+   - Asks for confirmation before proceeding
+2. Smart Restoration:
+   - Creates timestamped backups of existing files before overwriting
+   - Uses helper functions for consistent file and directory restoration
+   - Handles missing backup items gracefully
+3. Restores All Backed-up Items:
+   - Personal data (Documents, Pictures, Videos, etc.)
+   - Configuration files (.config, .bashrc, .gitconfig, etc.)
+   - Development tools (.npm, .yarn, .cursor, etc.)
+   - System files (/etc/hosts)
+   - GNOME Desktop settings (dconf)
+4. Manual Steps Guidance:
+   - Lists package files that need manual reinstallation
+   - Provides commands for reinstalling Flatpak apps, NPM packages, pip packages, etc.
+   - Shows locations of Docker images and GNOME extensions lists
+5. Post-Restoration:
+   - Sets proper file permissions
+   - Provides clear next steps for the user
+
+### Run script
+
+> The script should be run from the same directory where backup.sh was executed (it looks for a backup/ subdirectory). It will safely restore all your backed-up files and settings while preserving existing files by creating timestamped backups.
+
+```shell
 # make executable
-chmod +x fedora_setup.sh
+chmod +x restore.sh
 # run
-sudo ./setup.sh
+./restore.sh
 ```
 
-# Instructions
+## Useful commands
 
-### Setup system preferences
+### Remove old kernels
 
-- Background, dark theme, ...
-- Screenshot shortcut: Settings > Customize Shortcuts > Screenshots
-
-### Install flatpak apps
-
-### Install other apps
-
-### Set system default apps (browser, ...)
-
-### Power management
-
-[TLP](https://www.reddit.com/r/linux/comments/9z8w0t/tlp_and_tuned_conflict/)
-
-```bash
-sudo dnf install tlp tlp-rdw
-sudo dnf remove tuned tuned-ppd
-sudo systemctl enable tlp.service
-sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket
-sudo systemctl start tlp.service
-sudo tlp start
-tlp-stat -s
+```shell
+# current kernel
+uname -r
 ```
 
-** Config **
-
-# /etc/tlp.conf
-
-START_CHARGE_THRESH_BAT0=75
-STOP_CHARGE_THRESH_BAT0=80
-START_CHARGE_THRESH_BAT1=75
-STOP_CHARGE_THRESH_BAT1=80
-
-### Ghostty
-
-```bash
-sudo dnf copr enable pgdev/ghostty
-sudo dnf install ghostty
+```shell
+# list installed
+dnf list installed kernel
 ```
 
-### Fish
-
-```bash
-sudo dnf install fish
+```shell
+# remove all except current
+sudo dnf remove --oldinstallonly
+# or remove specific version
+sudo dnf remove kernel-6.0.11-300.fc36.x86_64
 ```
 
-### Starship
+or
 
-```bash
-curl -sS https://starship.rs/install.sh | sh
+```shell
+dnf-utils
 ```
 
-### Ulauncher
-
-```bash
-sudo dnf install ulauncher
+```shell
+# install dnf-utils (If Needed)
+sudo dnf install dnf-plugins-core
 ```
 
-### Go
-
-```bash
-sudo dnf install golang
+```shell
+# list old kernels
+sudo package-cleanup --oldkernels --count=2
 ```
 
-### Docker
-
-```bash
-sudo dnf install docker-cli containerd
-sudo dnf install docker-compose
+```shell
+# remove old kernels
+sudo package-cleanup --oldkernels --count=2 -y
 ```
-
-### Git
-
-```bash
-sudo dnf install git
-```
-
-```bash
-# Setup default merge tool (kdiff3)
-git config --global merge.tool kdiff3
-git config --global mergetool.kdiff3.path "/usr/bin/flatpak"
-git config --global mergetool.kdiff3.cmd "flatpak run org.kde.kdiff3 \$LOCAL \$BASE \$REMOTE -o \$MERGED"
-git config --global diff.tool kdiff3
-git config --global difftool.kdiff3.path "/usr/bin/flatpak"
-git config --global difftool.kdiff3.cmd "flatpak run org.kde.kdiff3 \$LOCAL \$REMOTE"
-# Setup git auth
-git config --global credential.credentialStore secretservice
-```
-
-### SourceGit
-
-- Install from Github
-
-### Nordvpn
-
-Follow instructions on website
-
-### Cursor
-
-Download from website.  
-[Instructions](https://dev.to/mhbaando/how-to-install-cursor-the-ai-editor-on-linux-41dm)
-
-```bash
-chmod +x cursor.AppImage
-```
-
-Install all extensions.
-
-### GNOME Extensions
-
-- Clipboard History
-- Dash to Dock
-- Tilling Shell

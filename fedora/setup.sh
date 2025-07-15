@@ -102,23 +102,31 @@ systemctl enable docker
 systemctl start docker
 usermod -aG docker $SUDO_USER
 
+# Install VSCode
+echo "Installing Visual Studio Code..."
+rpm --import https://packages.microsoft.com/keys/microsoft.asc
+echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | tee /etc/yum.repos.d/vscode.repo > /dev/null
+dnf install code
+
 # Install NordVPN
 echo "Installing NordVPN..."
 sh <(curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh)
 
 # Install Cursor editor
 echo "Installing Cursor editor..."
-wget https://download.cursor.sh/linux/appImage/x64/cursor.AppImage -O /opt/cursor.AppImage
-chmod +x /opt/cursor.AppImage
+wget https://downloads.cursor.com/production/faa03b17cce93e8a80b7d62d57f5eda6bb6ab9fa/linux/x64/Cursor-1.2.2-x86_64.AppImage -O cursor.AppImage
+sudo mv cursor.AppImage /opt/
+sudo chmod +x /opt/cursor.AppImage
 
 # Create desktop entry for Cursor
 cat > /usr/share/applications/cursor.desktop <<EOL
 [Desktop Entry]
 Name=Cursor
-Exec=/opt/cursor.AppImage
+Exec=/opt/cursor.AppImage %u
 Icon=/opt/cursor.webp
 Type=Application
 Categories=Development;
+MimeType=x-scheme-handler/cursor;
 EOL
 
 # Copy webp icon from this repo
@@ -137,6 +145,7 @@ sudo -u $SUDO_USER git config --global difftool.kdiff3.cmd "flatpak run org.kde.
 # Configure git credential storage
 echo "Configuring git credential storage..."
 sudo -u $SUDO_USER git config --global credential.credentialStore secretservice
+git config --global user.name "nejcm"
 
 
 # Configure screenshot shortcut
