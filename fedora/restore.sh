@@ -29,7 +29,7 @@ restore_directory() {
     if [ -d "$src" ]; then
         echo "Restoring $desc..."
         if [ -d "$dest" ]; then
-            mv "$dest" "$dest.backup.$(date +%Y%m%d_%H%M%S)" 2>/dev/null || echo "  Warning: Could not backup existing $dest"
+            mv "$dest" "$dest.old" 2>/dev/null || echo "  Warning: Could not backup existing $dest"
         fi
         cp -r "$src" "$dest" 2>/dev/null || echo "  Warning: Could not restore $desc"
         chown -R $SUDO_USER:$SUDO_USER "$dest" 2>/dev/null
@@ -47,7 +47,7 @@ restore_file() {
     if [ -f "$src" ]; then
         echo "Restoring $desc..."
         if [ -f "$dest" ]; then
-            mv "$dest" "$dest.backup.$(date +%Y%m%d_%H%M%S)" 2>/dev/null || echo "  Warning: Could not backup existing $dest"
+            mv "$dest" "$dest.old" 2>/dev/null || echo "  Warning: Could not backup existing $dest"
         fi
         cp "$src" "$dest" 2>/dev/null || echo "  Warning: Could not restore $desc"
         chown $SUDO_USER:$SUDO_USER "$dest" 2>/dev/null
@@ -166,37 +166,22 @@ else
     echo "  Warning: No GNOME extensions list found in backup"
 fi
 
-# Install TLP for power management
-echo "Installing and configuring TLP..."
-dnf install -y tlp tlp-rdw
-dnf remove -y tuned tuned-ppd
-systemctl enable tlp.service
-systemctl mask systemd-rfkill.service systemd-rfkill.socket
-
-# Configure TLP battery thresholds
-TLP_CONFIG="/etc/tlp.conf"
-sed -i 's/^#START_CHARGE_THRESH_BAT0=.*/START_CHARGE_THRESH_BAT0=75/' $TLP_CONFIG
-sed -i 's/^#STOP_CHARGE_THRESH_BAT0=.*/STOP_CHARGE_THRESH_BAT0=80/' $TLP_CONFIG
-sed -i 's/^#START_CHARGE_THRESH_BAT1=.*/START_CHARGE_THRESH_BAT1=75/' $TLP_CONFIG
-sed -i 's/^#STOP_CHARGE_THRESH_BAT1=.*/STOP_CHARGE_THRESH_BAT1=80/' $TLP_CONFIG
-systemctl start tlp.service
-tlp start
-
-# Install Ghostty terminal
-echo "Installing Ghostty terminal..."
-dnf copr enable -y pgdev/ghostty
-dnf install -y ghostty
-
 # Install Fish shell and Starship prompt
 echo "Installing Fish shell and Starship..."
 dnf install -y fish
 sudo -u $SUDO_USER chsh -s /usr/bin/fish
 curl -sS https://starship.rs/install.sh | sh -s -- -y
 
+# Install Ghostty terminal
+echo "Installing Ghostty terminal..."
+dnf copr enable -y pgdev/ghostty
+dnf install -y ghostty
+
 # Copy configuration files
 echo "Copying configuration files..."
 mkdir -p /home/$SUDO_USER/.config/fish
 mkdir -p /home/$SUDO_USER/.config/ghostty
+
 
 if [ -f "../fish/config.fish" ]; then
     cp ../fish/config.fish /home/$SUDO_USER/.config/fish/config.fish
@@ -207,6 +192,13 @@ fi
 if [ -f "../ghostty/config" ]; then
     cp ../ghostty/config /home/$SUDO_USER/.config/ghostty/config
 fi
+
+# Install Warp terminal
+echo "Installing Warp terminal..."
+rpm --import https://releases.warp.dev/linux/keys/warp.asc
+sh -c 'echo -e "[warpdotdev]\nname=warpdotdev\nbaseurl=https://releases.warp.dev/linux/rpm/stable\nenabled=1\ngpgcheck=1\ngpgkey=https://releases.warp.dev/linux/keys/warp.asc" > /etc/yum.repos.d/warpdotdev.repo'
+dnf install warp-terminal
+
 
 chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/.config/fish
 chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/.config/starship.toml
@@ -229,9 +221,6 @@ usermod -aG docker $SUDO_USER
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
 echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | tee /etc/yum.repos.d/vscode.repo > /dev/null
 dnf install -y code
-
-# Install NordVPN
-sh <(curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh)
 
 # Install Cursor editor
 wget https://downloads.cursor.com/production/faa03b17cce93e8a80b7d62d57f5eda6bb6ab9fa/linux/x64/Cursor-1.2.2-x86_64.AppImage -O cursor.AppImage
@@ -265,6 +254,11 @@ sudo -u $SUDO_USER git config --global difftool.kdiff3.cmd "flatpak run org.kde.
 # Configure git credential storage
 sudo -u $SUDO_USER git config --global credential.credentialStore secretservice
 
+# Install Source git
+wget https://github.com/sourcegit-scm/sourcegit/releases/download/v2025.26/sourcegit-2025.26-1.x86_64.rpm -O sourcegit.rpm
+dnf install -y ./sourcegit.rpm
+rm -f sourcegit.rpm
+
 # Configure screenshot shortcut
 sudo -u $SUDO_USER gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot '["<Shift><Super>s"]'
 
@@ -280,7 +274,7 @@ echo ""
 echo "Your system has been successfully restored (if backup was available) and setup."
 echo "Recommended next steps:"
 echo "1. Reboot your system"
-echo "2. Log in to your applications (NordVPN, GitHub, etc.)"
+echo "2. Log in to your applications (GitHub, VSCode, Cursor, etc.)"
 echo "3. Configure Cursor extensions through the app"
 echo "4. Customize GNOME extensions through gnome-tweaks"
 echo "5. Verify that all applications work correctly"
