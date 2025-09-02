@@ -108,10 +108,6 @@ rpm --import https://packages.microsoft.com/keys/microsoft.asc
 echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | tee /etc/yum.repos.d/vscode.repo > /dev/null
 dnf install code
 
-# Install NordVPN
-echo "Installing NordVPN..."
-sh <(curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh)
-
 # Install Cursor editor
 echo "Installing Cursor editor..."
 wget https://downloads.cursor.com/production/faa03b17cce93e8a80b7d62d57f5eda6bb6ab9fa/linux/x64/Cursor-1.2.2-x86_64.AppImage -O cursor.AppImage
@@ -131,6 +127,11 @@ EOL
 
 # Copy webp icon from this repo
 cp ../cursor/cursor.webp /opt/cursor.webp
+
+# Move bin directory to home directory
+mkdir -p /home/$SUDO_USER/bin
+mv bin/* /home/$SUDO_USER/bin/
+chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/bin
 
 # Install kdiff3 (already installed via Flatpak)
 # Configure git to use kdiff3

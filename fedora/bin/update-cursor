@@ -1,0 +1,58 @@
+#!/bin/bash
+set -euo pipefail
+
+usage() {
+  echo "Usage: $(basename "$0") <URL>" >&2
+  echo "Downloads the AppImage from URL and installs to /opt/cursor.AppImage" >&2
+}
+
+if [[ ${1:-} == "-h" || ${1:-} == "--help" ]]; then
+  usage
+  exit 0
+fi
+
+if [[ $# -lt 1 ]]; then
+  echo "Error: URL is required." >&2
+  usage
+  exit 1
+fi
+
+URL="$1"
+
+case "$URL" in
+  http://*|https://*) ;;
+  *)
+    echo "Error: URL must start with http:// or https://" >&2
+    exit 1
+    ;;
+esac
+
+if ! command -v wget >/dev/null 2>&1; then
+  echo "Error: wget is not installed or not in PATH" >&2
+  exit 1
+fi
+
+tmpfile="$(mktemp -t cursor.AppImage.XXXXXXXX)"
+trap 'rm -f "$tmpfile"' EXIT
+
+echo "Downloading AppImage..."
+wget -O "$tmpfile" "$URL"
+
+if [[ ! -s "$tmpfile" ]]; then
+  echo "Error: Downloaded file is empty" >&2
+  exit 1
+fi
+
+# Verify ELF magic (AppImages are ELF executables)
+if ! head -c 4 "$tmpfile" | od -An -t x1 | tr -d ' \n' | grep -qi '^7f454c46'; then
+  echo "Error: Downloaded file does not appear to be an executable AppImage (missing ELF header)" >&2
+  exit 1
+fi
+
+dest="/opt/cursor.AppImage"
+echo "Installing to $dest (requires sudo)..."
+sudo mv "$tmpfile" "$dest"
+sudo chmod +x "$dest"
+
+trap - EXIT
+echo "Installed: $dest"
