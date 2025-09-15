@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+# The folder where all git repos live
+WORKDIR="/home/nejc/Work"
+
+# Enable safer globbing
+shopt -s nullglob dotglob
+
+cd "$WORKDIR"
+
+for d in */; do
+  if [[ -d "$d/.git" ]]; then
+    echo "→ $d"
+    (cd "$d" && git remote prune origin && git pull --ff-only)
+  fi
+done
