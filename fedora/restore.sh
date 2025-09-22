@@ -223,25 +223,8 @@ echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com
 dnf install -y code
 
 # Install Cursor editor
-wget https://downloads.cursor.com/production/faa03b17cce93e8a80b7d62d57f5eda6bb6ab9fa/linux/x64/Cursor-1.2.2-x86_64.AppImage -O cursor.AppImage
-mv cursor.AppImage /opt/
-chmod +x /opt/cursor.AppImage
-
-# Create desktop entry for Cursor
-cat > /usr/share/applications/cursor.desktop <<EOL
-[Desktop Entry]
-Name=Cursor
-Exec=/opt/cursor.AppImage %u
-Icon=/opt/cursor.webp
-Type=Application
-Categories=Development;
-MimeType=x-scheme-handler/cursor;
-EOL
-
-# Copy webp icon from this repo
-if [ -f "../cursor/cursor.webp" ]; then
-    cp ../cursor/cursor.webp /opt/cursor.webp
-fi
+wget https://downloads.cursor.com/production/b753cece5c67c47cb5637199a5a5de2b7100c18f/linux/x64/rpm/x86_64/cursor-1.6.35.el8.x86_64.rpm -O cursor.rpm
+dnf /cursor.rpm
 
 # Configure git with kdiff3
 sudo -u $SUDO_USER git config --global merge.tool kdiff3

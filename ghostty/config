@@ -10,6 +10,9 @@ cursor-style = block
 # adjust-cell-height = 35%
 # background-opacity = 0.96
 
+window-width = 112
+window-height = 30
+
 mouse-hide-while-typing = true
 mouse-scroll-multiplier = 2
 

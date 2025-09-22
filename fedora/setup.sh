@@ -109,24 +109,8 @@ echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com
 dnf install code
 
 # Install Cursor editor
-echo "Installing Cursor editor..."
-wget https://downloads.cursor.com/production/faa03b17cce93e8a80b7d62d57f5eda6bb6ab9fa/linux/x64/Cursor-1.2.2-x86_64.AppImage -O cursor.AppImage
-sudo mv cursor.AppImage /opt/
-sudo chmod +x /opt/cursor.AppImage
-
-# Create desktop entry for Cursor
-cat > /usr/share/applications/cursor.desktop <<EOL
-[Desktop Entry]
-Name=Cursor
-Exec=/opt/cursor.AppImage %u
-Icon=/opt/cursor.webp
-Type=Application
-Categories=Development;
-MimeType=x-scheme-handler/cursor;
-EOL
-
-# Copy webp icon from this repo
-cp ../cursor/cursor.webp /opt/cursor.webp
+wget https://downloads.cursor.com/production/b753cece5c67c47cb5637199a5a5de2b7100c18f/linux/x64/rpm/x86_64/cursor-1.6.35.el8.x86_64.rpm -O cursor.rpm
+dnf /cursor.rpm
 
 # Move bin directory to home directory
 mkdir -p /home/$SUDO_USER/bin
