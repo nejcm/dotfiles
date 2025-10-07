@@ -7,6 +7,7 @@ function gbb  {git-switchbranch $args}
 function gbd  {git branch -D $args}
 function gc   {git commit $args}
 function gcm  {git commit -m $args}
+function gcmnv {git commit -m $args --no-verify}
 function gca  {git commit -a $args}
 function gcan {gc --amend --no-edit $args}
 function gco  {git checkout $args}
@@ -28,7 +29,9 @@ function gst  {git rev-parse --git-dir > /dev/null 2>&1 && git status || exa $ar
 function gu   {git reset --soft HEAD~1}
 
 function cua  {choco upgrade all -y}
-function ups   {winget install --id Microsoft.PowerShell --source winget}
+function ups  {winget install --id Microsoft.PowerShell --source winget}
+
+function ff-all {& "C:\Scripts\ff-all.ps1" @Args}
 
 Remove-Alias gal -Force
 Remove-Alias gc -Force
