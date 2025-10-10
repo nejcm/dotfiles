@@ -2,6 +2,13 @@
 
 Backup script for creating a backup with all the data.
 
+```shell
+# make executable
+chmod +x backup.sh
+# run
+sudo ./backup.sh
+```
+
 **What it backs up:**
 
 - Personal data (Documents, Pictures, Videos, Music, Downloads, Desktop, Templates, Work)
@@ -60,7 +67,7 @@ Backup script for creating a backup with all the data.
 # make executable
 chmod +x restore.sh
 # run
-./restore.sh
+sudo ./restore.sh
 ```
 
 ## Useful commands
