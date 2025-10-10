@@ -86,15 +86,8 @@ backup_directory "$REAL_HOME/.pki" "PKI certificates"
 
 # Back up development tools
 echo "Backing up development tools..."
-backup_directory "$REAL_HOME/.npm" "npm cache"
-backup_directory "$REAL_HOME/.yarn" "yarn cache"
 backup_directory "$REAL_HOME/.nv" "nv config"
 backup_directory "$REAL_HOME/.cursor" "Cursor settings"
-backup_directory "$REAL_HOME/.var" "var directory"
-
-# Back up Go workspace
-echo "Backing up Go workspace..."
-backup_directory "$REAL_HOME/go" "Go workspace"
 
 # Back up special files
 #echo "Backing up special files..."
