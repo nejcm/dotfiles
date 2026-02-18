@@ -25,6 +25,7 @@ This document describes the complete system architecture, agent interaction patt
 ### Agents as Microservices
 
 Traditional approach (anti-pattern):
+
 ```
 SuperAgent
 ├── Plans
@@ -36,6 +37,7 @@ SuperAgent
 ```
 
 Production approach:
+
 ```
 Planner → Builder → Tester → Reviewer → Release
    ↓         ↓         ↓         ↓         ↓
@@ -184,16 +186,19 @@ Planner → Builder → Tester → Reviewer → Release
 **Agents**: Planner, Reviewer, Security
 
 **Characteristics**:
+
 - Cannot modify files
 - Cannot execute commands
 - Focus on analysis and recommendations
 
 **Benefits**:
+
 - Separation of duties
 - Independent verification
 - Bias-free reviews
 
 **Implementation**:
+
 ```json
 {
   "tools": {
@@ -211,16 +216,19 @@ Planner → Builder → Tester → Reviewer → Release
 **Agents**: Tester
 
 **Characteristics**:
+
 - Can run commands
 - Cannot modify source code
 - Returns structured data
 
 **Benefits**:
+
 - Validation without side effects
 - Machine-readable results
 - Repeatable testing
 
 **Implementation**:
+
 ```json
 {
   "tools": {
@@ -237,16 +245,19 @@ Planner → Builder → Tester → Reviewer → Release
 **Agents**: Builder, Migration
 
 **Characteristics**:
+
 - Limited write permissions
 - Diff-based edits preferred
 - Validation required before handoff
 
 **Benefits**:
+
 - Controlled changes
 - Audit trail
 - Rollback capability
 
 **Implementation**:
+
 ```json
 {
   "tools": {
@@ -267,20 +278,23 @@ Planner → Builder → Tester → Reviewer → Release
 **Agents**: Security, Performance, Refactor, Debug
 
 **Characteristics**:
+
 - Invoked conditionally
 - Deep domain expertise
 - May use different model
 
 **Benefits**:
+
 - Cost-effective (only when needed)
 - Expert-level analysis
 - Parallel execution possible
 
 **Implementation**:
+
 ```json
 {
   "mode": "subagent",
-  "model": "anthropic/claude-opus-4-20250514",  // More powerful model
+  "model": "anthropic/claude-opus-4-6", // More powerful model
   "trigger_conditions": ["file_upload", "authentication", "payments"]
 }
 ```
@@ -406,16 +420,16 @@ def conditional_agents(code_changes):
 {
   "permission": {
     "tool": {
-      "read": "allow",      // Most agents need this
-      "search": "allow",    // Most agents need this
-      "write": "ask",       // Prompt for confirmation
-      "edit": "ask",        // Prompt for confirmation
-      "bash": "ask"         // Prompt for confirmation
+      "read": "allow", // Most agents need this
+      "search": "allow", // Most agents need this
+      "write": "ask", // Prompt for confirmation
+      "edit": "ask", // Prompt for confirmation
+      "bash": "ask" // Prompt for confirmation
     },
     "skill": {
-      "*": "ask",           // Default: ask
-      "read-*": "allow",    // Auto-allow read operations
-      "internal-*": "deny"  // Block internal tools
+      "*": "ask", // Default: ask
+      "read-*": "allow", // Auto-allow read operations
+      "internal-*": "deny" // Block internal tools
     }
   }
 }
@@ -501,12 +515,12 @@ Which agents use this skill
 
 ```typescript
 interface TestSkillInput {
-  test_type: 'unit' | 'integration' | 'e2e' | 'all';
-  files?: string[];  // Optional: specific test files
+  test_type: "unit" | "integration" | "e2e" | "all";
+  files?: string[]; // Optional: specific test files
 }
 
 interface TestSkillOutput {
-  status: 'passed' | 'failed' | 'partial';
+  status: "passed" | "failed" | "partial";
   summary: {
     total: number;
     passed: number;
@@ -543,6 +557,7 @@ interface TestSkillOutput {
 **Solution**: Explicit artifact files
 
 **Benefits**:
+
 - Audit trail
 - Reproducibility
 - Debuggable failures
@@ -572,22 +587,28 @@ interface TestSkillOutput {
 # Feature Name
 
 ## Problem
+
 [What needs solving]
 
 ## Constraints
+
 [Limits and requirements]
 
 ## Proposed Approach
+
 [Implementation strategy]
 
 ## Acceptance Criteria
+
 - [ ] Criterion 1
 - [ ] Criterion 2
 
 ## Risks
+
 [What could go wrong]
 
 ## Task Breakdown
+
 1. Step 1
 2. Step 2
 ```
@@ -595,6 +616,7 @@ interface TestSkillOutput {
 ### Spec as Contract
 
 The spec is a **contract between planner and builder**:
+
 - Builder implements **exactly** what spec says
 - Builder does **not** add unspecified features
 - Reviewer validates **spec compliance**
@@ -626,9 +648,7 @@ Instead of sending entire context:
 ```json
 {
   "failure_slice": {
-    "failed_tests": [
-      "auth.spec.ts:45 > should validate email"
-    ],
+    "failed_tests": ["auth.spec.ts:45 > should validate email"],
     "relevant_code": {
       "file": "src/auth.controller.ts",
       "lines": "67-85",
@@ -641,6 +661,7 @@ Instead of sending entire context:
 ```
 
 **Benefits**:
+
 - Smaller context = better reasoning
 - Faster fixes
 - Lower cost
@@ -692,6 +713,7 @@ Prevent infinite loops:
 ```
 
 **Typical Cost Breakdown**:
+
 - Single model: $10/feature
 - Optimized strategy: $2-3/feature
 - **Savings: 60-80%**
@@ -699,16 +721,19 @@ Prevent infinite loops:
 ### Context Optimization
 
 **Bad** (High Cost):
+
 ```
 Load entire monorepo → 150K tokens → $$$
 ```
 
 **Good** (Lower Cost):
+
 ```
 Load relevant files only → 15K tokens → $
 ```
 
 **Strategies**:
+
 - Scope subagents to specific directories
 - Use failure slices (not full context)
 - Cache specs (don't regenerate)
@@ -809,6 +834,7 @@ Critical: Multiple approvals (production deploys)
 **Goal**: Get Planner + Builder working
 
 **Tasks**:
+
 1. Set up directory structure
 2. Configure Planner agent
 3. Configure Builder agent
@@ -816,6 +842,7 @@ Critical: Multiple approvals (production deploys)
 5. Test workflow: Request → Spec → Implementation
 
 **Deliverables**:
+
 - Working Planner agent
 - Working Builder agent
 - Spec template
@@ -830,6 +857,7 @@ Critical: Multiple approvals (production deploys)
 **Goal**: Add Tester + Reviewer
 
 **Tasks**:
+
 1. Configure Tester agent
 2. Create test execution skill
 3. Configure Reviewer agent
@@ -837,6 +865,7 @@ Critical: Multiple approvals (production deploys)
 5. Create PR workflow
 
 **Deliverables**:
+
 - Working Tester agent
 - Working Reviewer agent
 - PR workflow template
@@ -851,6 +880,7 @@ Critical: Multiple approvals (production deploys)
 **Goal**: Add specialist agents and safety
 
 **Tasks**:
+
 1. Configure Security agent
 2. Configure Migration agent
 3. Configure Performance agent
@@ -860,6 +890,7 @@ Critical: Multiple approvals (production deploys)
 7. Add logging infrastructure
 
 **Deliverables**:
+
 - All specialist agents
 - Guardrails configuration
 - Logging and monitoring
@@ -874,6 +905,7 @@ Critical: Multiple approvals (production deploys)
 **Goal**: MCP integration and cost optimization
 
 **Tasks**:
+
 1. Set up GitHub MCP server
 2. Set up Linear MCP server
 3. Set up Context7 MCP server
@@ -883,6 +915,7 @@ Critical: Multiple approvals (production deploys)
 7. Add cost tracking
 
 **Deliverables**:
+
 - MCP servers configured
 - Model strategy implemented
 - Release workflow

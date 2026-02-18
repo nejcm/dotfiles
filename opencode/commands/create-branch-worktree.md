@@ -1,7 +1,7 @@
 ---
 description: Create a branch and matching worktree
 subtask: true
-model: anthropic/claude-haiku-4-20250514
+model: anthropic/claude-haiku-4-5-20251001
 ---
 
 Create a new branch worktree at `./tree/<branch>`.
@@ -9,6 +9,7 @@ Create a new branch worktree at `./tree/<branch>`.
 Input: `$ARGUMENTS`
 
 Argument format:
+
 - `branch-name`
 - `branch-name base-ref`
 

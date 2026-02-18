@@ -23,6 +23,7 @@
 ## Core Concepts
 
 ### Agent
+
 A specialized AI assistant configured with specific permissions, tools, and responsibilities. Each agent is designed for a single purpose (planning, building, testing, etc.).
 
 **Example:** `@planner` agent creates specifications, `@builder` agent implements code.
@@ -32,6 +33,7 @@ A specialized AI assistant configured with specific permissions, tools, and resp
 ---
 
 ### Spec (Specification)
+
 A structured document that describes what needs to be built, including problem statement, constraints, approach, acceptance criteria, and task breakdown.
 
 **Format:** Markdown file with standardized sections.
@@ -43,9 +45,11 @@ A structured document that describes what needs to be built, including problem s
 ---
 
 ### Spec Artifact Pattern
+
 A design pattern where specifications are stored as files (artifacts) rather than conversational memory. This enables persistent, reviewable, version-controlled requirements.
 
 **Benefits:**
+
 - Version control via Git
 - Peer review possible
 - Reusable across sessions
@@ -56,6 +60,7 @@ A design pattern where specifications are stored as files (artifacts) rather tha
 ---
 
 ### Skill
+
 A reusable tool or capability that agents can invoke to perform specific actions (run tests, validate specs, check CI status, etc.).
 
 **Format:** Markdown file with YAML frontmatter in subdirectory.
@@ -67,6 +72,7 @@ A reusable tool or capability that agents can invoke to perform specific actions
 ---
 
 ### Workflow
+
 A step-by-step process for completing complex tasks (feature implementation, PR creation, incident response, etc.).
 
 **Format:** Comprehensive markdown guide with phases, checklists, and examples.
@@ -78,9 +84,11 @@ A step-by-step process for completing complex tasks (feature implementation, PR 
 ---
 
 ### Guardrails
+
 Safety controls that prevent agents from performing dangerous operations, exceeding budgets, or violating security policies.
 
 **Categories:**
+
 - **Operational:** Max tool calls, max retries, max files per edit
 - **Cost:** Daily budgets, per-session limits
 - **Security:** Blocked operations, sensitive paths
@@ -91,6 +99,7 @@ Safety controls that prevent agents from performing dangerous operations, exceed
 ---
 
 ### MCP (Model Context Protocol)
+
 A standardized protocol for connecting AI agents to external services (GitHub, Linear, databases, etc.).
 
 **Purpose:** Enables agents to read/write data in external systems.
@@ -102,9 +111,11 @@ A standardized protocol for connecting AI agents to external services (GitHub, L
 ---
 
 ### Tool Permission
+
 Access control that determines what actions an agent can perform.
 
 **Permission Types:**
+
 - **read:** View files and data
 - **write:** Create new files
 - **edit:** Modify existing files
@@ -116,9 +127,11 @@ Access control that determines what actions an agent can perform.
 ---
 
 ### Subagent Mode
+
 An agent that operates as a subprocess with isolated context and specific tools, rather than in the main conversation thread.
 
 **Benefits:**
+
 - Isolated permissions
 - Specialized model selection
 - Clear separation of concerns
@@ -130,6 +143,7 @@ An agent that operates as a subprocess with isolated context and specific tools,
 ## Agents
 
 ### Planner Agent
+
 **Purpose:** Creates specifications and breaks down tasks.
 
 **Permissions:** Read-only (read, search)
@@ -143,6 +157,7 @@ An agent that operates as a subprocess with isolated context and specific tools,
 ---
 
 ### Builder Agent
+
 **Purpose:** Implements features based on specifications.
 
 **Permissions:** Write, edit, bash, read
@@ -156,6 +171,7 @@ An agent that operates as a subprocess with isolated context and specific tools,
 ---
 
 ### Tester Agent
+
 **Purpose:** Executes tests and returns structured results.
 
 **Permissions:** Bash, read
@@ -169,6 +185,7 @@ An agent that operates as a subprocess with isolated context and specific tools,
 ---
 
 ### Reviewer Agent
+
 **Purpose:** Validates code correctness, security, and spec compliance.
 
 **Permissions:** Read-only (read, search)
@@ -182,6 +199,7 @@ An agent that operates as a subprocess with isolated context and specific tools,
 ---
 
 ### Security Agent
+
 **Purpose:** Security review specialist for auth, payments, permissions, secrets.
 
 **Permissions:** Read-only (read, search)
@@ -195,6 +213,7 @@ An agent that operates as a subprocess with isolated context and specific tools,
 ---
 
 ### Migration Agent
+
 **Purpose:** Database schema changes and migrations.
 
 **Permissions:** Write, bash, read
@@ -208,6 +227,7 @@ An agent that operates as a subprocess with isolated context and specific tools,
 ---
 
 ### Performance Agent
+
 **Purpose:** Performance optimization specialist.
 
 **Permissions:** Edit, bash, read
@@ -221,6 +241,7 @@ An agent that operates as a subprocess with isolated context and specific tools,
 ---
 
 ### Refactor Agent
+
 **Purpose:** Code restructuring and cleanup.
 
 **Permissions:** Edit, bash, read
@@ -234,6 +255,7 @@ An agent that operates as a subprocess with isolated context and specific tools,
 ---
 
 ### Debug Agent
+
 **Purpose:** Root cause analysis and bug diagnosis.
 
 **Permissions:** Bash, read, search
@@ -249,9 +271,11 @@ An agent that operates as a subprocess with isolated context and specific tools,
 ## Permissions & Security
 
 ### READ Permission
+
 Allows agent to view files and data without modification.
 
 **Operations:**
+
 - Read file contents
 - Search codebase
 - View configuration
@@ -262,9 +286,11 @@ Allows agent to view files and data without modification.
 ---
 
 ### WRITE Permission
+
 Allows agent to create new files but not modify existing ones.
 
 **Operations:**
+
 - Create new files
 - Generate code
 - Create directories
@@ -272,15 +298,18 @@ Allows agent to create new files but not modify existing ones.
 **Security:** Medium risk - agent can add files but not change existing code
 
 **Guardrails:**
+
 - Max files per operation
 - Restricted paths (e.g., can't write to production configs)
 
 ---
 
 ### EDIT Permission
+
 Allows agent to modify existing files.
 
 **Operations:**
+
 - Change code
 - Update configuration
 - Refactor existing files
@@ -288,6 +317,7 @@ Allows agent to modify existing files.
 **Security:** Higher risk - agent can alter existing functionality
 
 **Guardrails:**
+
 - Diff-based editing (show what changes)
 - Max files per edit
 - Backup before edit
@@ -295,9 +325,11 @@ Allows agent to modify existing files.
 ---
 
 ### BASH/EXECUTE Permission
+
 Allows agent to run shell commands.
 
 **Operations:**
+
 - Run tests
 - Execute build scripts
 - Run database migrations
@@ -306,6 +338,7 @@ Allows agent to run shell commands.
 **Security:** Highest risk - arbitrary command execution
 
 **Guardrails:**
+
 - Blocked operations list
 - Approval required for dangerous commands
 - Audit logging of all executions
@@ -313,9 +346,11 @@ Allows agent to run shell commands.
 ---
 
 ### Security-Sensitive Path
+
 File paths that automatically trigger security review when modified.
 
 **Default Paths:**
+
 - `auth/` - Authentication logic
 - `payment/` - Payment processing
 - `admin/` - Administrative functions
@@ -327,9 +362,11 @@ File paths that automatically trigger security review when modified.
 ---
 
 ### Security-Sensitive File
+
 File patterns that trigger security review.
 
 **Default Patterns:**
+
 - `*password*` - Password handling
 - `*secret*` - Secret management
 - `*token*` - Token generation/validation
@@ -341,9 +378,11 @@ File patterns that trigger security review.
 ---
 
 ### Blocked Operation
+
 Commands or SQL statements that are prohibited by security policy.
 
 **Default Blocked:**
+
 - `DROP DATABASE` - Prevent accidental database deletion
 - `TRUNCATE TABLE users` - Prevent mass user deletion
 - `DELETE FROM users WHERE 1=1` - Prevent unfiltered deletes
@@ -353,6 +392,7 @@ Commands or SQL statements that are prohibited by security policy.
 ---
 
 ### Audit Log
+
 Comprehensive log of all agent actions including tool calls, file changes, API calls, and decisions.
 
 **Purpose:** Compliance, debugging, security review
@@ -368,9 +408,11 @@ Comprehensive log of all agent actions including tool calls, file changes, API c
 ## Workflows
 
 ### Feature Implementation Workflow
+
 Complete process for building a new feature from specification to deployment.
 
 **Phases:**
+
 1. Planning (spec creation)
 2. Implementation (code writing)
 3. Testing (validation)
@@ -384,15 +426,18 @@ Complete process for building a new feature from specification to deployment.
 ---
 
 ### Hotfix Workflow
+
 Emergency process for critical production issues requiring immediate fixes.
 
 **Severity Levels:**
+
 - **P0 (Critical):** Production completely down
 - **P1 (High):** Major functionality broken
 - **P2 (Medium):** Partial functionality affected
 - **P3 (Low):** Minor issue with workaround
 
 **Phases:**
+
 1. Assessment
 2. Preparation
 3. Implementation
@@ -405,15 +450,18 @@ Emergency process for critical production issues requiring immediate fixes.
 ---
 
 ### Incident Response Workflow
+
 Process for handling production incidents from detection to post-mortem.
 
 **Roles:**
+
 - **IC (Incident Commander):** Overall coordination
 - **Tech Lead:** Technical investigation and resolution
 - **Communications:** Stakeholder updates
 - **Scribe:** Documentation
 
 **Phases:**
+
 1. Detect
 2. Declare
 3. Triage
@@ -428,9 +476,11 @@ Process for handling production incidents from detection to post-mortem.
 ---
 
 ### Security Review Workflow
+
 Process for reviewing code changes for security vulnerabilities.
 
 **When Required:**
+
 - Authentication/authorization changes
 - Payment processing
 - File uploads
@@ -445,14 +495,17 @@ Process for reviewing code changes for security vulnerabilities.
 ---
 
 ### Database Migration Workflow
+
 Safe process for schema changes with zero-downtime patterns.
 
 **Risk Levels:**
+
 - **LOW:** Adding nullable columns, adding indexes (online)
 - **MEDIUM:** Renaming columns, changing types (compatible)
 - **HIGH:** Dropping columns, changing types (incompatible)
 
 **Patterns:**
+
 - **Expand-Migrate-Contract:** Gradual transition
 - **Shadow Table:** Parallel old/new tables
 - **Online Schema Change:** Use tools like gh-ost, pt-online-schema-change
@@ -462,9 +515,11 @@ Safe process for schema changes with zero-downtime patterns.
 ---
 
 ### PR Checklist Workflow
+
 Process for creating production-ready pull requests.
 
 **Checklist:**
+
 - [ ] All tests passing
 - [ ] Code reviewed
 - [ ] Documentation updated
@@ -477,9 +532,11 @@ Process for creating production-ready pull requests.
 ---
 
 ### Release Checklist Workflow
+
 Process for deploying new versions to production.
 
 **Phases:**
+
 1. Pre-release (preparation)
 2. Release (deployment)
 3. Post-release (verification)
@@ -491,6 +548,7 @@ Process for deploying new versions to production.
 ## Skills
 
 ### run-tests
+
 **Purpose:** Execute test suite and return structured results.
 
 **Input:** Test command (npm test, pytest, etc.)
@@ -502,9 +560,11 @@ Process for deploying new versions to production.
 ---
 
 ### spec-validator
+
 **Purpose:** Validate specification completeness and correctness.
 
 **Checks:**
+
 - All required sections present
 - Acceptance criteria clear
 - Risks identified
@@ -515,9 +575,11 @@ Process for deploying new versions to production.
 ---
 
 ### git-workflow
+
 **Purpose:** Git operations (commit, branch, PR creation).
 
 **Operations:**
+
 - Create branches
 - Commit with conventional format
 - Create pull requests
@@ -528,9 +590,11 @@ Process for deploying new versions to production.
 ---
 
 ### ci-status
+
 **Purpose:** Check CI/CD pipeline status.
 
 **Integrations:**
+
 - GitHub Actions
 - CircleCI
 - Jenkins
@@ -545,13 +609,16 @@ Process for deploying new versions to production.
 ## MCP (Model Context Protocol)
 
 ### GitHub MCP
+
 **Purpose:** Read/write GitHub repositories, issues, PRs.
 
 **Requirements:**
+
 - GitHub Personal Access Token
 - Scopes: `repo`, `read:org`, `workflow`
 
 **Operations:**
+
 - Create issues/PRs
 - Read repository contents
 - Update issue status
@@ -564,12 +631,15 @@ Process for deploying new versions to production.
 ---
 
 ### Linear MCP
+
 **Purpose:** Project management integration with Linear.
 
 **Requirements:**
+
 - Linear API Key
 
 **Operations:**
+
 - Create/update issues
 - Assign team members
 - Update project status
@@ -582,11 +652,13 @@ Process for deploying new versions to production.
 ---
 
 ### Context7 MCP
+
 **Purpose:** Semantic search and embeddings for codebase.
 
 **Requirements:** None (works out of the box)
 
 **Operations:**
+
 - Semantic code search
 - Find similar code
 - Get code context
@@ -598,23 +670,27 @@ Process for deploying new versions to production.
 ## Models & AI
 
 ### Claude Opus-4
+
 **Capabilities:** Most capable model, best reasoning, highest quality.
 
 **Use Cases:**
+
 - Security-critical reviews
 - Complex architecture decisions
 - High-stakes production issues
 
 **Cost:** Highest (~$15 input / $75 output per 1M tokens)
 
-**Configuration:** `anthropic/claude-opus-4-20250514`
+**Configuration:** `anthropic/claude-opus-4-6`
 
 ---
 
 ### Claude Sonnet-4
+
 **Capabilities:** Balanced model, good reasoning, fast performance.
 
 **Use Cases:**
+
 - Feature implementation
 - Code review
 - Planning and architecture
@@ -627,9 +703,11 @@ Process for deploying new versions to production.
 ---
 
 ### Claude Haiku-4
+
 **Capabilities:** Fast model, lower cost, good for routine tasks.
 
 **Use Cases:**
+
 - Test execution
 - Code formatting
 - Documentation generation
@@ -637,20 +715,23 @@ Process for deploying new versions to production.
 
 **Cost:** Lowest (~$0.25 input / $1.25 output per 1M tokens)
 
-**Configuration:** `anthropic/claude-haiku-4-20250514`
+**Configuration:** `anthropic/claude-haiku-4-5-20251001`
 
 ---
 
 ### Temperature
+
 Controls randomness/creativity in model output.
 
 **Values:**
+
 - **0.0:** Deterministic, same output every time
 - **0.1-0.3:** Mostly deterministic, slight variation
 - **0.5-0.7:** Balanced creativity and consistency
 - **0.8-1.0:** High creativity, more variation
 
 **Recommendations:**
+
 - **Implementation:** 0.1 (builder agent)
 - **Testing:** 0.0 (tester agent)
 - **Planning:** 0.3 (planner agent)
@@ -659,9 +740,11 @@ Controls randomness/creativity in model output.
 ---
 
 ### Context Window
+
 Maximum amount of text (in tokens) a model can process in a single request.
 
 **Typical Sizes:**
+
 - Claude 3.5 Sonnet: 200K tokens
 - Claude 3 Opus: 200K tokens
 - Claude 3.5 Haiku: 200K tokens
@@ -671,7 +754,9 @@ Maximum amount of text (in tokens) a model can process in a single request.
 ---
 
 ### Token
+
 Basic unit of text for AI models. Approximately:
+
 - 1 token ≈ 4 characters
 - 1 token ≈ 0.75 words
 - 100 tokens ≈ 75 words
@@ -683,6 +768,7 @@ Basic unit of text for AI models. Approximately:
 ## Cost & Performance
 
 ### Daily Budget
+
 Maximum amount (in USD) that can be spent on AI API calls per day.
 
 **Default:** $100/day
@@ -694,6 +780,7 @@ Maximum amount (in USD) that can be spent on AI API calls per day.
 ---
 
 ### Per-Session Limit
+
 Maximum amount (in USD) for a single conversation session.
 
 **Default:** $10/session
@@ -705,6 +792,7 @@ Maximum amount (in USD) for a single conversation session.
 ---
 
 ### Expensive Operation Threshold
+
 Dollar amount that triggers a warning before executing.
 
 **Default:** $5
@@ -716,6 +804,7 @@ Dollar amount that triggers a warning before executing.
 ---
 
 ### Rate Limit
+
 Maximum number of API calls an agent can make per hour.
 
 **Purpose:** Prevent abuse and control costs
@@ -723,6 +812,7 @@ Maximum number of API calls an agent can make per hour.
 **Configuration:** `opencode.json` - `rate_limits` section
 
 **Example:**
+
 - Planner: 30 calls/hour
 - Builder: 20 calls/hour
 - Tester: 40 calls/hour
@@ -730,9 +820,11 @@ Maximum number of API calls an agent can make per hour.
 ---
 
 ### Model Strategy
+
 Intentional selection of models (Opus/Sonnet/Haiku) based on task complexity to optimize cost/performance.
 
 **Strategy:**
+
 - **Security-critical:** Opus-4 (highest capability)
 - **Implementation:** Sonnet-4 (balanced)
 - **Testing:** Haiku-4 (fast and cheap)
@@ -746,6 +838,7 @@ Intentional selection of models (Opus/Sonnet/Haiku) based on task complexity to 
 ## Database & Migrations
 
 ### Zero-Downtime Migration
+
 Database schema change that doesn't require application downtime.
 
 **Key Principle:** Old and new code must work simultaneously during transition.
@@ -755,6 +848,7 @@ Database schema change that doesn't require application downtime.
 ---
 
 ### Expand-Migrate-Contract Pattern
+
 Three-phase migration strategy:
 
 1. **Expand:** Add new column (nullable) alongside old column
@@ -768,9 +862,11 @@ Three-phase migration strategy:
 ---
 
 ### Shadow Table
+
 Migration pattern using parallel tables.
 
 **Process:**
+
 1. Create new table with desired schema
 2. Dual-write to old and new tables
 3. Backfill historical data
@@ -782,9 +878,11 @@ Migration pattern using parallel tables.
 ---
 
 ### Online Schema Change
+
 Tool-assisted migrations that don't lock tables.
 
 **Tools:**
+
 - **gh-ost:** GitHub's online schema change tool
 - **pt-online-schema-change:** Percona toolkit
 - **pgslice:** PostgreSQL partitioning
@@ -794,9 +892,11 @@ Tool-assisted migrations that don't lock tables.
 ---
 
 ### Migration Rollback
+
 Process of reverting a database change.
 
 **Requirements:**
+
 - Down migration script
 - Data preservation strategy
 - Tested rollback procedure
@@ -808,9 +908,11 @@ Process of reverting a database change.
 ## Incident Management
 
 ### Incident Severity
+
 Classification of incident impact.
 
 **Levels:**
+
 - **P0 (Critical):** Complete outage, all users affected
 - **P1 (High):** Major feature broken, most users affected
 - **P2 (Medium):** Partial degradation, some users affected
@@ -821,9 +923,11 @@ Classification of incident impact.
 ---
 
 ### IC (Incident Commander)
+
 Person responsible for overall incident coordination.
 
 **Responsibilities:**
+
 - Declare incident
 - Assign roles
 - Make decisions
@@ -835,9 +939,11 @@ Person responsible for overall incident coordination.
 ---
 
 ### Tech Lead (Incident)
+
 Technical expert responsible for diagnosis and resolution.
 
 **Responsibilities:**
+
 - Investigate root cause
 - Implement fixes
 - Coordinate technical team
@@ -848,9 +954,11 @@ Technical expert responsible for diagnosis and resolution.
 ---
 
 ### Post-Mortem
+
 Blameless retrospective after incident to learn and improve.
 
 **Sections:**
+
 1. Timeline of events
 2. Root cause analysis
 3. What went well
@@ -864,11 +972,13 @@ Blameless retrospective after incident to learn and improve.
 ---
 
 ### RCA (Root Cause Analysis)
+
 Deep investigation to identify the fundamental reason an incident occurred.
 
 **Method:** "5 Whys" technique
 
 **Example:**
+
 1. Why did the app crash? → Out of memory
 2. Why out of memory? → Memory leak
 3. Why memory leak? → Event listeners not cleaned up
@@ -882,11 +992,13 @@ Deep investigation to identify the fundamental reason an incident occurred.
 ## Development Terms
 
 ### Conventional Commits
+
 Standardized commit message format.
 
 **Format:** `<type>(<scope>): <description>`
 
 **Types:**
+
 - `feat:` New feature
 - `fix:` Bug fix
 - `docs:` Documentation
@@ -899,11 +1011,13 @@ Standardized commit message format.
 ---
 
 ### Acceptance Criteria
+
 Specific, testable conditions that must be met for a feature to be considered complete.
 
 **Format:** Given/When/Then
 
 **Example:**
+
 - Given: User is logged in
 - When: User clicks "Logout"
 - Then: User session is terminated and redirected to login page
@@ -911,9 +1025,11 @@ Specific, testable conditions that must be met for a feature to be considered co
 ---
 
 ### Edge Case
+
 Unusual or extreme input that might cause unexpected behavior.
 
 **Examples:**
+
 - Empty array
 - Null values
 - Very large numbers
@@ -925,9 +1041,11 @@ Unusual or extreme input that might cause unexpected behavior.
 ---
 
 ### Technical Debt
+
 Code or architecture shortcuts that will need to be fixed later.
 
 **Types:**
+
 - **Deliberate:** Conscious decision to move faster now
 - **Accidental:** Didn't know better at the time
 - **Environmental:** External changes (deprecated API, etc.)
@@ -937,9 +1055,11 @@ Code or architecture shortcuts that will need to be fixed later.
 ---
 
 ### Rollback
+
 Reverting a deployment to a previous version.
 
 **Types:**
+
 - **Code rollback:** Deploy previous version
 - **Database rollback:** Run down migration
 - **Config rollback:** Restore previous configuration
@@ -949,9 +1069,11 @@ Reverting a deployment to a previous version.
 ---
 
 ### Canary Deployment
+
 Gradual rollout strategy where new version is deployed to small percentage of users first.
 
 **Process:**
+
 1. Deploy to 5% of users
 2. Monitor metrics
 3. If successful, increase to 25%
@@ -963,9 +1085,11 @@ Gradual rollout strategy where new version is deployed to small percentage of us
 ---
 
 ### Blast Radius
+
 Scope of potential damage from a failure or bug.
 
 **Examples:**
+
 - **Small:** Single user affected
 - **Medium:** One feature broken
 - **Large:** Entire application down
@@ -977,6 +1101,7 @@ Scope of potential damage from a failure or bug.
 ## Index
 
 For quick navigation to specific topics, see:
+
 - **By Role:** [INDEX.md - By Role](INDEX.md#by-role-who-you-are)
 - **By Task:** [INDEX.md - By Task](INDEX.md#by-task-what-you-want-to-do)
 - **By Scenario:** [INDEX.md - By Scenario](INDEX.md#by-scenario-whats-happening)
@@ -985,4 +1110,4 @@ For quick navigation to specific topics, see:
 
 **This glossary defines all terms used across OpenCode documentation. Bookmark for quick reference!**
 
-*Last updated: 2026-02-17*
+_Last updated: 2026-02-17_

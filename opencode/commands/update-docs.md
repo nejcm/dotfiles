@@ -1,7 +1,7 @@
 ---
 description: Update implementation and project documentation
 subtask: true
-model: anthropic/claude-haiku-4-20250514
+model: anthropic/claude-haiku-4-5-20251001
 ---
 
 # Documentation Analysis
@@ -85,6 +85,7 @@ model: anthropic/claude-haiku-4-20250514
 - Ensure documentation reflects actual implementation.
 
 Provide a summary of documentation updates after completion, including:
+
 1. Files updated
 2. Major changes to documentation
 3. Updated completion percentages

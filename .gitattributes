@@ -1,0 +1,3 @@
+# Ensure opencode config uses LF so parsers don't fail on CRLF (e.g. on Windows)
+opencode/opencode.json text eol=lf
+opencode/**/*.json text eol=lf

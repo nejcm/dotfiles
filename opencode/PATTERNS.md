@@ -26,6 +26,7 @@
 **Solution:** Persist specifications as file artifacts that can be version-controlled and reviewed.
 
 **Implementation:**
+
 ```markdown
 ## Using Planner Agent
 
@@ -35,6 +36,7 @@
 ```
 
 **Benefits:**
+
 - ✅ Specifications are version-controlled
 - ✅ Can be reviewed like code
 - ✅ Persistent across sessions
@@ -42,6 +44,7 @@
 - ✅ Searchable and linkable
 
 **When to Use:**
+
 - All non-trivial features
 - Any work lasting >1 hour
 - Changes affecting multiple files
@@ -58,6 +61,7 @@
 **Solution:** Each agent has one clear responsibility with minimal permissions.
 
 **Implementation:**
+
 ```
 Planner:  READ only  → Create specs
 Builder:  WRITE      → Implement code
@@ -67,12 +71,14 @@ Security: READ only  → Security audit
 ```
 
 **Benefits:**
+
 - ✅ Clear separation of concerns
 - ✅ Minimal permissions = safer
 - ✅ Easier to debug issues
 - ✅ Predictable behavior
 
 **Anti-Pattern:**
+
 ```
 ❌ Give builder agent security review responsibility
 ❌ Give planner agent code writing permissions
@@ -88,6 +94,7 @@ Security: READ only  → Security audit
 **Solution:** Review agents have READ permission only, builder must make changes.
 
 **Implementation:**
+
 ```
 @reviewer Review auth/login.ts for security
 
@@ -97,6 +104,7 @@ Security: READ only  → Security audit
 ```
 
 **Benefits:**
+
 - ✅ Clear separation: review vs. implementation
 - ✅ Prevents accidental modifications during review
 - ✅ Audit trail of who changed what
@@ -111,6 +119,7 @@ Security: READ only  → Security audit
 **Solution:** Validate early and often, fail fast with clear errors.
 
 **Implementation:**
+
 ```bash
 # Guardrails check before execution
 if spec_required && !spec_exists:
@@ -124,12 +133,14 @@ if sensitive_operation && !approved:
 ```
 
 **Checkpoints:**
+
 - Before implementation: Spec exists?
 - Before commit: Tests pass?
 - Before deployment: Security review done?
 - Before API call: Budget available?
 
 **Benefits:**
+
 - ✅ Fast feedback
 - ✅ Prevents expensive mistakes
 - ✅ Clear error messages
@@ -144,6 +155,7 @@ if sensitive_operation && !approved:
 **Solution:** Multiple overlapping guardrails at different levels.
 
 **Layers:**
+
 ```
 1. Agent Level:      Permission restrictions
 2. Tool Level:       Operation validation
@@ -153,6 +165,7 @@ if sensitive_operation && !approved:
 ```
 
 **Example:**
+
 ```
 Attempt to delete production database:
 
@@ -166,6 +179,7 @@ Result: Operation blocked at multiple levels
 ```
 
 **Benefits:**
+
 - ✅ Defense in depth
 - ✅ Redundant safety
 - ✅ Catches different failure modes
@@ -182,6 +196,7 @@ Result: Operation blocked at multiple levels
 **Solution:** Structured three-phase flow with clear handoffs.
 
 **Implementation:**
+
 ```
 Phase 1: Planning
   @planner Create spec for feature X
@@ -201,6 +216,7 @@ Phase 4: Review
 ```
 
 **Decision Points:**
+
 ```
 Spec complete? → Yes → Proceed to Builder
                 → No  → Clarify requirements
@@ -216,6 +232,7 @@ Review approved? → Yes → Merge
 ```
 
 **Benefits:**
+
 - ✅ Complete specifications before coding
 - ✅ Tests written with implementation
 - ✅ Quality validation built-in
@@ -232,6 +249,7 @@ Review approved? → Yes → Merge
 **Examples:**
 
 **Security Reviews:**
+
 ```
 ❌ @builder Also check for security issues
 ✅ @security Review auth/login.ts for vulnerabilities
@@ -240,6 +258,7 @@ Why: Security agent uses Opus-4 (most capable), has OWASP checklist
 ```
 
 **Database Migrations:**
+
 ```
 ❌ @builder Also create database migration
 ✅ @migration Create migration to add user roles
@@ -248,6 +267,7 @@ Why: Migration agent knows zero-downtime patterns, rollback procedures
 ```
 
 **Performance Optimization:**
+
 ```
 ❌ @builder Make this faster
 ✅ @performance Analyze and optimize checkout flow
@@ -256,6 +276,7 @@ Why: Performance agent knows profiling, benchmarking, optimization patterns
 ```
 
 **Benefits:**
+
 - ✅ Higher quality specialized work
 - ✅ Domain-specific validation
 - ✅ Appropriate model selection (Opus for security, Haiku for docs)
@@ -270,6 +291,7 @@ Why: Performance agent knows profiling, benchmarking, optimization patterns
 **Solution:** Guardrail enforces spec artifact before implementation.
 
 **Configuration:**
+
 ```json
 {
   "guardrails": {
@@ -279,6 +301,7 @@ Why: Performance agent knows profiling, benchmarking, optimization patterns
 ```
 
 **Implementation:**
+
 ```
 User: @builder Add user authentication
 
@@ -296,11 +319,13 @@ Builder: [Implements feature according to spec]
 ```
 
 **Exceptions (disable guardrail):**
+
 - Emergency hotfixes
 - Trivial changes (1-2 lines)
 - Experimental/prototype work
 
 **Benefits:**
+
 - ✅ Forces upfront planning
 - ✅ Creates documentation artifact
 - ✅ Reduces miscommunication
@@ -315,6 +340,7 @@ Builder: [Implements feature according to spec]
 **Workflow:** `workflows/feature_implementation.md`
 
 **Steps:**
+
 1. **Plan**: Create specification
 2. **Build**: Implement code + tests
 3. **Test**: Validate functionality
@@ -322,6 +348,7 @@ Builder: [Implements feature according to spec]
 5. **Deploy**: Merge and release
 
 **Checkpoints:**
+
 - ✅ Spec approved before coding
 - ✅ Tests written with implementation
 - ✅ Code review passed
@@ -339,12 +366,14 @@ Builder: [Implements feature according to spec]
 **When:** Production issue requiring immediate fix.
 
 **Severity Levels:**
+
 - **P0**: Complete outage → Fix within 1 hour
 - **P1**: Major feature broken → Fix within 4 hours
 - **P2**: Partial degradation → Fix within 24 hours
 - **P3**: Minor issue → Fix within 1 week
 
 **Steps (P0/P1):**
+
 1. **Assess** (5 min): Severity, impact, root cause
 2. **Prepare** (10 min): Create hotfix branch, backup plan
 3. **Implement** (30 min): Minimal fix, tests
@@ -353,11 +382,13 @@ Builder: [Implements feature according to spec]
 6. **Post-Hotfix** (30 min): Post-mortem, permanent fix
 
 **Guardrails Adjusted:**
+
 - ✅ Spec requirement waived for emergency
 - ✅ Fast-track deployment approval
 - ⚠️ Security review still required if auth/payment touched
 
 **Anti-Patterns:**
+
 ```
 ❌ Skip testing ("it's urgent!")
 ❌ Skip rollback plan
@@ -372,12 +403,14 @@ Builder: [Implements feature according to spec]
 **Workflow:** `workflows/incident_response.md`
 
 **Roles:**
+
 - **IC (Incident Commander)**: Coordinates response
 - **Tech Lead**: Diagnoses and fixes issue
 - **Communications**: Updates stakeholders
 - **Scribe**: Documents timeline
 
 **8 Phases:**
+
 1. **Detect**: Alert fires, monitoring detects issue
 2. **Declare**: IC declares incident, assigns roles
 3. **Triage**: Assess severity, impact, urgency
@@ -388,6 +421,7 @@ Builder: [Implements feature according to spec]
 8. **Learn**: Post-mortem within 3 days
 
 **Communication Templates:**
+
 ```
 Internal Update:
   Status: [INVESTIGATING|IDENTIFIED|MONITORING|RESOLVED]
@@ -402,6 +436,7 @@ Customer-Facing:
 ```
 
 **Escalation Path:**
+
 ```
 P3 → Assign to on-call engineer
 P2 → Page Tech Lead
@@ -416,17 +451,20 @@ P0 → Page entire leadership + prepare customer communication
 **Workflow:** `workflows/security_review.md`
 
 **Triggers (Automatic):**
+
 - Changes to `auth/`, `payment/`, `admin/` paths
 - Files matching `*password*`, `*secret*`, `*token*` patterns
 - Deployment to production (if configured)
 
 **Triggers (Manual):**
+
 - User input handling
 - File uploads
 - Cryptography usage
 - External API calls with credentials
 
 **OWASP Top 10 Checklist:**
+
 1. ✅ Broken Access Control
 2. ✅ Cryptographic Failures
 3. ✅ Injection (SQL, XSS, Command)
@@ -439,12 +477,14 @@ P0 → Page entire leadership + prepare customer communication
 10. ✅ Server-Side Request Forgery
 
 **Severity Classification:**
+
 - **CRITICAL**: Authentication bypass, RCE, SQL injection
 - **HIGH**: XSS, CSRF, information disclosure
 - **MEDIUM**: Missing rate limiting, weak validation
 - **LOW**: Missing security headers, verbose errors
 
 **Result:**
+
 ```
 ✅ APPROVED: No issues or low severity only
 ⚠️ APPROVED WITH CONDITIONS: Medium severity, must fix post-deploy
@@ -462,21 +502,22 @@ P0 → Page entire leadership + prepare customer communication
 **Solution:** Fail gracefully, provide partial functionality.
 
 **Implementation:**
+
 ```typescript
 async function generateDocumentation() {
   const results = {
-    api: await generateAPIDocs().catch(e => ({
+    api: await generateAPIDocs().catch((e) => ({
       error: e.message,
-      status: 'failed'
+      status: "failed",
     })),
-    types: await generateTypeDocs().catch(e => ({
+    types: await generateTypeDocs().catch((e) => ({
       error: e.message,
-      status: 'failed'
+      status: "failed",
     })),
-    examples: await generateExamples().catch(e => ({
+    examples: await generateExamples().catch((e) => ({
       error: e.message,
-      status: 'failed'
-    }))
+      status: "failed",
+    })),
   };
 
   // Return partial success
@@ -485,6 +526,7 @@ async function generateDocumentation() {
 ```
 
 **Benefits:**
+
 - ✅ Partial success better than total failure
 - ✅ Clear visibility into what failed
 - ✅ Can proceed with available data
@@ -499,11 +541,12 @@ async function generateDocumentation() {
 **Solution:** Retry with increasing delay between attempts.
 
 **Implementation:**
+
 ```typescript
 async function retryWithBackoff<T>(
   operation: () => Promise<T>,
   maxRetries: number = 3,
-  baseDelay: number = 1000
+  baseDelay: number = 1000,
 ): Promise<T> {
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     try {
@@ -519,17 +562,20 @@ async function retryWithBackoff<T>(
 ```
 
 **Delays:**
+
 - Attempt 1: Immediate
 - Attempt 2: 1 second
 - Attempt 3: 2 seconds
 - Attempt 4: 4 seconds
 
 **Benefits:**
+
 - ✅ Gives service time to recover
 - ✅ Avoids overwhelming failing service
 - ✅ Higher success rate than fixed delay
 
 **Configuration:**
+
 ```json
 {
   "guardrails": {
@@ -547,23 +593,25 @@ async function retryWithBackoff<T>(
 **Solution:** After N failures, stop trying for cooldown period.
 
 **States:**
+
 - **CLOSED**: Normal operation, calls go through
 - **OPEN**: Too many failures, calls blocked
 - **HALF-OPEN**: Test if service recovered
 
 **Implementation:**
+
 ```typescript
 class CircuitBreaker {
   private failureCount = 0;
   private lastFailure: Date | null = null;
-  private state: 'CLOSED' | 'OPEN' | 'HALF-OPEN' = 'CLOSED';
+  private state: "CLOSED" | "OPEN" | "HALF-OPEN" = "CLOSED";
 
   async call<T>(operation: () => Promise<T>): Promise<T> {
-    if (this.state === 'OPEN') {
+    if (this.state === "OPEN") {
       if (this.shouldAttemptReset()) {
-        this.state = 'HALF-OPEN';
+        this.state = "HALF-OPEN";
       } else {
-        throw new Error('Circuit breaker OPEN');
+        throw new Error("Circuit breaker OPEN");
       }
     }
 
@@ -579,7 +627,7 @@ class CircuitBreaker {
 
   private onSuccess() {
     this.failureCount = 0;
-    this.state = 'CLOSED';
+    this.state = "CLOSED";
   }
 
   private onFailure() {
@@ -587,7 +635,7 @@ class CircuitBreaker {
     this.lastFailure = new Date();
 
     if (this.failureCount >= 5) {
-      this.state = 'OPEN';
+      this.state = "OPEN";
     }
   }
 
@@ -600,6 +648,7 @@ class CircuitBreaker {
 ```
 
 **Benefits:**
+
 - ✅ Prevents cascading failures
 - ✅ Gives failing service time to recover
 - ✅ Fails fast during outages
@@ -615,6 +664,7 @@ class CircuitBreaker {
 **Solution:** Pyramid shape - many unit tests, fewer integration, minimal E2E.
 
 **Distribution:**
+
 ```
         /\
        /E2\      10% - End-to-End (slow, brittle)
@@ -627,11 +677,13 @@ class CircuitBreaker {
 ```
 
 **Coverage Targets:**
+
 - **Unit**: 80%+ coverage
 - **Integration**: Key workflows covered
 - **E2E**: Critical user journeys only
 
 **Benefits:**
+
 - ✅ Fast test suite
 - ✅ Reliable (unit tests rarely flake)
 - ✅ Easy to maintain
@@ -646,11 +698,12 @@ class CircuitBreaker {
 **Solution:** Structure all tests with AAA pattern.
 
 **Implementation:**
+
 ```typescript
-test('authenticateUser returns token for valid credentials', async () => {
+test("authenticateUser returns token for valid credentials", async () => {
   // Arrange - Set up test data
-  const email = 'user@example.com';
-  const password = 'password123';
+  const email = "user@example.com";
+  const password = "password123";
   const mockUser = { id: 1, email };
 
   // Act - Perform the operation
@@ -663,6 +716,7 @@ test('authenticateUser returns token for valid credentials', async () => {
 ```
 
 **Benefits:**
+
 - ✅ Clear test structure
 - ✅ Easy to understand intent
 - ✅ Consistent across codebase
@@ -676,13 +730,14 @@ test('authenticateUser returns token for valid credentials', async () => {
 **Solution:** Builder pattern for test data creation.
 
 **Implementation:**
+
 ```typescript
 class UserBuilder {
   private user = {
     id: 1,
-    email: 'test@example.com',
-    name: 'Test User',
-    role: 'user'
+    email: "test@example.com",
+    name: "Test User",
+    role: "user",
   };
 
   withEmail(email: string) {
@@ -702,12 +757,13 @@ class UserBuilder {
 
 // Usage
 const admin = new UserBuilder()
-  .withEmail('admin@example.com')
-  .withRole('admin')
+  .withEmail("admin@example.com")
+  .withRole("admin")
   .build();
 ```
 
 **Benefits:**
+
 - ✅ Readable test setup
 - ✅ Reusable across tests
 - ✅ Easy to customize
@@ -723,6 +779,7 @@ const admin = new UserBuilder()
 **Solution:** Multiple overlapping security layers.
 
 **Layers:**
+
 ```
 1. Input Validation:    Validate all user input
 2. Authentication:      Verify user identity
@@ -734,8 +791,9 @@ const admin = new UserBuilder()
 ```
 
 **Example (API Endpoint):**
+
 ```typescript
-app.post('/api/users', [
+app.post("/api/users", [
   // Layer 1: Input validation
   validateInput(userSchema),
 
@@ -743,7 +801,7 @@ app.post('/api/users', [
   requireAuth,
 
   // Layer 3: Authorization
-  requireRole('admin'),
+  requireRole("admin"),
 
   // Layer 4: Data validation
   async (req, res) => {
@@ -753,11 +811,11 @@ app.post('/api/users', [
     await createUser(sanitized);
 
     // Layer 6: Audit log
-    auditLog.info('User created', { by: req.user.id });
+    auditLog.info("User created", { by: req.user.id });
 
     // Layer 7: Rate limit (middleware)
     res.json({ success: true });
-  }
+  },
 ]);
 ```
 
@@ -770,6 +828,7 @@ app.post('/api/users', [
 **Solution:** Grant minimum permissions required for task.
 
 **Agent Permissions:**
+
 ```
 Planner:     READ only  (can't modify code)
 Builder:     WRITE, EDIT, BASH (can't review itself)
@@ -779,6 +838,7 @@ Security:    READ only  (audits, doesn't fix)
 ```
 
 **Benefits:**
+
 - ✅ Limits blast radius of errors
 - ✅ Clear responsibility boundaries
 - ✅ Prevents accidental modifications
@@ -793,23 +853,26 @@ Security:    READ only  (audits, doesn't fix)
 **Solution:** Security on by default, must explicitly disable.
 
 **Examples:**
+
 ```json
 {
   "security": {
-    "auto_trigger_security_review": true,  // ON by default
-    "block_sensitive_operations": [        // Blocked by default
+    "auto_trigger_security_review": true, // ON by default
+    "block_sensitive_operations": [
+      // Blocked by default
       "DROP DATABASE",
       "TRUNCATE TABLE users"
     ]
   },
   "deployment": {
-    "production_require_approval": true,   // ON by default
+    "production_require_approval": true, // ON by default
     "production_require_security_review": true
   }
 }
 ```
 
 **Benefits:**
+
 - ✅ Safe by default
 - ✅ Conscious decision to disable security
 - ✅ Prevents accidents
@@ -825,6 +888,7 @@ Security:    READ only  (audits, doesn't fix)
 **Solution:** Match model capability to task complexity.
 
 **Model Strategy:**
+
 ```
 Haiku (Fast, Cheap):
   - Testing (tester agent)
@@ -845,6 +909,7 @@ Opus (Slow, Expensive):
 ```
 
 **Cost Comparison (per 1M tokens):**
+
 ```
 Haiku:  $0.25 input / $1.25 output  (baseline)
 Sonnet: $3.00 input / $15.00 output (12x more)
@@ -852,19 +917,21 @@ Opus:   $15.00 input / $75.00 output (60x more)
 ```
 
 **Savings:**
+
 - Using strategic mix: 60-80% cost reduction vs. all-Opus
 - Minimal quality impact for appropriate tasks
 
 **Configuration:**
+
 ```json
 {
   "agent": {
     "tester": {
-      "model": "anthropic/claude-haiku-4-20250514",
+      "model": "anthropic/claude-haiku-4-5-20251001",
       "temperature": 0
     },
     "security": {
-      "model": "anthropic/claude-opus-4-20250514",
+      "model": "anthropic/claude-opus-4-6",
       "temperature": 0
     }
   }
@@ -880,6 +947,7 @@ Opus:   $15.00 input / $75.00 output (60x more)
 **Solution:** Batch multiple operations into single call.
 
 **Anti-Pattern:**
+
 ```typescript
 // ❌ Slow: N API calls
 for (const file of files) {
@@ -888,12 +956,14 @@ for (const file of files) {
 ```
 
 **Better:**
+
 ```typescript
 // ✅ Fast: 1 API call
 await analyzeFiles(files);
 ```
 
 **Benefits:**
+
 - ✅ Fewer API calls = lower cost
 - ✅ Faster overall execution
 - ✅ Lower rate limit impact
@@ -907,6 +977,7 @@ await analyzeFiles(files);
 **Solution:** Load only what's needed, when it's needed.
 
 **Implementation:**
+
 ```typescript
 // ❌ Eager loading
 const allAgents = loadAllAgents();
@@ -923,6 +994,7 @@ function getAgent(name: string) {
 ```
 
 **Benefits:**
+
 - ✅ Faster startup
 - ✅ Lower memory usage
 - ✅ Load only what's used
@@ -940,12 +1012,14 @@ function getAgent(name: string) {
 ```
 
 **Why Bad:**
+
 - Mixed responsibilities
 - Over-privileged (security risk)
 - Hard to debug
 - No separation of concerns
 
 **Instead:**
+
 ```
 ✅ @planner Create spec for feature X
 ✅ @builder Implement specs/feature-x.md
@@ -965,12 +1039,14 @@ function getAgent(name: string) {
 ```
 
 **Why Bad:**
+
 - Misunderstood requirements
 - Rework needed
 - Inconsistent implementation
 - Hard to review
 
 **Instead:**
+
 ```
 ✅ @planner Create spec for user profiles
 ✅ (Review and approve spec)
@@ -989,12 +1065,14 @@ function getAgent(name: string) {
 ```
 
 **Why Bad:**
+
 - Bugs found late (expensive to fix)
 - No regression protection
 - Hard to refactor later
 - Lower confidence in code
 
 **Instead:**
+
 ```
 ✅ @builder Implement feature X with comprehensive tests
 ✅ @tester Run tests and check coverage
@@ -1013,12 +1091,14 @@ function getAgent(name: string) {
 ```
 
 **Why Bad:**
+
 - Can break production
 - No rollback plan
 - No audit trail
 - Can't reproduce issue
 
 **Instead:**
+
 ```
 ✅ @tester Run full test suite
 ✅ @reviewer Review changes
@@ -1043,12 +1123,14 @@ function getAgent(name: string) {
 ```
 
 **Why Bad:**
+
 - No safety net
 - Expensive mistakes possible
 - No audit trail
 - Security risks
 
 **Instead:**
+
 ```
 ✅ Keep guardrails enabled
 ✅ Set appropriate budgets
@@ -1062,29 +1144,34 @@ function getAgent(name: string) {
 ## Pattern Selection Guide
 
 **For New Features:**
+
 1. Spec Artifact Pattern (always)
 2. Planner → Builder → Tester Flow
 3. Single Responsibility Agents
 4. Defense in Depth (if security-sensitive)
 
 **For Hotfixes:**
+
 1. Hotfix Pattern
 2. Fail-Fast Validation
 3. Graceful Degradation
 4. Retry with Backoff
 
 **For Production:**
+
 1. Incident Response Pattern (if issue occurs)
 2. Security Review Pattern (always)
 3. Circuit Breaker (for external services)
 4. Layered Guardrails
 
 **For Cost Optimization:**
+
 1. Strategic Model Selection
 2. Batch Operations
 3. Lazy Loading
 
 **For Testing:**
+
 1. Test Pyramid
 2. Arrange-Act-Assert
 3. Test Data Builders
@@ -1094,6 +1181,7 @@ function getAgent(name: string) {
 ## Summary
 
 **Core Principles:**
+
 1. ✅ Specifications before implementation
 2. ✅ Single responsibility per agent
 3. ✅ Defense in depth for security
@@ -1103,6 +1191,7 @@ function getAgent(name: string) {
 7. ✅ Graceful degradation for resilience
 
 **Anti-Patterns to Avoid:**
+
 1. ❌ God agents (one agent for everything)
 2. ❌ No specifications
 3. ❌ Skipping tests
@@ -1110,6 +1199,7 @@ function getAgent(name: string) {
 5. ❌ Ignoring guardrails
 
 **For More:**
+
 - **Workflows**: `workflows/` directory
 - **Examples**: `examples/` directory (coming soon)
 - **Architecture**: `ARCHITECTURE.md`
@@ -1117,4 +1207,4 @@ function getAgent(name: string) {
 
 ---
 
-*Last updated: 2026-02-17*
+_Last updated: 2026-02-17_

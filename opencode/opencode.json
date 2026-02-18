@@ -1,10 +1,12 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "model": "anthropic/claude-sonnet-4-6",
+  "small_model": "opencode/kimi-k2.5-free",
   "agent": {
     "planner": {
       "description": "Read-only planning agent that decomposes tasks and creates spec artifacts",
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-20250514",
+      "model": "anthropic/claude-sonnet-4-6",
       "temperature": 0.3,
       "tools": {
         "write": false,
@@ -17,7 +19,7 @@
     "builder": {
       "description": "Implementation agent that writes code strictly against specifications",
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-20250514",
+      "model": "anthropic/claude-sonnet-4-6",
       "temperature": 0.1,
       "tools": {
         "write": true,
@@ -29,7 +31,7 @@
     "tester": {
       "description": "Test execution agent that runs tests and returns structured results",
       "mode": "subagent",
-      "model": "anthropic/claude-haiku-4-20250514",
+      "model": "anthropic/claude-haiku-4-5-20251001",
       "temperature": 0,
       "tools": {
         "write": false,
@@ -41,7 +43,7 @@
     "reviewer": {
       "description": "Read-only code review agent that validates correctness, security, and spec compliance",
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-20250514",
+      "model": "anthropic/claude-sonnet-4-6",
       "temperature": 0.2,
       "tools": {
         "write": false,
@@ -54,7 +56,7 @@
     "security": {
       "description": "Security review specialist for auth, payments, permissions, secrets, and crypto",
       "mode": "subagent",
-      "model": "anthropic/claude-opus-4-20250514",
+      "model": "anthropic/claude-opus-4-6",
       "temperature": 0,
       "tools": {
         "write": false,
@@ -67,7 +69,7 @@
     "migration": {
       "description": "Database migration agent for schema diffs and dry-run migrations",
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-20250514",
+      "model": "anthropic/claude-sonnet-4-6",
       "temperature": 0,
       "tools": {
         "write": true,
@@ -79,7 +81,7 @@
     "performance": {
       "description": "Performance optimization specialist",
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-20250514",
+      "model": "anthropic/claude-sonnet-4-6",
       "temperature": 0.2,
       "tools": {
         "write": true,
@@ -91,7 +93,7 @@
     "refactor": {
       "description": "Code refactoring specialist for improvements and restructuring",
       "mode": "subagent",
-      "model": "anthropic/claude-haiku-4-20250514",
+      "model": "anthropic/claude-haiku-4-5-20251001",
       "temperature": 0.1,
       "tools": {
         "write": true,
@@ -103,7 +105,7 @@
     "debug": {
       "description": "Debug specialist for analyzing stack traces and root cause analysis",
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-20250514",
+      "model": "anthropic/claude-sonnet-4-6",
       "temperature": 0.3,
       "tools": {
         "write": false,
@@ -116,7 +118,7 @@
     "release": {
       "description": "Release management agent for versioning, changelogs, and deployment coordination",
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-20250514",
+      "model": "anthropic/claude-sonnet-4-6",
       "temperature": 0.2,
       "tools": {
         "write": true,
@@ -129,7 +131,7 @@
     "documentation": {
       "description": "Documentation generation and maintenance agent",
       "mode": "subagent",
-      "model": "anthropic/claude-haiku-4-20250514",
+      "model": "anthropic/claude-haiku-4-5-20251001",
       "temperature": 0.2,
       "tools": {
         "write": true,
@@ -142,7 +144,7 @@
     "analytics": {
       "description": "Codebase analytics and metrics agent",
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-20250514",
+      "model": "anthropic/claude-sonnet-4-6",
       "temperature": 0.3,
       "tools": {
         "write": false,
@@ -155,7 +157,7 @@
     "tooling-engineer": {
       "description": "Build tooling, linter configs, bundler optimization, and developer experience specialist",
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-20250514",
+      "model": "anthropic/claude-sonnet-4-6",
       "temperature": 0.2,
       "tools": {
         "write": true,
@@ -168,7 +170,7 @@
     "git-workflow-manager": {
       "description": "Git workflow automation for branching, merging, rebasing, and conflict resolution",
       "mode": "subagent",
-      "model": "anthropic/claude-haiku-4-20250514",
+      "model": "anthropic/claude-haiku-4-5-20251001",
       "temperature": 0.1,
       "tools": {
         "write": true,
@@ -181,7 +183,7 @@
     "dependency-manager": {
       "description": "Dependency auditing, updates, vulnerability scanning, and lock file management",
       "mode": "subagent",
-      "model": "anthropic/claude-haiku-4-20250514",
+      "model": "anthropic/claude-haiku-4-5-20251001",
       "temperature": 0.1,
       "tools": {
         "write": true,
@@ -194,7 +196,7 @@
     "devops-engineer": {
       "description": "CI/CD pipeline configuration, Docker, infrastructure, and deployment automation",
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-20250514",
+      "model": "anthropic/claude-sonnet-4-6",
       "temperature": 0.2,
       "tools": {
         "write": true,
@@ -207,7 +209,7 @@
     "mcp-developer": {
       "description": "MCP server development, protocol implementation, and tool integration",
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-20250514",
+      "model": "anthropic/claude-sonnet-4-6",
       "temperature": 0.2,
       "tools": {
         "write": true,
@@ -242,21 +244,24 @@
       }
     },
     "linear": {
-      "type": "local",
+      "type": "remote",
+      "url": "https://mcp.linear.app/mcp",
       "enabled": true,
-      "command": ["npx", "-y", "@linear/mcp"],
-      "environment": {
-        "LINEAR_API_KEY": "${LINEAR_API_KEY}"
+      "headers": {
+        "Authorization": "Bearer ${LINEAR_API_KEY}"
       }
     },
     "context7": {
-      "type": "local",
-      "enabled": true,
-      "command": ["npx", "-y", "@upstash/context7-mcp"],
-      "environment": {}
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
+      }
     },
     "notion": {
-      "url": "https://mcp.notion.com/mcp"
+      "type": "remote",
+      "url": "https://mcp.notion.com/mcp",
+      "headers": {}
     }
   }
 }

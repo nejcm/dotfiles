@@ -30,7 +30,9 @@ unset rc
 
 export GH_TOKEN=
 export FONTAWESOME_TOKEN=
+export FIGMA_API_KEY=
 export LINEAR_API_KEY=
+export CONTEXT7_API_KEY=
 
 export ENCORE_INSTALL="$HOME/.encore"
 export PATH="$ENCORE_INSTALL/bin:$PATH"
@@ -71,6 +73,7 @@ alias gst='git rev-parse --git-dir > /dev/null 2>&1 && git status || exa'
 alias gu='git reset --soft HEAD~1'
 # OTHER
 alias lg='lazygit'
+alias ai-usage='bunx tokscale@latest' # security concerns
 
 # Fish shell alias - use 'fish' or 'tofish' to start fish shell
 if command -v fish &> /dev/null

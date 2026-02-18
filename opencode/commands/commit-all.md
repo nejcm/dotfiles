@@ -1,7 +1,7 @@
 ---
 description: Stage and commit all changes with a generated message
 subtask: true
-model: anthropic/claude-haiku-4-20250514
+model: anthropic/claude-haiku-4-5-20251001
 ---
 
 Use the context below, then follow the steps.
