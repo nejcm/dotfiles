@@ -1,0 +1,1 @@
+asus-numpad bash-completion brightnessctl cursor-bin github-cli github-desktop-bin go hyprwhspr microsoft-edge-stable-bin nautilus obs-studio opencode pgadmin4-desktop python spotify starship visual-studio-code-bin brightnessctl jq pipewire-pulse helium-browser-bin smartgit opencode-desktop-bin speech-dispatcher espeak-ng 

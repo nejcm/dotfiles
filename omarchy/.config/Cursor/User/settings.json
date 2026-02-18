@@ -1,0 +1,107 @@
+{
+  "update.mode": "none",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "editor.minimap.enabled": false,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.tsserver.nodePath": "${env:HOME}/.config/nvm/versions/node/v24.11.0/bin/node",
+  "redhat.telemetry.enabled": true,
+  "security.workspace.trust.untrustedFiles": "open",
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell",
+      "path": "C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+    },
+    "Command Prompt": {
+      "path": [
+        "${env:windir}\\Sysnative\\cmd.exe",
+        "${env:windir}\\System32\\cmd.exe"
+      ],
+      "args": [],
+      "icon": "terminal-cmd"
+    },
+    "Git Bash": {
+      "source": "Git Bash"
+    },
+    "Windows PowerShell": {
+      "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    }
+  },
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.profiles.linux": {
+    "bash": {
+      "path": "bash",
+      "icon": "terminal-bash"
+    },
+    "fish": {
+      "path": "fish"
+    },
+    "zsh": {
+      "path": "zsh"
+    },
+    "tmux": {
+      "path": "tmux",
+      "icon": "terminal-tmux"
+    },
+    "pwsh": {
+      "path": "pwsh",
+      "icon": "terminal-powershell"
+    }
+  },
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "git.openRepositoryInParentFolders": "never",
+  "editor.formatOnSave": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "cSpell.ignoreWords": ["waitroom", "rumi.ai"],
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "nxConsole.showNodeVersionOnStartup": false,
+  "cSpell.userWords": [
+    "autodocs",
+    "chakra",
+    "fortawesome",
+    "tanstack",
+    "testid",
+    "togglable"
+  ],
+  "diffEditor.ignoreTrimWhitespace": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "editor.stickyScroll.enabled": false,
+  "editor.fontSize": 11,
+  "editor.linkedEditing": true,
+  "workbench.editor.enablePreview": false,
+  "augment.completions.enableAutomaticCompletions": false,
+  "augment.chat.userGuidelines": "",
+  "go.toolsManagement.autoUpdate": true,
+  "biome.suggestInstallingGlobally": false,
+  "extensions.ignoreRecommendations": true,
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "workbench.colorTheme": "Default Dark Modern",
+  "diffEditor.renderSideBySide": false,
+  "go.formatTool": "gofmt",
+  "[go]": {
+    "editor.defaultFormatter": "golang.go",
+    "editor.formatOnSave": true
+  },
+  "claudeCode.preferredLocation": "panel",
+  "workbench.externalBrowser": "edge"
+}

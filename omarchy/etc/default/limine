@@ -1,0 +1,19 @@
+TARGET_OS_NAME="Omarchy"
+
+ESP_PATH="/boot"
+
+KERNEL_CMDLINE[default]="cryptdevice=PARTUUID=afb68069-eb96-4004-acf4-1405f670e823:root root=/dev/mapper/root zswap.enabled=0 rootflags=subvol=@ rw rootfstype=btrfs nvidia.NVreg_PreserveVideoMemoryAllocations=1 nvidia.NVreg_TemporaryFilePath=/var/tmp amdgpu.dc=1 amdgpu.ppfeaturemask=0xffffffff amdgpu.gpu_recovery=1 amdgpu.dcdebugmask=0x10"
+
+ENABLE_UKI=yes
+CUSTOM_UKI_NAME="omarchy"
+
+ENABLE_LIMINE_FALLBACK=yes
+
+# Find and add other bootloaders
+FIND_BOOTLOADERS=yes
+
+BOOT_ORDER="*, *fallback, Snapshots"
+
+MAX_SNAPSHOT_ENTRIES=5
+
+SNAPSHOT_FORMAT_CHOICE=5

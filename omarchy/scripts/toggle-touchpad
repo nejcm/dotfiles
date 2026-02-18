@@ -1,0 +1,23 @@
+#!/bin/bash
+
+DEVICE_PATH="/sys/bus/i2c/drivers/i2c_hid_acpi/i2c-ASUF1208:00"
+STATE_FILE="/tmp/touchpad_enabled"
+
+# Initialize state file if it doesn't exist
+if [ ! -f "$STATE_FILE" ]; then
+    echo "1" > "$STATE_FILE"
+fi
+
+ENABLED=$(cat "$STATE_FILE")
+
+if [ "$ENABLED" = "1" ]; then
+    # Disable touchpad by unbinding from driver
+    echo "i2c-ASUF1208:00" | sudo tee /sys/bus/i2c/drivers/i2c_hid_acpi/unbind > /dev/null 2>&1
+    echo "0" > "$STATE_FILE"
+    notify-send "Touchpad" "Disabled"
+else
+    # Enable touchpad by binding to driver
+    echo "i2c-ASUF1208:00" | sudo tee /sys/bus/i2c/drivers/i2c_hid_acpi/bind > /dev/null 2>&1
+    echo "1" > "$STATE_FILE"
+    notify-send "Touchpad" "Enabled"
+fi

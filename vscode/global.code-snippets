@@ -1,0 +1,246 @@
+{
+  "Typescript React Function Component": {
+    "prefix": "tfc",
+    "body": [
+      "import { ReactElement } from 'react';",
+      "",
+      "export type $1Props = {",
+      "\t$2",
+      "}",
+      "",
+      "const $1 = ({$3}: $1Props): ReactElement | null => {",
+      "\treturn ($4);",
+      "}",
+      "export default $1;"
+    ],
+    "description": "Typescript React Function Component",
+    "scope": "typescript,typescriptreact"
+  },
+  "Typescript React Function Component - File name": {
+    "prefix": "tfcf",
+    "body": [
+      "import { ReactElement } from 'react';",
+      "",
+      "export type ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}Props = {",
+      "\t$1",
+      "}",
+      "",
+      "const ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/} = ({$2}: ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}Props): ReactElement | null => {",
+      "\treturn ($3);",
+      "}",
+      "export default ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/};"
+    ],
+    "description": "Typescript React Function Component - File name",
+    "scope": "typescript,typescriptreact"
+  },
+  "Typescript React Function Component - Directory name": {
+    "prefix": "tfcd",
+    "body": [
+      "import { ReactElement } from 'react';",
+      "",
+      "export type ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/}Props = {",
+      "\t$1",
+      "}",
+      "",
+      "const ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/} = ({$2}: ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/}Props): ReactElement | null => {",
+      "\treturn ($3);",
+      "}",
+      "export default ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/};"
+    ],
+    "description": "Typescript React Function Component - Directory name",
+    "scope": "typescript,typescriptreact"
+  },
+  "Typescript React Hook - File name": {
+    "prefix": "thf",
+    "body": [
+      "export type ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}Props = {",
+      "\t$1",
+      "}",
+      "export type ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}Response = {",
+      "\t$2",
+      "}",
+      "",
+      "export const ${TM_FILENAME_BASE/^.+\\\\(.*)$/${1}/} = ({$3}: ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}Props): ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}Response => {",
+      "\treturn {$4};",
+      "}"
+    ],
+    "description": "Typescript React Hook - File name",
+    "scope": "typescript,typescriptreact"
+  },
+  "Typescript React Hook - Directory name": {
+    "prefix": "thfd",
+    "body": [
+      "export type ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/}Props = {",
+      "\t$1",
+      "}",
+      "export type ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/}Response = {",
+      "\t$2",
+      "}",
+      "",
+      "export const ${TM_DIRECTORY/^.+\\\\(.*)$/${1}/} = ({$3}: ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/}Props): ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/}Response => {",
+      "\treturn {$4};",
+      "}"
+    ],
+    "description": "Typescript React Hook - Directory name",
+    "scope": "typescript,typescriptreact"
+  },
+  "Typescript Story Component - Directory name": {
+    "prefix": "tscd",
+    "body": [
+      "import { Meta, StoryObj } from '@storybook/react';",
+      "import ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/} from '.';",
+      "",
+      "const meta: Meta<typeof ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/}> = {",
+      "\ttitle: '$1',",
+      "\tcomponent: ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/},",
+      "\ttags: ['autodocs'],",
+      "\tdecorators: [],",
+      "};",
+      "",
+      "export default meta;",
+      "type Story = StoryObj<typeof ${TM_DIRECTORY/^.+\\\\(.*)$/${1:/capitalize}/}>;",
+      "",
+      "export const Template: Story = {",
+      "\targs: {",
+      "\t\t$2",
+      "\t},",
+      "};"
+    ],
+    "description": "Typescript Story Component - Directory name",
+    "scope": "typescript,typescriptreact"
+  },
+  "console.log": {
+    "prefix": "cl",
+    "body": ["console.log($1);"],
+    "description": "console.log",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "useCallback": {
+    "prefix": "useCallback",
+    "body": [
+      "useCallback(",
+      "  () => {",
+      "    ${1:first}",
+      "  },",
+      "  [${2:second}],",
+      ")",
+      ""
+    ],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "useContext": {
+    "prefix": "useContext",
+    "body": ["const ${1:first} = useContext(${2:second})"],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "useEffect": {
+    "prefix": "useEffect",
+    "body": [
+      "useEffect(() => {",
+      "  ${1:first}",
+      "",
+      "  return () => {",
+      "    ${2:second}",
+      "  }",
+      "}, [${3:third}]);"
+    ],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "useEffect - Simple": {
+    "prefix": "useEffectSimple",
+    "body": ["useEffect(() => {", "  ${1:first}", "}, [${2:second}]);", ""],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "useImperativeHandle": {
+    "prefix": "useImperativeHandle",
+    "body": [
+      "useImperativeHandle(",
+      "  ${1:first},",
+      "  () => {",
+      "    ${2:second}",
+      "  },",
+      "  [${3:third}],",
+      ");"
+    ],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "useLayoutEffect": {
+    "prefix": "useLayoutEffect",
+    "body": [
+      "useLayoutEffect(() => {",
+      "  ${1:first}",
+      "",
+      "  return () => {",
+      "    ${2:second}",
+      "  };",
+      "}, [${3:third}]);"
+    ],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "useMemo": {
+    "prefix": "useMemo",
+    "body": ["useMemo(() => ${1:first}, [${2:second}]);"],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "useReducer": {
+    "prefix": "useReducer",
+    "body": [
+      "const [state, dispatch] = useReducer(${1:first}, ${2:second}, ${3:third});"
+    ],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "useRef": {
+    "prefix": "useRef",
+    "body": ["const ${1:first} = useRef(${2:second});"],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "useState": {
+    "prefix": "useState",
+    "body": [
+      "const [${1:first}, set${1/(.*)/${1:/capitalize}/}] = useState(${2:second});"
+    ],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "useDispatch": {
+    "prefix": "useDispatch",
+    "body": ["const dispatch = useDispatch();"],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "Utilility Function": {
+    "prefix": "uf",
+    "body": ["export const $1 = ($2) => {", "", "};"],
+    "description": "Utilility Function",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "setInterval": {
+    "prefix": "setI",
+    "body": ["setInterval(() => { ${1:first} }, ${2:second});"],
+    "description": "Executes the given function at specified intervals",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "setTimeOut": {
+    "prefix": "setT",
+    "body": ["setTimeout(() => { ${1:first} }, ${2:second});"],
+    "description": "Executes the given function after the specified delay",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "promise": {
+    "prefix": "promise",
+    "body": ["return new Promise((resolve, reject) => { ${1:first} });"],
+    "description": "Creates and returns a new Promise in the standard ES7 syntax",
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  },
+  "reactTest": {
+    "prefix": "test",
+    "body": [
+      "import { ${1:${TM_FILENAME_BASE}} } from '../${1:${TM_FILENAME_BASE}}'",
+      "",
+      "describe('<${1:${TM_FILENAME_BASE}} />', () => {",
+      "  test('should', () => {",
+      "    expect(true).toBe(true)",
+      "  })",
+      "})"
+    ],
+    "scope": "typescript,typescriptreact,javascript,javascriptreact"
+  }
+}

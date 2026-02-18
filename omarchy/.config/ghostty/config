@@ -1,0 +1,81 @@
+# Dynamic theme colors
+config-file = ?"~/.config/omarchy/current/theme/ghostty.conf"
+
+# Linux: ~/.config/ghostty/config
+
+#shell-integration = fish
+#command = /bin/fish --login --interactive
+
+# Font
+font-family = "CaskaydiaMono Nerd Font"
+font-style = Regular
+font-size = 9
+
+# Styles
+theme = "Monokai Pro Spectrum"
+cursor-style = block
+# adjust-cell-height = 35%
+background-opacity = 0.96
+background = 1c1e20
+# foreground = dedfe1
+
+mouse-hide-while-typing = true
+mouse-scroll-multiplier = 2
+
+# Window
+window-theme = ghostty
+window-padding-x = 14
+window-padding-y = 14
+confirm-close-surface=false
+resize-overlay = never
+gtk-toolbar-style = flat
+window-width = 112
+window-height = 30
+window-padding-balance = true
+window-save-state = always
+window-colorspace = "display-p3"
+
+# Cursor styling + SSH session terminfo
+# (all shell integration options must be passed together)
+shell-integration-features = no-cursor,ssh-env
+
+# Keyboard bindings
+keybind = shift+insert=paste_from_clipboard
+keybind = control+insert=copy_to_clipboard
+keybind = super+control+shift+alt+arrow_down=resize_split:down,100
+keybind = super+control+shift+alt+arrow_up=resize_split:up,100
+keybind = super+control+shift+alt+arrow_left=resize_split:left,100
+keybind = super+control+shift+alt+arrow_right=resize_split:right,100
+
+keybind = cmd+s>r=reload_config
+keybind = cmd+s>x=close_surface
+
+keybind = cmd+s>n=new_window
+
+# tabs
+#keybind = cmd+s>c=new_tab
+#keybind = cmd+s>shift+l=next_tab
+#keybind = cmd+s>shift+h=previous_tab
+#keybind = cmd+s>comma=move_tab:-1
+#keybind = cmd+s>period=move_tab:1
+
+# quick tab switch
+#keybind = cmd+s>1=goto_tab:1
+#keybind = cmd+s>2=goto_tab:2
+
+# split
+keybind = cmd+s>\=new_split:right
+keybind = cmd+s>-=new_split:down
+
+keybind = cmd+s>j=goto_split:bottom
+keybind = cmd+s>k=goto_split:top
+keybind = cmd+s>h=goto_split:left
+keybind = cmd+s>l=goto_split:right
+
+keybind = cmd+s>z=toggle_split_zoom
+
+keybind = cmd+s>e=equalize_splits
+
+# other
+copy-on-select = clipboard
+keybind = shift+enter=text:\x1b\r

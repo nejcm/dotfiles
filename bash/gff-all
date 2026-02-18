@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -uo pipefail
+
+# The folder where all git repos live
+WORKDIR="$HOME/Work"
+
+# Enable safer globbing
+shopt -s nullglob dotglob
+
+# Function to run gff in a git repository
+run_gff_in_folder() {
+  local folder_path="$1"
+  echo "→ $folder_path"
+  (cd "$folder_path" && git remote prune origin && git pull --ff-only) || {
+    echo "  ✗ Error updating $folder_path, skipping..."
+    return 1
+  }
+}
+
+cd "$WORKDIR"
+
+for d in */; do
+  if [[ -d "$d/.git" ]]; then
+    # Run gff directly in this folder
+    run_gff_in_folder "$d"
+  else
+    # Go one level deeper and check subfolders
+    echo "Checking subfolders of $d - not a git repository"
+    for subd in "$d"*/; do
+      if [[ -d "$subd/.git" ]]; then
+        run_gff_in_folder "$subd"
+      fi
+    done
+  fi
+done

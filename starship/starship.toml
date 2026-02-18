@@ -1,0 +1,118 @@
+# Windows: /.starship/starship.toml
+# Linux: ~/.config/starship.toml
+
+command_timeout = 3000
+
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$git_metrics\
+$fill\
+$nodejs\
+$cmd_duration $jobs $time\
+$line_break\
+$character"""
+
+[directory]
+style = "blue"
+read_only = " "
+truncation_length = 4
+truncate_to_repo = false
+
+[character]
+success_symbol = "[❯](purple)"
+error_symbol = "[❯](red)"
+
+[jobs]
+symbol = ""
+style = "bold red"
+number_threshold = 1
+format = "[$symbol]($style)"
+
+[git_branch]
+symbol = " "
+format = "[$symbol$branch]($style) "
+style = "bright-black"
+
+[git_status]
+conflicted = "⚔️ "
+ahead = "🏎️ 💨 ×${count}"
+behind = "🐢 ×${count}"
+diverged = "🔱 🏎️ 💨 ×${ahead_count} 🐢 ×${behind_count}"
+untracked = "🛤️  ×${count}"
+stashed = "📦 "
+modified = "📝 ×${count}"
+staged = "🗃️  ×${count}"
+renamed = "📛 ×${count}"
+deleted = "🗑️  ×${count}"
+format = '([\[$all_status$ahead_behind\]]($style))'
+style = "bright-white"
+
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "bright-black"
+
+[git_metrics]
+disabled = false
+
+[cmd_duration]
+format = "[$duration]($style)"
+style = "yellow"
+
+[time]
+disabled = false
+style = "bold white"
+format = "[$time]($style)"
+
+[memory_usage]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[aws]
+symbol = " "
+
+[bun]
+format = '\[[$symbol($version)]($style)\]'
+
+[deno]
+format = '\[[$symbol($version)]($style)\]'
+
+[docker_context]
+format = '\[[$symbol$context]($style)\]'
+
+[dotnet]
+format = '\[[$symbol($version)(🎯 $tfm)]($style)\]'
+
+[elixir]
+format = '\[[$symbol($version \(OTP $otp_version\))]($style)\]'
+
+[erlang]
+format = '\[[$symbol($version)]($style)\]'
+
+[golang]
+symbol = " "
+format = '\[[$symbol($version)]($style)\]'
+
+[nodejs]
+format = '\[[$symbol($version)]($style)\]'
+
+[os]
+format = '\[[$symbol]($style)\]'
+
+[package]
+format = '\[[$symbol$version]($style)\]'
+
+[php]
+format = '\[[$symbol($version)]($style)\]'
+
+[python]
+format = '\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\]'
+
+[fill]
+symbol = " "
