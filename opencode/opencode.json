@@ -236,11 +236,7 @@
     "github": {
       "type": "local",
       "enabled": true,
-      "command": [
-        "npx",
-        "-y",
-        "@modelcontextprotocol/server-github"
-      ],
+      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
       "environment": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PAT}"
       }
@@ -248,11 +244,7 @@
     "linear": {
       "type": "local",
       "enabled": true,
-      "command": [
-        "npx",
-        "-y",
-        "@linear/mcp"
-      ],
+      "command": ["npx", "-y", "@linear/mcp"],
       "environment": {
         "LINEAR_API_KEY": "${LINEAR_API_KEY}"
       }
@@ -260,12 +252,11 @@
     "context7": {
       "type": "local",
       "enabled": true,
-      "command": [
-        "npx",
-        "-y",
-        "@upstash/context7-mcp"
-      ],
+      "command": ["npx", "-y", "@upstash/context7-mcp"],
       "environment": {}
+    },
+    "notion": {
+      "url": "https://mcp.notion.com/mcp"
     }
   }
 }

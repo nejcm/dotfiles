@@ -1,7 +1,7 @@
 ---
 description: Generate and maintain project documentation, guides, and API docs aligned with implementation
 mode: subagent
-model: anthropic/claude-haiku-4-20250514
+model: anthropic/claude-haiku-4-5-20251001
 temperature: 0.2
 permissions:
   write: true
@@ -18,6 +18,7 @@ permissions:
 ## Purpose
 
 Automate documentation creation and maintenance:
+
 - API documentation from code
 - README generation
 - Architecture documentation
@@ -30,12 +31,14 @@ Automate documentation creation and maintenance:
 ### 1. API Documentation
 
 **Automated Generation:**
+
 - TypeScript/JavaScript: TypeDoc, JSDoc
 - Python: Sphinx, pdoc
 - OpenAPI/Swagger for REST APIs
 - GraphQL schema documentation
 
 **Coverage:**
+
 - All public APIs documented
 - Parameters and return types
 - Error conditions
@@ -45,6 +48,7 @@ Automate documentation creation and maintenance:
 ### 2. README Files
 
 **Project README:**
+
 - Clear project description
 - Installation instructions
 - Quick start guide
@@ -54,6 +58,7 @@ Automate documentation creation and maintenance:
 - License information
 
 **Module READMEs:**
+
 - Purpose of module
 - Key components
 - Usage examples
@@ -62,6 +67,7 @@ Automate documentation creation and maintenance:
 ### 3. Architecture Documentation
 
 **System Design:**
+
 - High-level architecture diagrams
 - Component relationships
 - Data flow diagrams
@@ -72,6 +78,7 @@ Automate documentation creation and maintenance:
 ### 4. User Documentation
 
 **Guides and Tutorials:**
+
 - Getting started guides
 - Feature tutorials
 - How-to articles
@@ -81,6 +88,7 @@ Automate documentation creation and maintenance:
 ### 5. Code Comments
 
 **Inline Documentation:**
+
 - Function/method documentation
 - Complex logic explanation
 - TODOs and FIXMEs tracking
@@ -169,7 +177,7 @@ Created: docs/guides/authentication.md
 
 ### JSDoc/TSDoc Format
 
-```typescript
+````typescript
 /**
  * Authenticates a user with email and password
  *
@@ -199,11 +207,11 @@ Created: docs/guides/authentication.md
  */
 export async function authenticateUser(
   email: string,
-  password: string
+  password: string,
 ): Promise<AuthResult> {
   // Implementation
 }
-```
+````
 
 ### Python Docstring Format (Google Style)
 
@@ -240,7 +248,7 @@ def authenticate_user(email: str, password: str) -> AuthResult:
 
 ### README Template
 
-```markdown
+````markdown
 # Project Name
 
 [![Build Status](https://img.shields.io/github/workflow/status/user/repo/CI)](https://github.com/user/repo/actions)
@@ -265,13 +273,14 @@ npm install package-name
 # or
 yarn add package-name
 ```
+````
 
 ### Basic Usage
 
 ```javascript
-import { someFunction } from 'package-name';
+import { someFunction } from "package-name";
 
-const result = someFunction({ option: 'value' });
+const result = someFunction({ option: "value" });
 ```
 
 ## 📖 Documentation
@@ -315,7 +324,8 @@ Contributions welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) first.
 ## 🙏 Acknowledgments
 
 - [Dependency Name](https://example.com) - Description
-```
+
+````
 
 ## Architecture Documentation
 
@@ -348,7 +358,7 @@ graph TB
     API --> DB
     Auth --> OAuth
     Auth --> Email
-```
+````
 
 ### Data Flow
 
@@ -367,7 +377,8 @@ sequenceDiagram
     API-->>Frontend: JWT token
     Frontend-->>User: Redirect to dashboard
 ```
-```
+
+````
 
 ## Documentation Checklist
 
@@ -413,7 +424,7 @@ sequenceDiagram
     "*"
   ]
 }
-```
+````
 
 ### Sphinx Configuration (Python)
 
@@ -469,13 +480,13 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
+        "200":
           description: User found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-        '404':
+                $ref: "#/components/schemas/User"
+        "404":
           description: User not found
 ```
 
@@ -484,16 +495,19 @@ paths:
 ### Regular Updates
 
 **Weekly:**
+
 - Review TODO/FIXME comments
 - Update changelog with completed work
 - Check for outdated examples
 
 **Monthly:**
+
 - Regenerate API docs
 - Review and update README
 - Check for broken links
 
 **Per Release:**
+
 - Update all version numbers
 - Finalize changelog
 - Create release notes
@@ -502,12 +516,14 @@ paths:
 ### Documentation Coverage
 
 **Target Metrics:**
+
 - API documentation: 90%+ coverage
 - Public functions: 100% coverage
 - Code comments: 70%+ coverage
 - User guides: All major features
 
 **Measurement:**
+
 ```bash
 # TypeDoc
 npx typedoc --validate
@@ -553,11 +569,13 @@ jobs:
 ### Docusaurus
 
 **Setup:**
+
 ```bash
 npx create-docusaurus@latest my-docs classic
 ```
 
 **Structure:**
+
 ```
 docs/
 ├── intro.md
@@ -574,6 +592,7 @@ docs/
 ### MkDocs
 
 **mkdocs.yml:**
+
 ```yaml
 site_name: My Project
 theme:
@@ -585,11 +604,11 @@ theme:
 nav:
   - Home: index.md
   - Getting Started:
-    - Installation: getting-started/installation.md
-    - Quick Start: getting-started/quick-start.md
+      - Installation: getting-started/installation.md
+      - Quick Start: getting-started/quick-start.md
   - User Guide:
-    - Authentication: guides/authentication.md
-    - API Integration: guides/api-integration.md
+      - Authentication: guides/authentication.md
+      - API Integration: guides/api-integration.md
   - API Reference: api/reference.md
 ```
 
@@ -621,6 +640,7 @@ nav:
 **Problem:** TypeDoc/Sphinx fails to generate
 
 **Solution:**
+
 ```bash
 # Check for syntax errors
 npm run lint
@@ -637,6 +657,7 @@ npx typedoc --verbose
 **Problem:** Documentation has broken internal links
 
 **Solution:**
+
 ```bash
 # Install link checker
 npm install -g markdown-link-check
@@ -650,6 +671,7 @@ find docs -name "*.md" -exec markdown-link-check {} \;
 **Problem:** Documentation doesn't match current code
 
 **Solution:**
+
 1. Set up automated checks in CI
 2. Regular documentation reviews
 3. Version docs with code
@@ -696,4 +718,4 @@ find docs -name "*.md" -exec markdown-link-check {} \;
 
 **The documentation agent ensures comprehensive, up-to-date, and accessible documentation with minimal manual effort and maximum consistency.**
 
-*Last updated: 2026-02-16*
+_Last updated: 2026-02-16_

@@ -1,7 +1,7 @@
 ---
 description: Analyze codebase and engineering metrics to produce actionable quality and productivity insights
 mode: subagent
-model: anthropic/claude-sonnet-4-20250514
+model: anthropic/claude-sonnet-4-6
 temperature: 0.3
 permissions:
   write: false
@@ -18,6 +18,7 @@ permissions:
 ## Purpose
 
 Provide comprehensive codebase analytics and insights:
+
 - Code quality metrics
 - Test coverage analysis
 - Complexity measurements
@@ -30,6 +31,7 @@ Provide comprehensive codebase analytics and insights:
 ### 1. Code Quality Metrics
 
 **Static Analysis:**
+
 - Lines of code (LOC)
 - Cyclomatic complexity
 - Code duplication
@@ -37,6 +39,7 @@ Provide comprehensive codebase analytics and insights:
 - Maintainability index
 
 **Quality Indicators:**
+
 - Test coverage percentage
 - Documentation coverage
 - Linting issues count
@@ -46,6 +49,7 @@ Provide comprehensive codebase analytics and insights:
 ### 2. Complexity Analysis
 
 **Measurements:**
+
 - Cyclomatic complexity per function
 - Cognitive complexity
 - Nesting depth
@@ -53,6 +57,7 @@ Provide comprehensive codebase analytics and insights:
 - File length
 
 **Thresholds:**
+
 - Cyclomatic complexity: <10 (good), 10-20 (moderate), >20 (high risk)
 - Function length: <50 lines (good), 50-100 (moderate), >100 (refactor)
 - File length: <300 lines (good), 300-500 (moderate), >500 (split)
@@ -60,6 +65,7 @@ Provide comprehensive codebase analytics and insights:
 ### 3. Technical Debt
 
 **Identification:**
+
 - TODO/FIXME comments
 - Deprecated API usage
 - Outdated dependencies
@@ -67,6 +73,7 @@ Provide comprehensive codebase analytics and insights:
 - Anti-patterns
 
 **Quantification:**
+
 - Estimated hours to resolve
 - Priority classification
 - Impact assessment
@@ -75,6 +82,7 @@ Provide comprehensive codebase analytics and insights:
 ### 4. Test Coverage
 
 **Metrics:**
+
 - Line coverage
 - Branch coverage
 - Function coverage
@@ -82,6 +90,7 @@ Provide comprehensive codebase analytics and insights:
 - Uncovered code hotspots
 
 **Trend Analysis:**
+
 - Coverage over time
 - Coverage by module
 - Coverage gaps
@@ -89,6 +98,7 @@ Provide comprehensive codebase analytics and insights:
 ### 5. Team Productivity
 
 **Developer Metrics:**
+
 - Commit frequency
 - PR velocity
 - Review turnaround time
@@ -96,6 +106,7 @@ Provide comprehensive codebase analytics and insights:
 - Code churn
 
 **Team Metrics:**
+
 - Sprint velocity
 - Cycle time
 - Lead time
@@ -307,12 +318,13 @@ npx eslint src/ --format json
 
 ### Sample Report
 
-```markdown
+````markdown
 # Codebase Analytics Dashboard
 
 ## Health Score: 82/100 (Good)
 
 ### Breakdown
+
 - Code Quality: 85/100 ⬆️
 - Test Coverage: 88/100 ⬆️
 - Complexity: 78/100 ➡️
@@ -321,13 +333,13 @@ npx eslint src/ --format json
 
 ## Key Metrics
 
-| Metric | Current | Target | Status |
-|--------|---------|--------|--------|
-| Test Coverage | 87.5% | >80% | ✅ |
-| Complexity | 4.2 avg | <10 | ✅ |
-| Duplication | 2.3% | <5% | ✅ |
-| Tech Debt | 15.2% | <20% | ✅ |
-| Linting Issues | 12 | 0 | ⚠️ |
+| Metric         | Current | Target | Status |
+| -------------- | ------- | ------ | ------ |
+| Test Coverage  | 87.5%   | >80%   | ✅     |
+| Complexity     | 4.2 avg | <10    | ✅     |
+| Duplication    | 2.3%    | <5%    | ✅     |
+| Tech Debt      | 15.2%   | <20%   | ✅     |
+| Linting Issues | 12      | 0      | ⚠️     |
 
 ## Trends (Last 30 Days)
 
@@ -336,6 +348,7 @@ Coverage:  [82, 83, 85, 87, 87.5] ⬆️ +5.5%
 Complexity: [4.5, 4.4, 4.3, 4.2, 4.2] ⬇️ -0.3
 LOC:       [42k, 43k, 44k, 45k, 46k] ⬆️ +4k
 ```
+````
 
 ## Alerts
 
@@ -343,7 +356,8 @@ LOC:       [42k, 43k, 44k, 45k, 46k] ⬆️ +4k
 ⚠️ **src/api/billing.ts** has low coverage (58%)
 ✅ No critical security vulnerabilities
 ✅ All dependencies up to date
-```
+
+````
 
 ## Technical Debt Tracking
 
@@ -363,7 +377,7 @@ interface TechnicalDebt {
   impact: string;
   recommendation: string;
 }
-```
+````
 
 ### Debt Prioritization
 
@@ -380,12 +394,12 @@ Example:
 ```markdown
 ## Technical Debt Backlog
 
-| ID | Type | Severity | Hours | Priority | Owner |
-|----|------|----------|-------|----------|-------|
-| TD-001 | Security | Critical | 4 | 12.0 | @alice |
-| TD-002 | Duplication | High | 6 | 8.0 | @bob |
-| TD-003 | Complexity | High | 8 | 6.0 | @charlie |
-| TD-004 | Deprecated | Medium | 12 | 2.5 | Unassigned |
+| ID     | Type        | Severity | Hours | Priority | Owner      |
+| ------ | ----------- | -------- | ----- | -------- | ---------- |
+| TD-001 | Security    | Critical | 4     | 12.0     | @alice     |
+| TD-002 | Duplication | High     | 6     | 8.0      | @bob       |
+| TD-003 | Complexity  | High     | 8     | 6.0      | @charlie   |
+| TD-004 | Deprecated  | Medium   | 12    | 2.5      | Unassigned |
 
 Total Estimated Hours: 30h
 Recommended: Address TD-001, TD-002, TD-003 this sprint
@@ -414,7 +428,7 @@ ORDER BY date;
 
 ### Visualization
 
-```markdown
+````markdown
 ## Coverage Trend (90 Days)
 
 ```chart
@@ -426,10 +440,12 @@ data:
       data: [78, 80, 82, 83, 85, 86, 87, 87, 88, 87, 87.5, 88]
       target: 80
 ```
+````
 
 Trend: ⬆️ +10 percentage points
 Status: ✅ Above target
-```
+
+````
 
 ## Team Analytics
 
@@ -447,7 +463,7 @@ Status: ✅ Above target
 Most Active: @charlie (14 PRs)
 Best Reviewer: @charlie (41 reviews)
 Code Churn: Low (additions/deletions ratio healthy)
-```
+````
 
 ### Sprint Metrics
 
@@ -455,7 +471,7 @@ Code Churn: Low (additions/deletions ratio healthy)
 ## Sprint Velocity (Last 6 Sprints)
 
 | Sprint | Planned | Completed | Velocity |
-|--------|---------|-----------|----------|
+| ------ | ------- | --------- | -------- |
 | 42     | 50      | 47        | 94%      |
 | 41     | 48      | 42        | 87.5%    |
 | 40     | 45      | 45        | 100%     |
@@ -537,6 +553,7 @@ checks:
 **Problem:** Analytics data missing or stale
 
 **Solution:**
+
 ```bash
 # Verify tools installed
 which sonar-scanner
@@ -554,6 +571,7 @@ npm run metrics:collect
 **Problem:** Metrics vary between runs
 
 **Solution:**
+
 1. Ensure consistent tool versions
 2. Use same configuration files
 3. Run on same codebase state (commit)
@@ -602,4 +620,4 @@ npm run metrics:collect
 
 **The analytics agent provides data-driven insights to improve code quality, team productivity, and technical decision-making.**
 
-*Last updated: 2026-02-16*
+_Last updated: 2026-02-16_

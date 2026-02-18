@@ -28,9 +28,9 @@ if [ -d ~/.bashrc.d ]; then
 fi
 unset rc
 
-# TODO: fill env variables
-export GH_TOKEN=?
-export FONTAWESOME_TOKEN=?
+export GH_TOKEN=
+export FONTAWESOME_TOKEN=
+export LINEAR_API_KEY=
 
 export ENCORE_INSTALL="$HOME/.encore"
 export PATH="$ENCORE_INSTALL/bin:$PATH"

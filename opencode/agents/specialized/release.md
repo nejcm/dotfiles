@@ -1,7 +1,7 @@
 ---
 description: Manage versioning, changelogs, release notes, and release coordination workflows
 mode: subagent
-model: anthropic/claude-sonnet-4-20250514
+model: anthropic/claude-sonnet-4-6
 temperature: 0.2
 permissions:
   write: true
@@ -18,6 +18,7 @@ permissions:
 ## Purpose
 
 Automate and streamline the software release process:
+
 - Version bumping (semantic versioning)
 - Changelog generation from commits
 - Release notes creation
@@ -30,12 +31,14 @@ Automate and streamline the software release process:
 ### 1. Version Management
 
 **Semantic Versioning:**
+
 - Analyze changes to determine version bump (major/minor/patch)
 - Update version in package.json, setup.py, etc.
 - Create version tags
 - Maintain version history
 
 **Decision Rules:**
+
 - **MAJOR** (x.0.0): Breaking changes, API changes
 - **MINOR** (0.x.0): New features, backwards compatible
 - **PATCH** (0.0.x): Bug fixes, no new features
@@ -43,6 +46,7 @@ Automate and streamline the software release process:
 ### 2. Changelog Generation
 
 **Automatic Changelog:**
+
 - Parse git commits since last release
 - Categorize by type (feat, fix, docs, etc.)
 - Group by scope
@@ -50,6 +54,7 @@ Automate and streamline the software release process:
 - Include breaking changes prominently
 
 **Conventional Commits:**
+
 ```
 feat(auth): add OAuth2 login
 fix(api): resolve timeout on large requests
@@ -60,6 +65,7 @@ BREAKING CHANGE: remove deprecated /v1/users endpoint
 ### 3. Release Notes
 
 **Create Comprehensive Notes:**
+
 - Summary of changes
 - New features highlight
 - Bug fixes list
@@ -70,6 +76,7 @@ BREAKING CHANGE: remove deprecated /v1/users endpoint
 ### 4. Deployment Coordination
 
 **Multi-Environment:**
+
 - Staging deployment first
 - Smoke tests on staging
 - Production deployment with canary rollout
@@ -78,6 +85,7 @@ BREAKING CHANGE: remove deprecated /v1/users endpoint
 ### 5. Post-Release Tasks
 
 **Validation:**
+
 - Verify deployment successful
 - Run smoke tests
 - Check monitoring dashboards
@@ -201,34 +209,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.1.0] - 2024-02-14
 
 ### Added
+
 - OAuth2 authentication with Google, GitHub providers
 - User profile management with avatar upload
 - CSV export for all data tables
 - Rate limiting for API endpoints
 
 ### Changed
+
 - Improved performance of data processing by 40%
 - Updated UI with new design system
 - Enhanced error messages for better debugging
 
 ### Fixed
+
 - Login timeout on slow network connections
 - Memory leak in background job processor
 - Timezone handling in scheduled reports
 - CSV export encoding issues
 
 ### Security
+
 - Updated dependencies to patch CVE-2024-1234
 - Added rate limiting to prevent abuse
 - Improved password hashing algorithm
 
 ### Deprecated
+
 - /api/v1/users endpoint (use /api/v2/users instead)
 
 ### Removed
+
 - Legacy authentication method (replaced by OAuth2)
 
 ## [2.0.5] - 2024-01-15
+
 ...
 ```
 
@@ -244,15 +259,15 @@ function determineVersionBump(commits: Commit[]): VersionBump {
 
   for (const commit of commits) {
     if (commit.breaking) hasBreaking = true;
-    if (commit.type === 'feat') hasFeatures = true;
-    if (commit.type === 'fix') hasFixes = true;
+    if (commit.type === "feat") hasFeatures = true;
+    if (commit.type === "fix") hasFixes = true;
   }
 
-  if (hasBreaking) return 'MAJOR';
-  if (hasFeatures) return 'MINOR';
-  if (hasFixes) return 'PATCH';
+  if (hasBreaking) return "MAJOR";
+  if (hasFeatures) return "MINOR";
+  if (hasFixes) return "PATCH";
 
-  return 'PATCH'; // Default to patch
+  return "PATCH"; // Default to patch
 }
 ```
 
@@ -316,7 +331,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version (leave empty for auto)'
+        description: "Version (leave empty for auto)"
         required: false
 
 jobs:
@@ -325,7 +340,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Get all history
+          fetch-depth: 0 # Get all history
 
       - name: Determine Version
         id: version
@@ -482,6 +497,7 @@ Questions? Contact support@example.com
 **Problem:** Empty or incorrect changelog
 
 **Solution:**
+
 ```bash
 # Ensure commits follow conventional commits format
 git log --oneline | head -20
@@ -498,6 +514,7 @@ npx standard-version --first-release
 **Problem:** Version already exists
 
 **Solution:**
+
 ```bash
 # Check existing tags
 git tag -l | grep "2.1.0"
@@ -511,6 +528,7 @@ npm version 2.1.1
 **Problem:** Production deployment failed
 
 **Solution:**
+
 1. Don't panic
 2. Check deployment logs
 3. Verify infrastructure status
@@ -559,4 +577,4 @@ npm version 2.1.1
 
 **The release agent ensures smooth, reliable, and well-documented software releases with minimal manual intervention and maximum confidence.**
 
-*Last updated: 2026-02-16*
+_Last updated: 2026-02-16_

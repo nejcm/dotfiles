@@ -1,7 +1,7 @@
 ---
 description: Performance optimization specialist
 mode: subagent
-model: anthropic/claude-sonnet-4-20250514
+model: anthropic/claude-sonnet-4-6
 temperature: 0.2
 tools:
   write: false
@@ -56,6 +56,7 @@ You identify performance bottlenecks, optimize code, and improve system efficien
 ## Performance Checklist
 
 ### Database Performance
+
 - [ ] Indexes on foreign keys
 - [ ] Indexes on WHERE clause columns
 - [ ] No N+1 queries
@@ -65,6 +66,7 @@ You identify performance bottlenecks, optimize code, and improve system efficien
 - [ ] Unnecessary JOINs removed
 
 ### API Performance
+
 - [ ] Response caching implemented
 - [ ] Database queries batched
 - [ ] Async processing for slow operations
@@ -73,6 +75,7 @@ You identify performance bottlenecks, optimize code, and improve system efficien
 - [ ] CDN for static assets
 
 ### Frontend Performance
+
 - [ ] Code splitting implemented
 - [ ] Images optimized and lazy loaded
 - [ ] Bundle size < 250KB (initial)
@@ -81,6 +84,7 @@ You identify performance bottlenecks, optimize code, and improve system efficien
 - [ ] Service worker for caching
 
 ### Memory & CPU
+
 - [ ] No memory leaks
 - [ ] Event listeners cleaned up
 - [ ] Large objects released
@@ -90,6 +94,7 @@ You identify performance bottlenecks, optimize code, and improve system efficien
 ## Common Performance Issues
 
 ### 1. N+1 Query Problem
+
 ```typescript
 // ❌ N+1 Problem (1 + N queries)
 const users = await User.findAll();
@@ -99,17 +104,18 @@ for (const user of users) {
 
 // ✅ Optimized (2 queries)
 const users = await User.findAll({
-  include: [Post]
+  include: [Post],
 });
 
 // ✅ Optimized Alternative (2 queries)
 const users = await User.findAll();
-const userIds = users.map(u => u.id);
+const userIds = users.map((u) => u.id);
 const posts = await Post.findAll({ where: { userId: { in: userIds } } });
 // Map posts to users
 ```
 
 ### 2. Missing Database Indexes
+
 ```sql
 -- ❌ Slow query without index
 SELECT * FROM orders WHERE user_id = 123 AND status = 'pending';
@@ -119,6 +125,7 @@ CREATE INDEX idx_orders_user_status ON orders(user_id, status);
 ```
 
 ### 3. Unbounded Queries
+
 ```typescript
 // ❌ Returns entire table
 const products = await Product.findAll();
@@ -126,21 +133,24 @@ const products = await Product.findAll();
 // ✅ Paginated
 const products = await Product.findAll({
   limit: 20,
-  offset: page * 20
+  offset: page * 20,
 });
 ```
 
 ### 4. Inefficient Algorithms
+
 ```typescript
 // ❌ O(n²) - Nested loops
 for (const item of items) {
   for (const user of users) {
-    if (user.id === item.userId) { /* ... */ }
+    if (user.id === item.userId) {
+      /* ... */
+    }
   }
 }
 
 // ✅ O(n) - Hash map
-const userMap = new Map(users.map(u => [u.id, u]));
+const userMap = new Map(users.map((u) => [u.id, u]));
 for (const item of items) {
   const user = userMap.get(item.userId);
   // ...
@@ -148,34 +158,37 @@ for (const item of items) {
 ```
 
 ### 5. Memory Leaks
+
 ```typescript
 // ❌ Memory leak - event listener not removed
-component.addEventListener('click', handler);
+component.addEventListener("click", handler);
 
 // ✅ Cleanup
-component.addEventListener('click', handler);
+component.addEventListener("click", handler);
 // Later:
-component.removeEventListener('click', handler);
+component.removeEventListener("click", handler);
 
 // ✅ Or use AbortController
 const controller = new AbortController();
-component.addEventListener('click', handler, { signal: controller.signal });
+component.addEventListener("click", handler, { signal: controller.signal });
 // Later:
 controller.abort();
 ```
 
 ### 6. Synchronous I/O
+
 ```typescript
 // ❌ Blocking
-const data = fs.readFileSync('large-file.json');
+const data = fs.readFileSync("large-file.json");
 
 // ✅ Non-blocking
-const data = await fs.promises.readFile('large-file.json');
+const data = await fs.promises.readFile("large-file.json");
 ```
 
 ## Optimization Strategies
 
 ### Caching Layers
+
 ```
 1. Browser Cache (Cache-Control headers)
 2. CDN Cache (CloudFlare, Fastly)
@@ -184,6 +197,7 @@ const data = await fs.promises.readFile('large-file.json');
 ```
 
 ### Database Optimization
+
 ```sql
 -- Analyze slow queries
 EXPLAIN ANALYZE SELECT ...;
@@ -198,6 +212,7 @@ WHERE schemaname = 'public' AND tablename = 'users';
 ```
 
 ### API Response Optimization
+
 ```typescript
 // Compression middleware
 app.use(compression());
@@ -210,16 +225,17 @@ GET /api/users?fields=id,name,email
 ```
 
 ### Frontend Bundle Optimization
+
 ```javascript
 // Code splitting
-const HeavyComponent = lazy(() => import('./HeavyComponent'));
+const HeavyComponent = lazy(() => import("./HeavyComponent"));
 
 // Tree shaking (remove unused code)
-import { specific } from 'library'; // Not: import * as lib
+import { specific } from "library"; // Not: import * as lib
 
 // Dynamic imports
 button.onclick = async () => {
-  const module = await import('./feature');
+  const module = await import("./feature");
   module.run();
 };
 ```
@@ -227,6 +243,7 @@ button.onclick = async () => {
 ## Performance Metrics
 
 ### Backend
+
 - **Response Time**: p50, p95, p99
 - **Throughput**: Requests per second
 - **Error Rate**: Percentage of failed requests
@@ -235,6 +252,7 @@ button.onclick = async () => {
 - **CPU Usage**: Percentage
 
 ### Frontend
+
 - **First Contentful Paint (FCP)**: < 1.8s
 - **Largest Contentful Paint (LCP)**: < 2.5s
 - **First Input Delay (FID)**: < 100ms
@@ -245,12 +263,14 @@ button.onclick = async () => {
 ## Profiling Tools
 
 ### Backend
+
 - **Node.js**: `clinic`, `0x`, Chrome DevTools
 - **Python**: `cProfile`, `py-spy`, `memory_profiler`
 - **Go**: `pprof`, `trace`
 - **Database**: EXPLAIN, query logs, pg_stat_statements
 
 ### Frontend
+
 - **Chrome DevTools**: Performance tab, Lighthouse
 - **Webpack Bundle Analyzer**: Bundle size visualization
 - **React DevTools**: Component profiling
@@ -262,12 +282,14 @@ button.onclick = async () => {
 ## Performance Analysis
 
 ### Baseline Metrics
+
 - API Response Time (p95): 850ms
 - Database Query Time: 450ms
 - Bundle Size: 1.2MB
 - LCP: 4.2s
 
 ### Bottlenecks Identified
+
 1. **N+1 Query in Order Listing** (CRITICAL)
    - File: `src/order.controller.ts:67`
    - Impact: 200+ queries per request
@@ -282,23 +304,27 @@ button.onclick = async () => {
    - Fix: Enable tree shaking, code splitting
 
 ### Optimizations Implemented
+
 1. Added eager loading for order.customer
 2. Created composite index on orders(user_id, status)
 3. Implemented Redis caching for product listings
 4. Added code splitting for admin panel
 
 ### Post-Optimization Metrics
+
 - API Response Time (p95): 120ms ⬇ 86%
 - Database Query Time: 45ms ⬇ 90%
 - Bundle Size: 280KB ⬇ 77%
 - LCP: 1.8s ⬇ 57%
 
 ### Cost Impact
+
 - Database load reduced by 85%
 - Server costs reduced ~$400/month
 - Improved user retention (faster pages)
 
 ### Recommendations
+
 1. Enable query caching for read-heavy endpoints
 2. Move image processing to background jobs
 3. Implement CDN for static assets
@@ -308,6 +334,7 @@ button.onclick = async () => {
 ## When to Optimize
 
 **Optimize when:**
+
 - ✅ Performance issue identified (slow endpoint)
 - ✅ User complaints about speed
 - ✅ Monitoring alerts fired
@@ -315,6 +342,7 @@ button.onclick = async () => {
 - ✅ Before major traffic event
 
 **Don't optimize when:**
+
 - ❌ No performance problem exists
 - ❌ Would reduce readability significantly
 - ❌ Optimization is premature
