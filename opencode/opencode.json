@@ -1,0 +1,271 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "planner": {
+      "description": "Read-only planning agent that decomposes tasks and creates spec artifacts",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.3,
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false,
+        "read": true,
+        "search": true
+      }
+    },
+    "builder": {
+      "description": "Implementation agent that writes code strictly against specifications",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.1,
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "read": true
+      }
+    },
+    "tester": {
+      "description": "Test execution agent that runs tests and returns structured results",
+      "mode": "subagent",
+      "model": "anthropic/claude-haiku-4-20250514",
+      "temperature": 0,
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": true,
+        "read": true
+      }
+    },
+    "reviewer": {
+      "description": "Read-only code review agent that validates correctness, security, and spec compliance",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.2,
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false,
+        "read": true,
+        "search": true
+      }
+    },
+    "security": {
+      "description": "Security review specialist for auth, payments, permissions, secrets, and crypto",
+      "mode": "subagent",
+      "model": "anthropic/claude-opus-4-20250514",
+      "temperature": 0,
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false,
+        "read": true,
+        "search": true
+      }
+    },
+    "migration": {
+      "description": "Database migration agent for schema diffs and dry-run migrations",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0,
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "read": true
+      }
+    },
+    "performance": {
+      "description": "Performance optimization specialist",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.2,
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "read": true
+      }
+    },
+    "refactor": {
+      "description": "Code refactoring specialist for improvements and restructuring",
+      "mode": "subagent",
+      "model": "anthropic/claude-haiku-4-20250514",
+      "temperature": 0.1,
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "read": true
+      }
+    },
+    "debug": {
+      "description": "Debug specialist for analyzing stack traces and root cause analysis",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.3,
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": true,
+        "read": true,
+        "search": true
+      }
+    },
+    "release": {
+      "description": "Release management agent for versioning, changelogs, and deployment coordination",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.2,
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "read": true,
+        "search": true
+      }
+    },
+    "documentation": {
+      "description": "Documentation generation and maintenance agent",
+      "mode": "subagent",
+      "model": "anthropic/claude-haiku-4-20250514",
+      "temperature": 0.2,
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "read": true,
+        "search": true
+      }
+    },
+    "analytics": {
+      "description": "Codebase analytics and metrics agent",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.3,
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": true,
+        "read": true,
+        "search": true
+      }
+    },
+    "tooling-engineer": {
+      "description": "Build tooling, linter configs, bundler optimization, and developer experience specialist",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.2,
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "read": true,
+        "search": true
+      }
+    },
+    "git-workflow-manager": {
+      "description": "Git workflow automation for branching, merging, rebasing, and conflict resolution",
+      "mode": "subagent",
+      "model": "anthropic/claude-haiku-4-20250514",
+      "temperature": 0.1,
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "read": true,
+        "search": true
+      }
+    },
+    "dependency-manager": {
+      "description": "Dependency auditing, updates, vulnerability scanning, and lock file management",
+      "mode": "subagent",
+      "model": "anthropic/claude-haiku-4-20250514",
+      "temperature": 0.1,
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "read": true,
+        "search": true
+      }
+    },
+    "devops-engineer": {
+      "description": "CI/CD pipeline configuration, Docker, infrastructure, and deployment automation",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.2,
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "read": true,
+        "search": true
+      }
+    },
+    "mcp-developer": {
+      "description": "MCP server development, protocol implementation, and tool integration",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.2,
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "read": true,
+        "search": true
+      }
+    }
+  },
+  "permission": {
+    "skill": {
+      "*": "ask",
+      "read-*": "allow",
+      "search-*": "allow",
+      "internal-*": "deny"
+    },
+    "tool": {
+      "bash": "ask",
+      "write": "ask",
+      "edit": "ask",
+      "read": "allow"
+    }
+  },
+  "mcp": {
+    "github": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "environment": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PAT}"
+      }
+    },
+    "linear": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "npx",
+        "-y",
+        "@linear/mcp"
+      ],
+      "environment": {
+        "LINEAR_API_KEY": "${LINEAR_API_KEY}"
+      }
+    },
+    "context7": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "npx",
+        "-y",
+        "@upstash/context7-mcp"
+      ],
+      "environment": {}
+    }
+  }
+}

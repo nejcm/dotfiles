@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Dependency audit configuration for npm/yarn security checks",
+
+  "severity": {
+    "threshold": "moderate",
+    "levels": {
+      "info": {
+        "action": "log",
+        "failBuild": false
+      },
+      "low": {
+        "action": "warn",
+        "failBuild": false
+      },
+      "moderate": {
+        "action": "warn",
+        "failBuild": true
+      },
+      "high": {
+        "action": "error",
+        "failBuild": true
+      },
+      "critical": {
+        "action": "error",
+        "failBuild": true
+      }
+    }
+  },
+
+  "allowlist": {
+    "description": "Vulnerabilities to temporarily ignore (with justification)",
+    "advisories": [
+      {
+        "id": "GHSA-xxxx-xxxx-xxxx",
+        "package": "example-package",
+        "reason": "False positive - we don't use the vulnerable code path",
+        "expiry": "2026-03-31",
+        "approvedBy": "security-team"
+      }
+    ]
+  },
+
+  "blocklist": {
+    "description": "Packages that should never be used",
+    "packages": [
+      {
+        "name": "left-pad",
+        "reason": "Notorious package with history of malicious versions"
+      },
+      {
+        "name": "event-stream",
+        "reason": "Had cryptocurrency mining malware in 2018"
+      },
+      {
+        "name": "flatmap-stream",
+        "reason": "Malicious dependency of event-stream"
+      }
+    ]
+  },
+
+  "autoFix": {
+    "enabled": true,
+    "severity": ["moderate", "high", "critical"],
+    "updateTypes": ["patch", "minor"],
+    "excludeMajor": true
+  },
+
+  "notifications": {
+    "slack": {
+      "enabled": false,
+      "webhookUrl": "${SLACK_WEBHOOK_URL}",
+      "channel": "#security-alerts"
+    },
+    "email": {
+      "enabled": false,
+      "recipients": ["security@example.com"]
+    }
+  },
+
+  "schedule": {
+    "daily": {
+      "enabled": true,
+      "time": "03:00",
+      "timezone": "UTC"
+    },
+    "onCommit": {
+      "enabled": true,
+      "preCommitHook": true
+    },
+    "onPR": {
+      "enabled": true,
+      "failOnVulnerabilities": true
+    }
+  },
+
+  "reporting": {
+    "format": "json",
+    "outputPath": "reports/security-audit.json",
+    "includeDevDependencies": false,
+    "includeOptionalDependencies": false
+  },
+
+  "exemptions": {
+    "description": "Temporary exemptions for specific vulnerabilities",
+    "rules": [
+      {
+        "advisory": "GHSA-yyyy-yyyy-yyyy",
+        "package": "another-package",
+        "paths": ["path/to/dependency"],
+        "reason": "Waiting for upstream fix, mitigated by WAF",
+        "until": "2026-04-15",
+        "reviewer": "security-lead"
+      }
+    ]
+  },
+
+  "compliance": {
+    "licenses": {
+      "allowed": [
+        "MIT",
+        "Apache-2.0",
+        "BSD-2-Clause",
+        "BSD-3-Clause",
+        "ISC",
+        "0BSD"
+      ],
+      "blocked": [
+        "GPL-3.0",
+        "AGPL-3.0",
+        "SSPL-1.0"
+      ]
+    },
+    "sbom": {
+      "generate": true,
+      "format": "cyclonedx",
+      "outputPath": "reports/sbom.json"
+    }
+  }
+}

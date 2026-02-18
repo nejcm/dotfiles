@@ -1,0 +1,132 @@
+# Dredd Configuration File
+# API contract testing configuration
+
+# Dry run mode (validation without actual requests)
+dry-run: false
+
+# Hookfiles for custom logic
+hookfiles: ./hooks.js
+
+# Programming language for hooks
+language: nodejs
+
+# Command to start the server
+server: npm start
+
+# Wait time for server to start (seconds)
+server-wait: 5
+
+# Initialize new dredd configuration
+init: false
+
+# Custom configuration
+custom:
+  apiUrl: http://localhost:3000
+  authToken: test-token
+
+# Show transaction names only
+names: false
+
+# Only run specific transactions (empty = run all)
+only: []
+
+# Skip specific transactions
+skip: []
+
+# Reporter format
+reporter:
+  - cli      # Terminal output
+  - html     # HTML report
+  - junit    # JUnit XML (for CI/CD)
+
+# Output files for reporters
+output:
+  - ''  # CLI to stdout
+  - reports/dredd.html
+  - reports/dredd.xml
+
+# Additional headers for all requests
+header:
+  - 'Content-Type: application/json'
+  - 'User-Agent: Dredd/API-Validator'
+
+# Sort transactions by method and path
+sorted: false
+
+# Basic authentication (username:password)
+user: null
+
+# Display errors inline
+inline-errors: true
+
+# Show detailed request/response
+details: true
+
+# Only test specific HTTP methods
+method: []
+
+# Use colors in output
+color: true
+
+# Logging level (error, warning, info, debug)
+level: info
+
+# Add timestamps to logs
+timestamp: true
+
+# Silent mode (no output)
+silent: false
+
+# Additional paths to API description files
+path: []
+
+# Main API description file
+blueprint: openapi.yaml
+
+# API endpoint base URL
+endpoint: 'http://localhost:3000'
+
+# Hooks timeout (milliseconds)
+hooks-worker-timeout: 5000
+
+# Connection timeout (milliseconds)
+hooks-worker-connect-timeout: 1500
+
+# Request timeout (milliseconds)
+hooks-worker-connect-retry: 500
+
+# Request timeout (milliseconds)
+hooks-worker-after-connect-wait: 100
+
+# Hooks worker handler host
+hooks-worker-handler-host: 127.0.0.1
+
+# Hooks worker handler port
+hooks-worker-handler-port: 61321
+
+# Configuration for specific environments
+environments:
+  development:
+    endpoint: 'http://localhost:3000'
+    server: npm run dev
+    server-wait: 10
+
+  staging:
+    endpoint: 'https://staging-api.example.com'
+    server: null  # Don't start server (already running)
+    header:
+      - 'Authorization: Bearer {{STAGING_TOKEN}}'
+
+  production:
+    endpoint: 'https://api.example.com'
+    server: null
+    dry-run: true  # Read-only validation
+    header:
+      - 'Authorization: Bearer {{PROD_TOKEN}}'
+
+# Ignore specific validation errors
+ignore:
+  - 'Headers validation'  # Ignore header validation (optional)
+
+# Require specific HTTP methods
+require: []

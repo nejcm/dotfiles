@@ -1,0 +1,149 @@
+# Spectral OpenAPI Linting Configuration
+# Advanced validation rules for OpenAPI specifications
+
+extends:
+  - spectral:oas  # Built-in OpenAPI ruleset
+
+rules:
+  # Info Section
+  info-contact: error           # API must have contact information
+  info-description: error       # API must have description
+  info-license: warn           # API should have license
+  license-url: warn            # License should have URL
+
+  # Operations
+  operation-description: error  # All operations must have description
+  operation-operationId: error # All operations must have operationId
+  operation-summary: error     # All operations must have summary
+  operation-tags: error        # All operations must have tags
+  operation-operationId-unique: error  # Operation IDs must be unique
+  operation-operationId-valid-in-url: error  # Operation IDs URL-safe
+
+  # Parameters
+  parameter-description: error # All parameters must have description
+  path-params: error          # Path parameters must be defined
+  no-$ref-siblings: error     # No properties alongside $ref
+
+  # Schemas
+  typed-enum: error           # Enums must have type specified
+  oas3-schema: error          # Schemas must be valid
+  valid-example: error        # Examples must match schema
+
+  # Paths
+  path-declarations-must-exist: error    # Paths must be non-empty
+  path-keys-no-trailing-slash: error    # No trailing slashes
+  path-not-include-query: error         # No query strings in paths
+  no-path-trailing-slash: error         # No trailing slashes
+
+  # Tags
+  openapi-tags: warn          # Tags should be defined in global tags
+  openapi-tags-alphabetical: off  # Tags don't need alphabetical order
+
+  # Security
+  oas3-api-servers: error     # Must have servers defined
+  no-eval-in-markdown: error  # No eval in markdown descriptions
+  no-script-tags-in-markdown: error  # No script tags
+
+  # Custom Rules
+  must-have-examples:
+    description: All request/response bodies should have examples
+    given: "$.paths[*][*]..content..*"
+    severity: warn
+    then:
+      field: example
+      function: truthy
+
+  response-status-codes:
+    description: Operations should define common status codes
+    given: "$.paths[*][*].responses"
+    severity: warn
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required:
+            - "200"
+            - "400"
+            - "500"
+
+  security-defined:
+    description: All operations should have security defined
+    given: "$.paths[*][*]"
+    severity: error
+    then:
+      field: security
+      function: truthy
+
+  consistent-error-responses:
+    description: Error responses should follow standard format
+    given: "$.paths[*][*].responses[?(@property >= 400)]..schema"
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required:
+            - error
+            - message
+          properties:
+            error:
+              type: string
+            message:
+              type: string
+
+  pagination-for-lists:
+    description: List endpoints should support pagination
+    given: "$.paths[*].get.responses.200.content..schema"
+    severity: warn
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          properties:
+            page:
+              type: integer
+            limit:
+              type: integer
+
+  versioned-api:
+    description: API should be versioned in URL
+    given: "$.servers[*].url"
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "/(v\\d+|api/v\\d+)"
+
+  rate-limiting-headers:
+    description: Rate-limited endpoints should document headers
+    given: "$.paths[*][*].responses.429"
+    severity: warn
+    then:
+      field: headers
+      function: truthy
+
+  deprecation-notice:
+    description: Deprecated operations should have x-deprecated-message
+    given: "$.paths[*][*][?(@.deprecated == true)]"
+    severity: warn
+    then:
+      field: x-deprecated-message
+      function: truthy
+
+  request-validation:
+    description: POST/PUT/PATCH should have request body validation
+    given: "$.paths[*][post,put,patch]"
+    severity: error
+    then:
+      field: requestBody
+      function: truthy
+
+# Severity Levels:
+# - error: Fails linting
+# - warn: Warns but doesn't fail
+# - info: Informational only
+# - hint: Suggestions
+# - off: Disabled

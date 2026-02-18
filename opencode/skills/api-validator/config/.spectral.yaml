@@ -1,0 +1,29 @@
+# .spectral.yaml
+# Spectral configuration for API linting
+# Place this in project root for automatic discovery
+
+extends:
+  - ./skills/api-validator/config/openapi-lint.yaml
+
+# Override specific rules for this project
+rules:
+  # Make license optional for internal APIs
+  info-license: off
+
+  # Require strict versioning
+  versioned-api: error
+
+  # Custom rule for this project
+  require-x-internal-only:
+    description: Internal APIs must be marked
+    given: "$.info"
+    severity: warn
+    then:
+      field: x-internal-only
+      function: truthy
+
+# Ignore specific files
+ignore:
+  - "**/node_modules/**"
+  - "**/dist/**"
+  - "**/*.test.yaml"
