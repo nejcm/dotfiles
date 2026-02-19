@@ -236,10 +236,45 @@ mosh --ssh="ssh -p 2222" user@100.x.y.z
 
 You should land directly inside tmux.
 
+## Multiple parallel OpenCode sessions (Android)
+
+To run several OpenCode sessions at once from your phone (e.g. different projects), use **multiple Termius tabs** to the same VM and **tmux** on the VM so each tab has its own session.
+
+### Option A — Multiple tabs, separate tmux sessions (recommended)
+
+1. **On the VM:** Disable auto-attach so you can choose the tmux session per connection. Edit `~/.bashrc` and comment out or remove the block that attaches to `main`:
+
+   ```bash
+   # Comment out so you can create/attach to named sessions:
+   # if [ -n "$SSH_CONNECTION" ] && [ -z "$TMUX" ]; then
+   #   tmux attach -t main 2>/dev/null || tmux new -s main
+   # fi
+   ```
+
+2. **On the phone (Termius):**
+   - Open a **new tab** and connect again: `mosh user@100.x.y.z`.
+   - In **tab 1:** `tmux new -s project-a` then `cd ~/project-a && opencode ...`
+   - In **tab 2:** `tmux new -s project-b` then `cd ~/project-b && opencode ...`
+   - Reconnect later: `tmux attach -t project-a` or `tmux attach -t project-b`.
+
+Each tab is a separate connection; each can run a different named tmux session and a different OpenCode run.
+
+### Option B — One tab, multiple tmux windows
+
+Keep the existing auto-attach to `main`. Use one Termius connection and tmux windows inside it:
+
+- Create a new window: **`Ctrl+b c`**
+- In each window: `cd ~/project-x && opencode ...`
+- Switch windows: **`Ctrl+b n`** (next), **`Ctrl+b p`** (previous), **`Ctrl+b 0`** … **`Ctrl+b 9`** (by number)
+
+| Goal                                                | On phone                                          | On VM                                                                                |
+| --------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Several independent OpenCode sessions (per project) | Multiple Termius tabs, each `mosh user@100.x.y.z` | Option A: disable auto-attach; in each tab `tmux new -s <name>` then run OpenCode    |
+| One connection, multiple tasks                      | One Termius tab                                   | Option B: one session, use tmux windows (`Ctrl+b c`) and run OpenCode in each window |
+
 # VM Security Hardening Guide
 
-**Host:** ubuntu-4gb-hel1-3 (Hetzner)
-**OS:** Ubuntu 24.04.3 LTS
+**OS:** Ubuntu LTS
 **Tailscale IP:** 100.xxx.xx.xx
 **Audit date:** 2026-02-13
 
