@@ -280,19 +280,6 @@
         "bash": true,
         "read": true
       }
-    },
-    "oncall-guide": {
-      "description": "Incident triage and diagnostics. Checks logs, health, recent deploys. Suggests fixes but does not apply; read-only.",
-      "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
-      "temperature": 0.2,
-      "tools": {
-        "write": false,
-        "edit": false,
-        "bash": true,
-        "read": true,
-        "search": true
-      }
     }
   },
   "permission": {
