@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RLM MCP context management tools",
+  "description": "Request/response schemas for rlm_ingest_repo and rlm_update_repo",
+  "definitions": {
+    "rlm_ingest_repo_request": {
+      "type": "object",
+      "required": ["path"],
+      "properties": {
+        "path": { "type": "string", "description": "Absolute or workspace-relative repo root path" },
+        "context_id": { "type": "string", "minLength": 1, "maxLength": 128, "description": "Optional; server assigns if omitted" },
+        "mode": { "type": "string", "enum": ["code", "code_and_docs", "full"], "default": "code" }
+      },
+      "additionalProperties": false
+    },
+    "rlm_ingest_repo_response": {
+      "type": "object",
+      "required": ["context_id", "stats"],
+      "properties": {
+        "context_id": { "type": "string" },
+        "stats": {
+          "type": "object",
+          "required": ["files_indexed", "chunks_created"],
+          "properties": {
+            "files_indexed": { "type": "integer", "minimum": 0 },
+            "chunks_created": { "type": "integer", "minimum": 0 },
+            "symbols_count": { "type": "integer", "minimum": 0 },
+            "import_edges": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 50
+        }
+      },
+      "additionalProperties": false
+    },
+    "rlm_update_repo_request": {
+      "type": "object",
+      "required": ["context_id"],
+      "properties": {
+        "context_id": { "type": "string" },
+        "changed_paths": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Paths that changed; if omitted, server may infer from VCS or re-index all"
+        }
+      },
+      "additionalProperties": false
+    },
+    "rlm_update_repo_response": {
+      "type": "object",
+      "required": ["updated_files", "stats"],
+      "properties": {
+        "updated_files": { "type": "integer", "minimum": 0 },
+        "stats": {
+          "type": "object",
+          "properties": {
+            "chunks_updated": { "type": "integer", "minimum": 0 },
+            "chunks_removed": { "type": "integer", "minimum": 0 }
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

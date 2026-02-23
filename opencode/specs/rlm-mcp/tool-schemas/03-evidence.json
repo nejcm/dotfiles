@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RLM MCP evidence / snippet tools",
+  "description": "Low-context retrieval: rlm_get_snippet, rlm_get_symbol",
+  "definitions": {
+    "rlm_get_snippet_request": {
+      "type": "object",
+      "required": ["snippet_id"],
+      "properties": {
+        "snippet_id": { "type": "string" },
+        "max_lines": { "type": "integer", "minimum": 50, "maximum": 300, "default": 150 }
+      },
+      "additionalProperties": false
+    },
+    "rlm_get_snippet_response": {
+      "type": "object",
+      "required": ["snippet_id", "path", "content", "line_start"],
+      "properties": {
+        "snippet_id": { "type": "string" },
+        "path": { "type": "string" },
+        "line_start": { "type": "integer" },
+        "line_end": { "type": "integer" },
+        "content": { "type": "string" },
+        "truncated": { "type": "boolean", "default": false }
+      },
+      "additionalProperties": false
+    },
+    "rlm_get_symbol_request": {
+      "type": "object",
+      "required": ["context_id", "symbol_ref"],
+      "properties": {
+        "context_id": { "type": "string" },
+        "symbol_ref": {
+          "type": "string",
+          "description": "FQN or file:line or file#symbol"
+        }
+      },
+      "additionalProperties": false
+    },
+    "rlm_get_symbol_response": {
+      "type": "object",
+      "required": ["symbol_ref", "path", "line_start"],
+      "properties": {
+        "symbol_ref": { "type": "string" },
+        "path": { "type": "string" },
+        "line_start": { "type": "integer" },
+        "line_end": { "type": "integer" },
+        "signature": { "type": "string" },
+        "doc": { "type": "string", "maxLength": 1024 },
+        "excerpt": { "type": "string", "maxLength": 2048 },
+        "snippet_id": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

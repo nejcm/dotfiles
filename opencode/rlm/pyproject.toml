@@ -1,0 +1,20 @@
+[project]
+name = "opencode-rlm"
+version = "0.1.0"
+description = "Opt-in RLM engineering loop for OpenCode using alexzhang13/rlm"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "rlms>=0.1.1",
+]
+
+[project.scripts]
+opencode-rlm = "opencode_rlm.run:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["opencode_rlm*"]

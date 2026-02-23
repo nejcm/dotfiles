@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RLM MCP engineering loop tools",
+  "description": "Request/response for rlm_plan, rlm_design, rlm_patch, rlm_validate",
+  "definitions": {
+    "rlm_plan_request": {
+      "type": "object",
+      "required": ["context_id", "goal"],
+      "properties": {
+        "context_id": { "type": "string" },
+        "goal": { "type": "string", "maxLength": 4096 },
+        "constraints": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 20
+        }
+      },
+      "additionalProperties": false
+    },
+    "rlm_plan_response": {
+      "type": "object",
+      "required": ["plan_id", "milestones", "acceptance_criteria"],
+      "properties": {
+        "plan_id": { "type": "string" },
+        "milestones": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "title", "order"],
+            "properties": {
+              "id": { "type": "string" },
+              "title": { "type": "string" },
+              "order": { "type": "integer" },
+              "scope_summary": { "type": "string" }
+            }
+          },
+          "maxItems": 15
+        },
+        "affected_modules": { "type": "array", "items": { "type": "string" }, "maxItems": 30 },
+        "risk_list": { "type": "array", "items": { "type": "string" }, "maxItems": 10 },
+        "test_strategy": { "type": "string", "maxLength": 1024 },
+        "acceptance_criteria": { "type": "array", "items": { "type": "string" }, "maxItems": 15 }
+      },
+      "additionalProperties": false
+    },
+    "rlm_design_request": {
+      "type": "object",
+      "required": ["context_id", "plan_id"],
+      "properties": {
+        "context_id": { "type": "string" },
+        "plan_id": { "type": "string" },
+        "style": { "type": "string", "enum": ["light", "detailed"], "default": "light" }
+      },
+      "additionalProperties": false
+    },
+    "rlm_design_response": {
+      "type": "object",
+      "properties": {
+        "api_changes": { "type": "array", "items": { "type": "string" }, "maxItems": 25 },
+        "data_model_changes": { "type": "array", "items": { "type": "string" }, "maxItems": 20 },
+        "ui_component_changes": { "type": "array", "items": { "type": "string" }, "maxItems": 20 },
+        "backward_compatibility_notes": { "type": "array", "items": { "type": "string" }, "maxItems": 15 }
+      },
+      "additionalProperties": false
+    },
+    "rlm_patch_request": {
+      "type": "object",
+      "required": ["context_id", "plan_id", "scope"],
+      "properties": {
+        "context_id": { "type": "string" },
+        "plan_id": { "type": "string" },
+        "scope": {
+          "type": "string",
+          "description": "Milestone id or 'full' or comma-separated milestone ids"
+        },
+        "patch_style": { "type": "string", "enum": ["small_diffs", "single_diff"], "default": "small_diffs" }
+      },
+      "additionalProperties": false
+    },
+    "evidence_pointer": {
+      "type": "object",
+      "properties": {
+        "snippet_id": { "type": "string" },
+        "path": { "type": "string" },
+        "line_start": { "type": "integer" },
+        "line_end": { "type": "integer" },
+        "reason": { "type": "string" }
+      }
+    },
+    "rlm_patch_response": {
+      "type": "object",
+      "required": ["patch_id", "changed_files", "summary"],
+      "properties": {
+        "patch_id": { "type": "string" },
+        "segment_ids": { "type": "array", "items": { "type": "string" }, "maxItems": 10 },
+        "changed_files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["path", "summary"],
+            "properties": {
+              "path": { "type": "string" },
+              "summary": { "type": "string" },
+              "diff_ref": { "type": "string", "description": "Reference to unified diff segment" }
+            }
+          },
+          "maxItems": 10
+        },
+        "summary": { "type": "string", "maxLength": 1024 },
+        "rationale": { "type": "string", "maxLength": 512 },
+        "evidence_pointers": { "type": "array", "items": { "$ref": "#/definitions/evidence_pointer" }, "maxItems": 20 }
+      },
+      "additionalProperties": false
+    },
+    "rlm_validate_request": {
+      "type": "object",
+      "required": ["context_id", "patch_id", "commands"],
+      "properties": {
+        "context_id": { "type": "string" },
+        "patch_id": { "type": "string" },
+        "commands": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "maxItems": 10,
+          "description": "e.g. ['pnpm test', 'pnpm lint']"
+        },
+        "budget_seconds": { "type": "integer", "minimum": 1, "maximum": 600, "default": 120 }
+      },
+      "additionalProperties": false
+    },
+    "rlm_validate_response": {
+      "type": "object",
+      "required": ["overall_pass", "results"],
+      "properties": {
+        "overall_pass": { "type": "boolean" },
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["command", "pass"],
+            "properties": {
+              "command": { "type": "string" },
+              "pass": { "type": "boolean" },
+              "exit_code": { "type": "integer" },
+              "log_excerpt": { "type": "string", "maxLength": 2048 },
+              "failure_summary": { "type": "string", "maxLength": 512 }
+            }
+          }
+        },
+        "suggested_next_action": { "type": "string", "enum": ["fix", "adjust_tests", "expand_scope", "done"], "maxLength": 128 },
+        "relevant_snippet_ids": { "type": "array", "items": { "type": "string" }, "maxItems": 5 }
+      },
+      "additionalProperties": false
+    }
+  }
+}
