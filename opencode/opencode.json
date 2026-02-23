@@ -218,6 +218,81 @@
         "read": true,
         "search": true
       }
+    },
+    "rlm": {
+      "description": "RLM engineering assistant; runs plan -> patch -> validate loop to completion. Opt-in only.",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-6",
+      "temperature": 0.2,
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": true,
+        "read": true,
+        "search": true
+      }
+    },
+    "code-simplifier": {
+      "description": "Post-implementation cleanup; simplifies code after coding sessions or complex PRs. Use proactively.",
+      "mode": "subagent",
+      "model": "anthropic/claude-haiku-4-5-20251001",
+      "temperature": 0.1,
+      "tools": {
+        "write": false,
+        "edit": true,
+        "bash": true,
+        "read": true
+      }
+    },
+    "build-validator": {
+      "description": "Runs full build pipeline (lint, typecheck, build, test). Read-only; reports pass/fail only.",
+      "mode": "subagent",
+      "model": "anthropic/claude-haiku-4-5-20251001",
+      "temperature": 0,
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": true,
+        "read": true
+      }
+    },
+    "code-architect": {
+      "description": "System design specialist for module boundaries, API contracts, data flow. Read-only; produces ADRs and design recommendations.",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-6",
+      "temperature": 0.3,
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false,
+        "read": true,
+        "search": true
+      }
+    },
+    "verify-app": {
+      "description": "End-to-end application verification. Starts app, runs E2E/integration tests, checks key flows. Reports only; does not fix.",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-6",
+      "temperature": 0.1,
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": true,
+        "read": true
+      }
+    },
+    "oncall-guide": {
+      "description": "Incident triage and diagnostics. Checks logs, health, recent deploys. Suggests fixes but does not apply; read-only.",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-6",
+      "temperature": 0.2,
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": true,
+        "read": true,
+        "search": true
+      }
     }
   },
   "permission": {
