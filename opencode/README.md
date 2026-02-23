@@ -25,21 +25,25 @@ This agent architecture is already set up in your OpenCode global configuration:
 ### 2. Basic Usage
 
 #### Plan a Feature
+
 ```
 @planner Create a spec for user authentication system
 ```
 
 #### Implement a Feature
+
 ```
 @builder Implement the feature from specs/2026-02-13-auth-system.md
 ```
 
 #### Run Tests
+
 ```
 @tester Run comprehensive tests for the authentication feature
 ```
 
 #### Review Code
+
 ```
 @reviewer Review the authentication implementation
 ```
@@ -67,9 +71,11 @@ Create PR → CI/CD → Deploy
 ## Core Agents
 
 ### 🎯 Planner (Read-only)
+
 **Purpose**: Decompose tasks and create specification artifacts
 
 **Responsibilities**:
+
 - Research existing code
 - Identify patterns
 - Create detailed specs
@@ -79,6 +85,7 @@ Create PR → CI/CD → Deploy
 **Permissions**: Read-only (no file writes, no execution)
 
 **Usage**:
+
 ```
 @planner Plan implementation for real-time notifications
 ```
@@ -88,9 +95,11 @@ Create PR → CI/CD → Deploy
 ---
 
 ### 🔨 Builder (Write + Execute)
+
 **Purpose**: Implement features strictly against specifications
 
 **Responsibilities**:
+
 - Write code following specs
 - Update tests
 - Run fast validation
@@ -99,6 +108,7 @@ Create PR → CI/CD → Deploy
 **Permissions**: File write (diff-only), execute (scoped)
 
 **Usage**:
+
 ```
 @builder Implement specs/2026-02-13-notifications.md
 ```
@@ -106,6 +116,7 @@ Create PR → CI/CD → Deploy
 **Output**: Code changes + test updates
 
 **Guardrails**:
+
 - Max 2 auto-fix attempts
 - Max 5 files per edit
 - Must pass lint/typecheck/unit tests
@@ -113,9 +124,11 @@ Create PR → CI/CD → Deploy
 ---
 
 ### ✅ Tester (Execute-only)
+
 **Purpose**: Run tests and return structured results
 
 **Responsibilities**:
+
 - Execute test suites
 - Generate coverage reports
 - Identify failure patterns
@@ -124,6 +137,7 @@ Create PR → CI/CD → Deploy
 **Permissions**: Execute tests only (no source edits)
 
 **Usage**:
+
 ```
 @tester Run full test suite with coverage
 ```
@@ -133,9 +147,11 @@ Create PR → CI/CD → Deploy
 ---
 
 ### 👀 Reviewer (Read-only)
+
 **Purpose**: Validate correctness, security, and spec compliance
 
 **Responsibilities**:
+
 - Check spec compliance
 - Review code quality
 - Identify security issues
@@ -145,6 +161,7 @@ Create PR → CI/CD → Deploy
 **Permissions**: Read-only (no edits)
 
 **Usage**:
+
 ```
 @reviewer Review the notification system implementation
 ```
@@ -156,9 +173,11 @@ Create PR → CI/CD → Deploy
 ## Specialized Agents
 
 ### 🔒 Security Agent
+
 **Trigger**: Authentication, payments, file uploads, secrets, crypto
 
 **Purpose**: Deep security analysis
+
 - OWASP Top 10 vulnerabilities
 - Authentication/authorization flaws
 - Input validation issues
@@ -167,6 +186,7 @@ Create PR → CI/CD → Deploy
 **Model**: Opus-4 (maximum capability)
 
 **Usage**:
+
 ```
 @security Review payment processing implementation
 ```
@@ -174,9 +194,11 @@ Create PR → CI/CD → Deploy
 ---
 
 ### 🗃️ Migration Agent
+
 **Trigger**: Database schema changes
 
 **Purpose**: Safe database migrations
+
 - Generate migrations
 - Test rollbacks
 - Assess data loss risks
@@ -185,6 +207,7 @@ Create PR → CI/CD → Deploy
 **Guardrails**: NEVER applies production migrations automatically
 
 **Usage**:
+
 ```
 @migration Create migration for user_profiles table
 ```
@@ -192,15 +215,18 @@ Create PR → CI/CD → Deploy
 ---
 
 ### ⚡ Performance Agent
+
 **Trigger**: Performance bottlenecks identified
 
 **Purpose**: Optimize code and queries
+
 - Database optimization
 - Algorithm improvements
 - Caching strategies
 - Bundle size reduction
 
 **Usage**:
+
 ```
 @performance Optimize the order listing endpoint
 ```
@@ -208,9 +234,11 @@ Create PR → CI/CD → Deploy
 ---
 
 ### ♻️ Refactor Agent
+
 **Trigger**: Code quality improvements needed
 
 **Purpose**: Improve maintainability without changing behavior
+
 - Extract functions
 - Remove duplication
 - Simplify complexity
@@ -219,6 +247,7 @@ Create PR → CI/CD → Deploy
 **Guardrails**: Must not change functionality
 
 **Usage**:
+
 ```
 @refactor Improve the authentication service code
 ```
@@ -226,15 +255,18 @@ Create PR → CI/CD → Deploy
 ---
 
 ### 🐛 Debug Agent
+
 **Trigger**: After 2 failed auto-fix attempts
 
 **Purpose**: Root cause analysis
+
 - Stack trace interpretation
 - Reproduce failures
 - Identify patterns
 - Recommend fixes
 
 **Usage**:
+
 ```
 @debug Analyze test failures in auth.spec.ts
 ```
@@ -244,6 +276,7 @@ Create PR → CI/CD → Deploy
 ## Key Workflows
 
 ### Feature Implementation
+
 See [workflows/feature_implementation.md](workflows/feature_implementation.md)
 
 ```
@@ -256,11 +289,13 @@ See [workflows/feature_implementation.md](workflows/feature_implementation.md)
 ```
 
 ### Pull Request
+
 See [workflows/pr_checklist.md](workflows/pr_checklist.md)
 
 Comprehensive checklist for creating high-quality pull requests.
 
 ### Release
+
 See [workflows/release_checklist.md](workflows/release_checklist.md)
 
 Complete release process with rollback procedures and monitoring.
@@ -272,7 +307,9 @@ Complete release process with rollback procedures and monitoring.
 Skills are deterministic capability wrappers that agents can use.
 
 ### run-tests
+
 Execute test suites and return structured results
+
 ```json
 {
   "status": "passed",
@@ -282,12 +319,15 @@ Execute test suites and return structured results
 ```
 
 ### spec-validator
+
 Validate implementation against spec acceptance criteria
 
 ### git-workflow
+
 Manage Git operations (branch, commit, PR)
 
 ### ci-status
+
 Check CI/CD pipeline status and build results
 
 ---
@@ -297,36 +337,46 @@ Check CI/CD pipeline status and build results
 All features start with a spec artifact in `specs/`.
 
 ### Spec Template
+
 `specs/template.md` - Complete specification template
 
 ### Example Spec
+
 `specs/example-user-profiles.md` - Reference implementation
 
 ### Spec Format
+
 ```markdown
 # Feature Name
 
 ## Problem
+
 What needs to be solved
 
 ## Constraints
+
 Technical & business limits
 
 ## Proposed Approach
+
 How to implement
 
 ## Acceptance Criteria
+
 - [ ] Testable requirement 1
 - [ ] Testable requirement 2
 
 ## Risks
+
 What could go wrong
 
 ## Task Breakdown
+
 Step-by-step implementation
 ```
 
 **Why Specs?**
+
 - Audit trail
 - Reproducibility
 - Team visibility
@@ -338,9 +388,11 @@ Step-by-step implementation
 ## Configuration
 
 ### Agent Configuration
+
 `opencode.json` - Main configuration file
 
 **Key Settings**:
+
 ```json
 {
   "agent": {
@@ -361,22 +413,27 @@ Step-by-step implementation
 ### Model Strategy (Cost Optimization)
 
 **Planning & Architecture**: Sonnet-4 / Opus-4
+
 - Complex reasoning required
 - High-impact decisions
 
 **Implementation**: Sonnet-4
+
 - Precision needed
 - Context-heavy
 
 **Testing**: Haiku-4
+
 - Fast execution
 - Structured output
 
 **Security**: Opus-4
+
 - Maximum capability
 - Critical analysis
 
 **Refactoring / Docs**: Haiku-4
+
 - Routine operations
 - Lower complexity
 
@@ -389,6 +446,7 @@ Step-by-step implementation
 Model Context Protocol servers provide external tool access.
 
 ### GitHub MCP
+
 Repository operations, issues, PRs
 
 ```json
@@ -402,6 +460,7 @@ Repository operations, issues, PRs
 ```
 
 ### Linear MCP
+
 Issue tracking, project management
 
 ```json
@@ -415,6 +474,7 @@ Issue tracking, project management
 ```
 
 ### Context7 MCP
+
 Up-to-date documentation access
 
 ```json
@@ -437,19 +497,23 @@ Up-to-date documentation access
 **Rule**: Never give all three to one agent
 
 ### Diff-Based Editing
+
 Prevents catastrophic rewrites
+
 ```
 apply_patch(file, diff)  # ✅ Safe
 rewrite_file(file, content)  # ❌ Dangerous
 ```
 
 ### Planning Gate
+
 ```
 plan → approve → execute  # Always
 plan → execute  # Never
 ```
 
 ### Budget Limits
+
 - Max tool calls per session
 - Token ceilings
 - Runtime caps
@@ -484,19 +548,23 @@ plan → execute  # Never
 ## Troubleshooting
 
 ### Agent Not Working
+
 1. Check `opencode.json` configuration
 2. Verify agent mode (primary/subagent/all)
 3. Check tool permissions
 4. Review model availability
 
 ### Tests Failing
+
 1. Check logs from @tester
 2. Reproduce locally
 3. Send failure slice to @builder
 4. If still failing: invoke @debug
 
 ### Security Concerns
+
 Always trigger @security for:
+
 - Authentication/authorization
 - Payment processing
 - File uploads
@@ -505,6 +573,7 @@ Always trigger @security for:
 - Webhook endpoints
 
 ### Performance Issues
+
 1. Profile first (measure, don't guess)
 2. Invoke @performance with metrics
 3. Focus on bottlenecks (80/20 rule)
@@ -515,6 +584,7 @@ Always trigger @security for:
 ## Examples
 
 ### Example 1: Simple Feature
+
 ```
 User: "Add email validation to registration"
 @planner → Creates spec (2 min)
@@ -525,6 +595,7 @@ Total: ~10 minutes
 ```
 
 ### Example 2: Complex Feature
+
 ```
 User: "Add real-time notifications with WebSocket"
 @planner → Research + spec (10 min)
@@ -538,6 +609,7 @@ Total: ~65 minutes
 ```
 
 ### Example 3: Bug Fix
+
 ```
 User: "Login fails intermittently"
 @debug → Root cause analysis (5 min)
@@ -561,23 +633,27 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for complete system design, agent interac
 Track these to measure agent system effectiveness:
 
 ### Speed
+
 - Time from request to implementation
 - Planning time
 - Review time
 - Total cycle time
 
 ### Quality
+
 - Test coverage percentage
 - Security vulnerabilities found
 - Code review approval rate
 - Rollback rate
 
 ### Cost
+
 - API costs per feature
 - Model usage distribution
 - Token efficiency
 
 ### Reliability
+
 - First-time success rate
 - Auto-fix success rate
 - Human intervention rate
@@ -588,12 +664,14 @@ Track these to measure agent system effectiveness:
 ## Support
 
 ### Documentation
+
 - [Complete Workflows](workflows/)
 - [Agent Prompts](agents/)
 - [Skill Definitions](skills/)
 - [Spec Templates](specs/)
 
 ### Getting Help
+
 - Review example specs and workflows
 - Check troubleshooting section
 - Consult [ARCHITECTURE.md](ARCHITECTURE.md)
@@ -604,22 +682,26 @@ Track these to measure agent system effectiveness:
 ## Roadmap
 
 ### Week 1-2 (Foundation)
+
 - ✅ Core agents (Planner, Builder, Tester, Reviewer)
 - ✅ Spec artifact system
 - ✅ Basic workflows
 
 ### Week 3 (Specialization)
+
 - ✅ Security agent
 - ✅ Migration agent
 - ✅ Performance agent
 - ✅ Debug agent
 
 ### Week 4 (Optimization)
+
 - ✅ MCP server integration
 - ✅ Model strategy
 - ✅ Complete documentation
 
 ### Future
+
 - Team collaboration features
 - Metrics dashboard
 - Agent performance analytics
@@ -631,6 +713,7 @@ Track these to measure agent system effectiveness:
 ## Credits
 
 Based on production-grade agent architecture principles:
+
 - Microservice-style agents
 - Separation of concerns
 - Least privilege
@@ -648,3 +731,34 @@ This agent architecture is provided as-is for use with OpenCode.
 ---
 
 **Remember**: Reliability beats flash. Build for control first, autonomy second.
+
+---
+
+## Useful Links
+
+### Skills
+
+- [anthropics/skills](https://github.com/anthropics/skills) - Public repository for Agent Skills
+- [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) - Vercel's official collection of agent skills
+- [skills-directory](https://www.skillsdirectory.com/) - Skills directory
+- [agent-skills](https://github.com/vercel-labs/agent-skills) - Vercel agent skills
+
+### Subagents
+
+- [VoltAgent/awesome-claude-code-subagents](https://github.com/VoltAgent/awesome-claude-code-subagents) - 100+ specialized Claude Code subagents
+- [gsd-build/get-shit-done](https://github.com/gsd-build/get-shit-done) - Meta-prompting and spec-driven development system
+
+### Plugins
+
+- [kdcokenny/opencode-worktree](https://github.com/kdcokenny/opencode-worktree) - Zero-friction git worktrees for OpenCode
+
+### MCPs
+
+- [mcp-directory](https://cursor.directory/mcp) - MCP cursor directory
+- [upstash/context7](https://github.com/upstash/context7) - Context7 MCP Server for up-to-date code docs
+- [firecrawl/firecrawl](https://github.com/firecrawl/firecrawl) - Turn websites into LLM-ready data
+
+### Prompts
+
+- [f/prompts.chat](https://github.com/f/prompts.chat) - Awesome ChatGPT Prompts
+- [x1xhlol/system-prompts-and-models-of-ai-tools](https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools) - System prompts of AI tools
