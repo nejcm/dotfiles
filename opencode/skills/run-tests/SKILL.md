@@ -1,6 +1,9 @@
 ---
 name: run-tests
 description: Execute test suites and return structured results with coverage metrics
+compatibility: opencode
+metadata:
+  category: testing
 ---
 
 # Run Tests Skill

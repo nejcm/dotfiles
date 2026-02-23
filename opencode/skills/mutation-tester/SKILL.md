@@ -1,15 +1,10 @@
 ---
 name: mutation-tester
 description: Mutation testing to validate test suite quality
-version: 1.0.0
-category: testing
-tools:
-  - stryker
-  - mutmut
-  - pitest
-permissions:
-  - read
-  - bash
+compatibility: opencode
+metadata:
+  version: "1.0.0"
+  category: testing
 ---
 
 # Mutation Tester Skill

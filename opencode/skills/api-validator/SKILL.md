@@ -1,19 +1,10 @@
 ---
 name: api-validator
 description: API contract testing, OpenAPI validation, and schema compliance verification
-version: 2.0.0
-category: testing
-tools:
-  - swagger-cli
-  - openapi-validator
-  - dredd
-  - postman/newman
-  - pact
-  - spectral
-permissions:
-  - read
-  - bash
-  - write
+compatibility: opencode
+metadata:
+  version: "2.0.0"
+  category: testing
 ---
 
 # API Validator Skill

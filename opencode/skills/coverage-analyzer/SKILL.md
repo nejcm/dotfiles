@@ -1,17 +1,10 @@
 ---
 name: coverage-analyzer
 description: Analyzes test coverage and identifies untested code paths
-version: 1.0.0
-category: testing
-tools:
-  - nyc
-  - istanbul
-  - coverage.py
-  - jest
-  - pytest-cov
-permissions:
-  - read
-  - bash
+compatibility: opencode
+metadata:
+  version: "1.0.0"
+  category: testing
 ---
 
 # Coverage Analyzer Skill

@@ -1,16 +1,10 @@
 ---
 name: dependency-check
 description: Scans dependencies for known security vulnerabilities and license issues
-version: 1.0.0
-category: security
-tools:
-  - npm audit
-  - pip-audit
-  - snyk
-  - dependabot
-permissions:
-  - read
-  - bash
+compatibility: opencode
+metadata:
+  version: "1.0.0"
+  category: security
 ---
 
 # Dependency Check Skill

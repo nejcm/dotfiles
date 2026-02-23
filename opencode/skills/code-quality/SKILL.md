@@ -1,18 +1,10 @@
 ---
 name: code-quality
 description: Automated code quality checks including linting, formatting, and type checking
-version: 1.0.0
-category: quality
-tools:
-  - eslint
-  - prettier
-  - typescript
-  - pylint
-  - black
-  - mypy
-permissions:
-  - read
-  - bash
+compatibility: opencode
+metadata:
+  version: "1.0.0"
+  category: quality
 ---
 
 # Code Quality Skill

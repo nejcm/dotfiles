@@ -1,6 +1,9 @@
 ---
 name: ci-status
 description: Check CI/CD pipeline status and retrieve build results
+compatibility: opencode
+metadata:
+  category: workflow
 ---
 
 # CI Status Skill

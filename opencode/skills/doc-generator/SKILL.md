@@ -1,18 +1,10 @@
 ---
 name: doc-generator
 description: Auto-generates documentation from code comments, types, and structure
-version: 1.0.0
-category: documentation
-tools:
-  - jsdoc
-  - typedoc
-  - sphinx
-  - pydoc
-  - swagger
-permissions:
-  - read
-  - write
-  - bash
+compatibility: opencode
+metadata:
+  version: "1.0.0"
+  category: documentation
 ---
 
 # Documentation Generator Skill

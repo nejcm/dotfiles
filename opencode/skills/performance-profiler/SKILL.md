@@ -1,19 +1,10 @@
 ---
 name: performance-profiler
 description: CPU/memory profiling and performance benchmarking with advanced analysis
-version: 2.0.0
-category: performance
-tools:
-  - node --prof
-  - clinic.js
-  - py-spy
-  - memory-profiler
-  - flamegraph
-  - perf
-permissions:
-  - read
-  - bash
-  - write
+compatibility: opencode
+metadata:
+  version: "2.0.0"
+  category: performance
 ---
 
 # Performance Profiler Skill

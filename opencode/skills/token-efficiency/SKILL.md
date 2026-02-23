@@ -1,7 +1,10 @@
 ---
 name: token-efficiency
 description: Token optimization best practices for cost-effective Claude Code usage. Automatically applies efficient file reading, command execution, and output handling strategies. Includes model selection guidance (Opus for learning, Sonnet for development/debugging). Prefers bash commands over reading files.
-version: 1.4.0
+compatibility: opencode
+metadata:
+  version: "1.4.0"
+  category: efficiency
 ---
 
 # Token Efficiency Expert

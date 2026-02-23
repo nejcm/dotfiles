@@ -1,6 +1,9 @@
 ---
 name: git-workflow
 description: Manage Git operations including branches, commits, and pull requests
+compatibility: opencode
+metadata:
+  category: workflow
 ---
 
 # Git Workflow Skill

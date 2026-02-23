@@ -1,6 +1,9 @@
 ---
 name: explore-codebase
 description: Systematic codebase exploration methodology
+compatibility: opencode
+metadata:
+  category: workflow
 ---
 
 ## When exploring unfamiliar code

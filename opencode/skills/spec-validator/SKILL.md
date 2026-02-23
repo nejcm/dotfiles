@@ -1,6 +1,9 @@
 ---
 name: spec-validator
 description: Validate that implementation matches specification acceptance criteria
+compatibility: opencode
+metadata:
+  category: testing
 ---
 
 # Spec Validator Skill
