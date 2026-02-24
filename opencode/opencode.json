@@ -308,6 +308,12 @@
       "write": "ask",
       "edit": "ask",
       "read": "allow"
+    },
+    "read": {
+      "C:/Work/Personal/dotfiles/.opencode/get-shit-done/*": "allow"
+    },
+    "external_directory": {
+      "C:/Work/Personal/dotfiles/.opencode/get-shit-done/*": "allow"
     }
   },
   "mcp": {
