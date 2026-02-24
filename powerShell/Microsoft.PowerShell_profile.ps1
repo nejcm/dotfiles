@@ -32,6 +32,7 @@ function cua  {choco upgrade all -y}
 function ups  {winget install --id Microsoft.PowerShell --source winget}
 
 function ff-all {& "C:\Scripts\ff-all.ps1" @Args}
+function ai-usage {bunx tokscale@latest}
 
 Remove-Alias gal -Force
 Remove-Alias gc -Force
