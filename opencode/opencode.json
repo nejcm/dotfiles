@@ -325,25 +325,24 @@
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PAT}"
       }
     },
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+      }
+    },
     "linear": {
       "type": "remote",
       "url": "https://mcp.linear.app/mcp",
       "enabled": true,
       "headers": {
-        "Authorization": "Bearer ${LINEAR_API_KEY}"
+        "Authorization": "Bearer {env:LINEAR_API_KEY}"
       }
     },
-    "context7": {
+    "gh_grep": {
       "type": "remote",
-      "url": "https://mcp.context7.com/mcp",
-      "headers": {
-        "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
-      }
-    },
-    "notion": {
-      "type": "remote",
-      "url": "https://mcp.notion.com/mcp",
-      "headers": {}
+      "url": "https://mcp.grep.app"
     }
   }
 }

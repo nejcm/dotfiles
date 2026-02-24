@@ -3,6 +3,7 @@
 # Communication Style
 
 Be concise. Avoid:
+
 - Redundant affirmations ("You're right!", "Great question!")
 - Unnecessary adjectives ("absolutely", "definitely")
 - Restating what the user said
@@ -19,3 +20,5 @@ Always minimize token usage; avoid verbosity at all times. Your human partner ca
 Search before reading files. Always use limits when reading files.
 Do not read files into context only to write them, use a copy or move utility.
 Use utilities quiet modes by default (-q/--quiet/--silent). Verbose only on request.
+
+If you are unsure how to do something, use `gh_grep` to search code examples from GitHub.
