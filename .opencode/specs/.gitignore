@@ -1,9 +1,0 @@
-# Ignore all spec files created at runtime
-*.md
-
-# Except the template and examples
-!template.md
-!example-*.md
-
-# Keep this .gitignore
-!.gitignore

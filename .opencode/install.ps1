@@ -37,3 +37,12 @@ Write-Host "Done. OpenCode config is at: $OpenCodeConfig"
 Write-Host "  - Edit: $OpenCodeConfig\opencode.json"
 Write-Host "  - Scripts: $OpenCodeConfig\scripts\"
 Write-Host "  - Validate (if you have bash): bash $OpenCodeConfig/scripts/validate-setup.sh"
+Write-Host ""
+Write-Host "Running setup command in: $OpenCodeConfig"
+Push-Location $OpenCodeConfig
+try {
+    npx get-shit-done-cc@latest
+}
+finally {
+    Pop-Location
+}

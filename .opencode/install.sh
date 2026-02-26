@@ -39,3 +39,9 @@ echo "Done. OpenCode config is at: $OPENCODE_CONFIG"
 echo "  - Edit: $OPENCODE_CONFIG/opencode.json"
 echo "  - Scripts: $OPENCODE_CONFIG/scripts/"
 echo "  - Validate: bash $OPENCODE_CONFIG/scripts/validate-setup.sh"
+echo ""
+echo "Running setup command in: $OPENCODE_CONFIG"
+(
+  cd "$OPENCODE_CONFIG"
+  npx get-shit-done-cc@latest
+)
