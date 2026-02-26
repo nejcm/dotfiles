@@ -628,47 +628,7 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for complete system design, agent interac
 
 ---
 
-## Metrics
-
-Track these to measure agent system effectiveness:
-
-### Speed
-
-- Time from request to implementation
-- Planning time
-- Review time
-- Total cycle time
-
-### Quality
-
-- Test coverage percentage
-- Security vulnerabilities found
-- Code review approval rate
-- Rollback rate
-
-### Cost
-
-- API costs per feature
-- Model usage distribution
-- Token efficiency
-
-### Reliability
-
-- First-time success rate
-- Auto-fix success rate
-- Human intervention rate
-- Agent accuracy
-
----
-
 ## Support
-
-### Documentation
-
-- [Complete Workflows](workflows/)
-- [Agent Prompts](agents/)
-- [Skill Definitions](skills/)
-- [Spec Templates](specs/)
 
 ### Getting Help
 
@@ -679,58 +639,15 @@ Track these to measure agent system effectiveness:
 
 ---
 
-## Roadmap
+## Get shit done
 
-### Week 1-2 (Foundation)
+> [https://github.com/gsd-build/get-shit-done](https://github.com/gsd-build/get-shit-done)
 
-- ✅ Core agents (Planner, Builder, Tester, Reviewer)
-- ✅ Spec artifact system
-- ✅ Basic workflows
+Staying Updated:
 
-### Week 3 (Specialization)
-
-- ✅ Security agent
-- ✅ Migration agent
-- ✅ Performance agent
-- ✅ Debug agent
-
-### Week 4 (Optimization)
-
-- ✅ MCP server integration
-- ✅ Model strategy
-- ✅ Complete documentation
-
-### Future
-
-- Team collaboration features
-- Metrics dashboard
-- Agent performance analytics
-- Custom agent templates
-- Integration with more tools
-
----
-
-## Credits
-
-Based on production-grade agent architecture principles:
-
-- Microservice-style agents
-- Separation of concerns
-- Least privilege
-- Observable behavior
-- Deterministic outputs
-
-Built for OpenCode, adaptable to any AI coding environment.
-
----
-
-## License
-
-This agent architecture is provided as-is for use with OpenCode.
-
----
-
-**Remember**: Reliability beats flash. Build for control first, autonomy second.
+```bash
+npx get-shit-done-cc@latest
+```
 
 ---
 
@@ -762,3 +679,11 @@ This agent architecture is provided as-is for use with OpenCode.
 
 - [f/prompts.chat](https://github.com/f/prompts.chat) - Awesome ChatGPT Prompts
 - [x1xhlol/system-prompts-and-models-of-ai-tools](https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools) - System prompts of AI tools
+
+---
+
+## License
+
+This agent architecture is provided as-is for use with OpenCode.
+
+---
