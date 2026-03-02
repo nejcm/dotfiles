@@ -1,0 +1,1 @@
+brave gh git git.install gitextensions github-desktop GoogleChrome lazygit nodejs-lts pgadmin4 python314 qbittorrent starship steam telegram vscode winscp wiztree 

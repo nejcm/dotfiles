@@ -6,6 +6,12 @@ Write-Host "Windows System Setup Script" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 
+$repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+$chocoPackagesFile = Join-Path $repoRoot "windows\choco.txt"
+$npmPackagesFile = Join-Path $repoRoot "windows\npm.txt"
+$profileSourceFile = Join-Path $repoRoot "powerShell\Microsoft.PowerShell_profile.ps1"
+$regPath = Join-Path $repoRoot "reg"
+
 # Check for admin privileges
 if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
     Write-Error "This script requires administrator privileges."
@@ -24,8 +30,8 @@ if (-not (Test-Path $profileDir)) {
     New-Item -ItemType Directory -Path $profileDir -Force
 }
 
-if (Test-Path "powerShell\Microsoft.PowerShell_profile.ps1") {
-    Copy-Item "powerShell\Microsoft.PowerShell_profile.ps1" $profilePath -Force
+if (Test-Path $profileSourceFile) {
+    Copy-Item $profileSourceFile $profilePath -Force
 }
 
 # Install Chocolatey
@@ -36,14 +42,15 @@ Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://com
 
 # Install Chocolatey packages from file
 Write-Host "Installing Chocolatey packages..." -ForegroundColor Yellow
-if (Test-Path "chocolatey\packages.txt") {
-    Get-Content "chocolatey\packages.txt" | ForEach-Object {
-        if ($_.Trim() -and -not $_.StartsWith("#")) {
-            choco install $_.Trim() -y
-        }
+if (Test-Path $chocoPackagesFile) {
+    Get-Content $chocoPackagesFile |
+    Where-Object { $_ -and $_.Trim() -notmatch '^\s*#' } |
+    ForEach-Object {
+        $pkg = $_.Trim()
+        choco install $pkg -y
     }
 } else {
-    Write-Warning "chocolatey\packages.txt not found. Skipping Chocolatey package installation."
+    Write-Warning "windows\choco.txt not found. Skipping Chocolatey package installation."
 }
 
 # Install remaining tools via Winget
@@ -57,18 +64,24 @@ foreach ($package in $wingetPackages) {
     winget install --id $package --source winget --accept-package-agreements --accept-source-agreements
 }
 
-# Install bun
-powershell -c "irm bun.sh/install.ps1 | iex"
-
 # Install Node.js tools
 Write-Host "Installing Node.js tools..." -ForegroundColor Yellow
 Invoke-RestMethod bun.sh/install.ps1 | Invoke-Expression
-npm install -g pnpm rimraf @anthropic-ai/claude-code
+if (Test-Path $npmPackagesFile) {
+    Get-Content $npmPackagesFile |
+    Where-Object { $_ -and $_.Trim() -notmatch '^\s*#' } |
+    ForEach-Object {
+        $pkg = $_.Trim()
+        npm install -g $pkg
+    }
+} else {
+    Write-Warning "windows\npm.txt not found. Skipping global npm package installation."
+}
 
 # Apply registry settings
 Write-Host "Applying registry settings..." -ForegroundColor Yellow
-if (Test-Path "reg") {
-    Get-ChildItem -Path "reg" -Filter "*.reg" | ForEach-Object {
+if (Test-Path $regPath) {
+    Get-ChildItem -Path $regPath -Filter "*.reg" | ForEach-Object {
         Write-Host "Applying $($_.Name)..." -ForegroundColor Gray
         reg import $_.FullName
     }
