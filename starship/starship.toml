@@ -1,7 +1,7 @@
 # Windows: /.starship/starship.toml
 # Linux: ~/.config/starship.toml
 
-command_timeout = 3000
+command_timeout = 2000
 
 format = """
 $username\
@@ -78,6 +78,8 @@ symbol = " "
 symbol = " "
 
 [bun]
+# Disable slow module: bun (282ms) — Starship ran bun --version on every single prompt to detect the Bun version, which is expensive
+disabled = true
 format = '\[[$symbol($version)]($style)\]'
 
 [deno]
@@ -116,3 +118,7 @@ format = '\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\]'
 
 [fill]
 symbol = " "
+
+# Disable slow module: battery (186ms) — Starship queried Windows WMI/power status on every prompt
+[battery]
+disabled = true
