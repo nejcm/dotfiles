@@ -1,6 +1,0 @@
-@anthropic-ai/claude-code
-@openai/codex
-bun
-corepack
-knip
-rimraf

@@ -8,9 +8,9 @@ Write-Host ""
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $chocoPackagesFile = Join-Path $repoRoot "windows\choco.txt"
-$npmPackagesFile = Join-Path $repoRoot "windows\npm.txt"
-$profileSourceFile = Join-Path $repoRoot "powerShell\Microsoft.PowerShell_profile.ps1"
-$regPath = Join-Path $repoRoot "reg"
+$bunPackagesFile = Join-Path $repoRoot "bun\install.txt"
+$profileSourceFile = Join-Path $repoRoot "powerShell\Profile.ps1"
+$regPath = Join-Path $repoRoot "windows\reg"
 
 # Check for admin privileges
 if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
@@ -32,6 +32,29 @@ if (-not (Test-Path $profileDir)) {
 
 if (Test-Path $profileSourceFile) {
     Copy-Item $profileSourceFile $profilePath -Force
+}
+
+Write-Host "Configuring custom scripts folder..." -ForegroundColor Yellow
+$scriptsDir = Join-Path $env:USERPROFILE "Scripts"
+if (-not (Test-Path $scriptsDir)) {
+    New-Item -ItemType Directory -Path $scriptsDir -Force | Out-Null
+}
+
+$currentUserPath = [Environment]::GetEnvironmentVariable("Path", "User")
+if ($null -eq $currentUserPath -or -not ($currentUserPath.Split(';') -contains $scriptsDir)) {
+    if ($null -eq $currentUserPath) {
+        $newUserPath = $scriptsDir
+    } else {
+        $newUserPath = "$currentUserPath;$scriptsDir"
+    }
+    [Environment]::SetEnvironmentVariable("Path", $newUserPath, "User")
+}
+
+$scriptsSource = Join-Path $repoRoot "windows\Scripts"
+if (Test-Path $scriptsSource) {
+    Copy-Item (Join-Path $scriptsSource "*.ps1") -Destination $scriptsDir -Force -ErrorAction SilentlyContinue
+} else {
+    Write-Warning "windows\Scripts folder not found. Skipping custom scripts deployment."
 }
 
 # Install Chocolatey
@@ -66,16 +89,16 @@ foreach ($package in $wingetPackages) {
 
 # Install Node.js tools
 Write-Host "Installing Node.js tools..." -ForegroundColor Yellow
-Invoke-RestMethod bun.sh/install.ps1 | Invoke-Expression
-if (Test-Path $npmPackagesFile) {
-    Get-Content $npmPackagesFile |
+powershell -c "irm bun.sh/install.ps1 | iex"
+if (Test-Path $bunPackagesFile) {
+    Get-Content $bunPackagesFile |
     Where-Object { $_ -and $_.Trim() -notmatch '^\s*#' } |
     ForEach-Object {
         $pkg = $_.Trim()
-        npm install -g $pkg
+        bun add -g $pkg
     }
 } else {
-    Write-Warning "windows\npm.txt not found. Skipping global npm package installation."
+    Write-Warning "bun\install.txt not found. Skipping global bun package installation."
 }
 
 # Apply registry settings
