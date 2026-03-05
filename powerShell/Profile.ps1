@@ -1,5 +1,5 @@
 # GIT ALIASES
-function ff   {gpr && git pull --ff-only}
+function gff  {gpr && git pull --ff-only}
 function ga   {git add $args}
 function gb   {git branch $args}
 function gba  {git branch --all $args}
@@ -31,7 +31,7 @@ function gu   {git reset --soft HEAD~1}
 function cua  {choco upgrade all -y}
 function ups  {winget install --id Microsoft.PowerShell --source winget}
 
-function ff-all {& "C:\Scripts\ff-all.ps1" @Args}
+function gff-all {& "C:\Scripts\gff-all.ps1" @Args}
 function ai-usage {bunx tokscale@latest}
 
 Remove-Alias gal -Force

@@ -8,7 +8,7 @@ Write-Host ""
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $chocoPackagesFile = Join-Path $repoRoot "windows\choco.txt"
-$bunPackagesFile = Join-Path $repoRoot "bun\install.txt"
+$nodePackagesFile = Join-Path $repoRoot "node\packages.txt"
 $profileSourceFile = Join-Path $repoRoot "powerShell\Profile.ps1"
 $regPath = Join-Path $repoRoot "windows\reg"
 
@@ -90,8 +90,8 @@ foreach ($package in $wingetPackages) {
 # Install Node.js tools
 Write-Host "Installing Node.js tools..." -ForegroundColor Yellow
 powershell -c "irm bun.sh/install.ps1 | iex"
-if (Test-Path $bunPackagesFile) {
-    Get-Content $bunPackagesFile |
+if (Test-Path $nodePackagesFile) {
+    Get-Content $nodePackagesFile |
     Where-Object { $_ -and $_.Trim() -notmatch '^\s*#' } |
     ForEach-Object {
         $pkg = $_.Trim()

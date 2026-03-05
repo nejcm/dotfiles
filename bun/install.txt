@@ -1,1 +1,0 @@
-corepack knip rimraf @anthropic-ai/claude-code @openai/codex opencode-ai

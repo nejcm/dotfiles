@@ -26,13 +26,21 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 # Chocolatey
 
-List all packages
+List all choco packages
 
 ```bash
 choco list --idonly >> choco.txt
 ```
 
+List all node packages
+
+```bash
+bun list -g --depth=0 >> packages.txt
+```
+
 # Other tools and apps
+
+bunx playwright install --with-deps
 
 https://github.com/imputnet/helium-windows/releases
 https://cursor.com/download
