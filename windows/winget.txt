@@ -1,0 +1,9 @@
+Docker.DockerDesktop
+GoLang.Go
+Surfshark.Surfshark
+Anysphere.Cursor
+Tailscale.Tailscale
+Termius.Termius
+SST.OpenCodeDesktop
+ImputNet.Helium
+ZedIndustries.Zed

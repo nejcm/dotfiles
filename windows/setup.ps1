@@ -8,6 +8,7 @@ Write-Host ""
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $chocoPackagesFile = Join-Path $repoRoot "windows\choco.txt"
+$wingetPackagesFile = Join-Path $repoRoot "windows\winget.txt"
 $nodePackagesFile = Join-Path $repoRoot "node\packages.txt"
 $profileSourceFile = Join-Path $repoRoot "powerShell\Profile.ps1"
 $regPath = Join-Path $repoRoot "windows\reg"
@@ -76,15 +77,17 @@ if (Test-Path $chocoPackagesFile) {
     Write-Warning "windows\choco.txt not found. Skipping Chocolatey package installation."
 }
 
-# Install remaining tools via Winget
-Write-Host "Installing additional tools via winget..." -ForegroundColor Yellow
-$wingetPackages = @(
-    "Docker.DockerDesktop",
-    "GoLang.Go"
-)
-
-foreach ($package in $wingetPackages) {
-    winget install --id $package --source winget --accept-package-agreements --accept-source-agreements
+# Install tools via Winget from file
+Write-Host "Installing tools via winget..." -ForegroundColor Yellow
+if (Test-Path $wingetPackagesFile) {
+    Get-Content $wingetPackagesFile |
+    Where-Object { $_ -and $_.Trim() -notmatch '^\s*#' } |
+    ForEach-Object {
+        $package = $_.Trim()
+        winget install --id $package --source winget --accept-package-agreements --accept-source-agreements
+    }
+} else {
+    Write-Warning "windows\winget.txt not found. Skipping winget package installation."
 }
 
 # Install Node.js tools
