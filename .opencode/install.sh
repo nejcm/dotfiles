@@ -44,4 +44,5 @@ echo "Running setup command in: $OPENCODE_CONFIG"
 (
   cd "$OPENCODE_CONFIG"
   npx get-shit-done-cc@latest
+  mgrep install-opencode
 )

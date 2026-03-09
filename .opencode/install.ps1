@@ -42,6 +42,7 @@ Write-Host "Running setup command in: $OpenCodeConfig"
 Push-Location $OpenCodeConfig
 try {
     npx get-shit-done-cc@latest
+    mgrep install-opencode
 }
 finally {
     Pop-Location
