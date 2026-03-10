@@ -5,7 +5,7 @@
   "plugin": [
     "./plugins/git-worktree.ts",
     "./plugins/format-on-write.ts",
-    "./plugins/ecc-hooks.ts"
+    "ecc-universal"
   ],
   "agent": {
     "planner": {
