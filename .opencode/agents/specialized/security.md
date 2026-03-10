@@ -1,7 +1,7 @@
 ---
 description: Security review specialist for auth, payments, permissions, secrets, and crypto
 mode: subagent
-model: anthropic/claude-opus-4-6
+model: opus
 temperature: 0
 tools:
   write: false

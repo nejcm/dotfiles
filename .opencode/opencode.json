@@ -2,13 +2,18 @@
   "$schema": "https://opencode.ai/config.json",
   "model": "sonnet",
   "small_model": "opencode/kimi-k2.5-free",
-  "plugin": ["./plugins/git-worktree.ts", "./plugins/format-on-write.ts"],
+  "plugin": [
+    "./plugins/git-worktree.ts",
+    "./plugins/format-on-write.ts",
+    "./plugins/ecc-hooks.ts"
+  ],
   "agent": {
     "planner": {
       "description": "Read-only planning agent that decomposes tasks and creates spec artifacts",
       "mode": "subagent",
       "model": "sonnet",
       "temperature": 0.3,
+      "prompt": "{file:.opencode/prompts/agents/planner.txt}",
       "tools": {
         "write": false,
         "edit": false,
@@ -46,6 +51,7 @@
       "mode": "subagent",
       "model": "sonnet",
       "temperature": 0.2,
+      "prompt": "{file:.opencode/prompts/agents/code-reviewer.txt}",
       "tools": {
         "write": false,
         "edit": false,
@@ -59,6 +65,7 @@
       "mode": "subagent",
       "model": "opus",
       "temperature": 0,
+      "prompt": "{file:.opencode/prompts/agents/security-reviewer.txt}",
       "tools": {
         "write": false,
         "edit": false,
@@ -96,6 +103,7 @@
       "mode": "subagent",
       "model": "haiku",
       "temperature": 0.1,
+      "prompt": "{file:.opencode/prompts/agents/refactor-cleaner.txt}",
       "tools": {
         "write": true,
         "edit": true,
@@ -134,6 +142,7 @@
       "mode": "subagent",
       "model": "haiku",
       "temperature": 0.2,
+      "prompt": "{file:.opencode/prompts/agents/doc-updater.txt}",
       "tools": {
         "write": true,
         "edit": true,
@@ -250,6 +259,7 @@
       "mode": "subagent",
       "model": "haiku",
       "temperature": 0,
+      "prompt": "{file:.opencode/prompts/agents/build-error-resolver.txt}",
       "tools": {
         "write": false,
         "edit": false,
@@ -262,6 +272,7 @@
       "mode": "subagent",
       "model": "sonnet",
       "temperature": 0.3,
+      "prompt": "{file:.opencode/prompts/agents/architect.txt}",
       "tools": {
         "write": false,
         "edit": false,
@@ -275,12 +286,195 @@
       "mode": "subagent",
       "model": "sonnet",
       "temperature": 0.1,
+      "prompt": "{file:.opencode/prompts/agents/e2e-runner.txt}",
       "tools": {
         "write": false,
         "edit": false,
         "bash": true,
         "read": true
       }
+    },
+    "tdd-guide": {
+      "description": "Test-Driven Development specialist enforcing write-tests-first methodology. Use when writing new features, fixing bugs, or refactoring code. Ensures 80%+ test coverage.",
+      "mode": "subagent",
+      "model": "sonnet",
+      "prompt": "{file:.opencode/prompts/agents/tdd-guide.txt}",
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
+    },
+    "go-reviewer": {
+      "description": "Expert Go code reviewer specializing in idiomatic Go, concurrency patterns, error handling, and performance.",
+      "mode": "subagent",
+      "model": "sonnet",
+      "prompt": "{file:.opencode/prompts/agents/go-reviewer.txt}",
+      "tools": {
+        "read": true,
+        "bash": true,
+        "write": false,
+        "edit": false
+      }
+    },
+    "go-build-resolver": {
+      "description": "Go build, vet, and compilation error resolution specialist. Fixes Go build errors with minimal changes.",
+      "mode": "subagent",
+      "model": "sonnet",
+      "prompt": "{file:.opencode/prompts/agents/go-build-resolver.txt}",
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
+    },
+    "database-reviewer": {
+      "description": "PostgreSQL database specialist for query optimization, schema design, security, and performance. Incorporates Supabase best practices.",
+      "mode": "subagent",
+      "model": "sonnet",
+      "prompt": "{file:.opencode/prompts/agents/database-reviewer.txt}",
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
+    }
+  },
+  "command": {
+    "plan": {
+      "description": "Create a detailed implementation plan for complex features",
+      "template": "{file:.opencode/commands/plan.md}\n\n$ARGUMENTS",
+      "agent": "planner",
+      "subtask": true
+    },
+    "tdd": {
+      "description": "Enforce TDD workflow with 80%+ test coverage",
+      "template": "{file:.opencode/commands/tdd.md}\n\n$ARGUMENTS",
+      "agent": "tdd-guide",
+      "subtask": true
+    },
+    "code-review": {
+      "description": "Review code for quality, security, and maintainability",
+      "template": "{file:.opencode/commands/code-review.md}\n\n$ARGUMENTS",
+      "agent": "reviewer",
+      "subtask": true
+    },
+    "security": {
+      "description": "Run comprehensive security review",
+      "template": "{file:.opencode/commands/security.md}\n\n$ARGUMENTS",
+      "agent": "security",
+      "subtask": true
+    },
+    "build-fix": {
+      "description": "Fix build and TypeScript errors with minimal changes",
+      "template": "{file:.opencode/commands/build-fix.md}\n\n$ARGUMENTS",
+      "agent": "build-validator",
+      "subtask": true
+    },
+    "e2e": {
+      "description": "Generate and run E2E tests with Playwright",
+      "template": "{file:.opencode/commands/e2e.md}\n\n$ARGUMENTS",
+      "agent": "verify-app",
+      "subtask": true
+    },
+    "refactor-clean": {
+      "description": "Remove dead code and consolidate duplicates",
+      "template": "{file:.opencode/commands/refactor-clean.md}\n\n$ARGUMENTS",
+      "agent": "refactor",
+      "subtask": true
+    },
+    "orchestrate": {
+      "description": "Orchestrate multiple agents for complex tasks",
+      "template": "{file:.opencode/commands/orchestrate.md}\n\n$ARGUMENTS",
+      "agent": "planner",
+      "subtask": true
+    },
+    "learn": {
+      "description": "Extract patterns and learnings from session",
+      "template": "{file:.opencode/commands/learn.md}\n\n$ARGUMENTS"
+    },
+    "checkpoint": {
+      "description": "Save verification state and progress",
+      "template": "{file:.opencode/commands/checkpoint.md}\n\n$ARGUMENTS"
+    },
+    "verify": {
+      "description": "Run verification loop",
+      "template": "{file:.opencode/commands/verify.md}\n\n$ARGUMENTS"
+    },
+    "eval": {
+      "description": "Run evaluation against criteria",
+      "template": "{file:.opencode/commands/eval.md}\n\n$ARGUMENTS"
+    },
+    "update-docs": {
+      "description": "Update documentation",
+      "template": "{file:.opencode/commands/update-docs.md}\n\n$ARGUMENTS",
+      "agent": "documentation",
+      "subtask": true
+    },
+    "update-codemaps": {
+      "description": "Update codemaps",
+      "template": "{file:.opencode/commands/update-codemaps.md}\n\n$ARGUMENTS",
+      "agent": "documentation",
+      "subtask": true
+    },
+    "test-coverage": {
+      "description": "Analyze test coverage",
+      "template": "{file:.opencode/commands/test-coverage.md}\n\n$ARGUMENTS",
+      "agent": "tdd-guide",
+      "subtask": true
+    },
+    "setup-pm": {
+      "description": "Configure package manager",
+      "template": "{file:.opencode/commands/setup-pm.md}\n\n$ARGUMENTS"
+    },
+    "go-review": {
+      "description": "Go code review",
+      "template": "{file:.opencode/commands/go-review.md}\n\n$ARGUMENTS",
+      "agent": "go-reviewer",
+      "subtask": true
+    },
+    "go-test": {
+      "description": "Go TDD workflow",
+      "template": "{file:.opencode/commands/go-test.md}\n\n$ARGUMENTS",
+      "agent": "tdd-guide",
+      "subtask": true
+    },
+    "go-build": {
+      "description": "Fix Go build errors",
+      "template": "{file:.opencode/commands/go-build.md}\n\n$ARGUMENTS",
+      "agent": "go-build-resolver",
+      "subtask": true
+    },
+    "skill-create": {
+      "description": "Generate skills from git history",
+      "template": "{file:.opencode/commands/skill-create.md}\n\n$ARGUMENTS"
+    },
+    "instinct-status": {
+      "description": "View learned instincts",
+      "template": "{file:.opencode/commands/instinct-status.md}\n\n$ARGUMENTS"
+    },
+    "instinct-import": {
+      "description": "Import instincts",
+      "template": "{file:.opencode/commands/instinct-import.md}\n\n$ARGUMENTS"
+    },
+    "instinct-export": {
+      "description": "Export instincts",
+      "template": "{file:.opencode/commands/instinct-export.md}\n\n$ARGUMENTS"
+    },
+    "evolve": {
+      "description": "Cluster instincts into skills",
+      "template": "{file:.opencode/commands/evolve.md}\n\n$ARGUMENTS"
+    },
+    "promote": {
+      "description": "Promote project instincts to global scope",
+      "template": "{file:.opencode/commands/promote.md}\n\n$ARGUMENTS"
+    },
+    "projects": {
+      "description": "List known projects and instinct stats",
+      "template": "{file:.opencode/commands/projects.md}\n\n$ARGUMENTS"
     }
   },
   "permission": {

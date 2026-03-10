@@ -1,93 +1,74 @@
 ---
-description: Update implementation and project documentation
+description: Update documentation for recent changes
+agent: doc-updater
 subtask: true
 model: haiku
 ---
 
-# Documentation Analysis
+# Update Docs Command
 
-1. Review current documentation status:
-   - Check `specs/implementation_status.md` for overall project status.
-   - Review the implemented phase document (`specs/phase{N}_implementation_plan.md`).
-   - Review `specs/flutter_structurizr_implementation_spec.md` and `specs/flutter_structurizr_implementation_spec_updated.md`.
-   - Review `specs/testing_plan.md` to ensure it is current given recent test passes, failures, and changes.
-   - Examine `CLAUDE.md` and `README.md` for project-wide documentation.
-   - Check for and document any new lessons learned or best practices in `CLAUDE.md`.
+Update documentation to reflect recent changes: $ARGUMENTS
 
-2. Analyze implementation and testing results:
-   - Review what was implemented in the last phase.
-   - Review testing results and coverage.
-   - Identify new best practices discovered during implementation.
-   - Note any implementation challenges and solutions.
-   - Cross-reference updated documentation with recent implementation and test results to ensure accuracy.
+## Your Task
 
-# Documentation Updates
+1. **Identify changed code** - `git diff --name-only`
+2. **Find related docs** - README, API docs, guides
+3. **Update documentation** - Keep in sync with code
+4. **Verify accuracy** - Docs match implementation
 
-1. Update phase implementation document:
-   - Mark completed tasks with `✅` status.
-   - Update implementation percentages.
-   - Add detailed notes on implementation approach.
-   - Document any deviations from original plan with justification.
-   - Add new sections if needed (lessons learned, best practices).
-   - Document specific implementation details for complex components.
-   - Include a summary of any new troubleshooting tips or workflow improvements discovered during the phase.
+## Documentation Types
 
-2. Update implementation status document:
-   - Update phase completion percentages.
-   - Add or update implementation status for components.
-   - Add notes on implementation approach and decisions.
-   - Document best practices discovered during implementation.
-   - Note any challenges overcome and solutions implemented.
+### README.md
 
-3. Update implementation specification documents:
-   - Mark completed items with `✅` or strikethrough but preserve original requirements.
-   - Add notes on implementation details where appropriate.
-   - Add references to implemented files and classes.
-   - Update any implementation guidance based on experience.
+- Installation instructions
+- Quick start guide
+- Feature overview
+- Configuration options
 
-4. Update `CLAUDE.md` and `README.md` if necessary:
-   - Add new best practices.
-   - Update project status.
-   - Add new implementation guidance.
-   - Document known issues or limitations.
-   - Update usage examples to include new functionality.
+### API Documentation
 
-5. Document new testing procedures:
-   - Add details on test files created.
-   - Include test running instructions.
-   - Document test coverage.
-   - Explain testing approach for complex components.
+- Endpoint descriptions
+- Request/response formats
+- Authentication details
+- Error codes
 
-# Documentation Formatting and Structure
+### Code Comments
 
-1. Maintain consistent documentation style:
-   - Use clear headings and sections.
-   - Include code examples where helpful.
-   - Use status indicators (`✅`, `⚠️`, `❌`) consistently.
-   - Maintain proper Markdown formatting.
+- JSDoc for public APIs
+- Complex logic explanations
+- TODO/FIXME cleanup
 
-2. Ensure documentation completeness:
-   - Cover all implemented features.
-   - Include usage examples.
-   - Document API changes or additions.
-   - Include troubleshooting guidance for common issues.
+### Guides
 
-# Guidelines
+- How-to tutorials
+- Architecture decisions (ADRs)
+- Troubleshooting guides
 
-- Do not create new specification files.
-- Update existing files in the `specs/` directory.
-- Maintain consistent documentation style.
-- Include practical examples where appropriate.
-- Cross-reference related documentation sections.
-- Document best practices and lessons learned.
-- Provide clear status updates on project progress.
-- Update numerical completion percentages.
-- Ensure documentation reflects actual implementation.
+## Update Checklist
 
-Provide a summary of documentation updates after completion, including:
+- [ ] README reflects current features
+- [ ] API docs match endpoints
+- [ ] JSDoc updated for changed functions
+- [ ] Examples are working
+- [ ] Links are valid
+- [ ] Version numbers updated
 
-1. Files updated
-2. Major changes to documentation
-3. Updated completion percentages
-4. New best practices documented
-5. Status of the overall project after this phase
+## Documentation Quality
+
+### Good Documentation
+
+- Accurate and up-to-date
+- Clear and concise
+- Has working examples
+- Covers edge cases
+
+### Avoid
+
+- Outdated information
+- Missing parameters
+- Broken examples
+- Ambiguous language
+
+---
+
+**IMPORTANT**: Documentation should be updated alongside code changes, not as an afterthought.

@@ -1,7 +1,7 @@
 ---
 description: Write short prose in a personal, informal style from topics or resources
 mode: subagent
-model: anthropic/claude-sonnet-4-20250514
+model: sonnet
 temperature: 0.7
 maxSteps: 15
 permission:
