@@ -1,7 +1,7 @@
 ---
 description: Runs full build pipeline (lint, typecheck, build, test). Use when validating a PR or before merge. Read-only; reports pass/fail only.
 mode: subagent
-model: anthropic/claude-haiku-4-5-20251001
+model: haiku
 temperature: 0
 tools:
   write: false
@@ -30,11 +30,11 @@ Execute lint, typecheck, build, and test in order. Auto-detect the project's too
 ```markdown
 ## Build validation
 
-| Step       | Status | Command / notes |
-| ---------- | ------ | ----------------- |
-| Lint      | pass   | `pnpm lint`       |
-| Typecheck | pass   | `pnpm typecheck`  |
-| Build     | pass   | `pnpm build`      |
+| Step      | Status | Command / notes               |
+| --------- | ------ | ----------------------------- |
+| Lint      | pass   | `pnpm lint`                   |
+| Typecheck | pass   | `pnpm typecheck`              |
+| Build     | pass   | `pnpm build`                  |
 | Test      | fail   | `pnpm test` — 2 failures in X |
 ```
 

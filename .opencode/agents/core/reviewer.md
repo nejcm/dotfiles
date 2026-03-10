@@ -1,7 +1,7 @@
 ---
 description: Read-only code review agent that validates correctness, security, and spec compliance
 mode: subagent
-model: anthropic/claude-sonnet-4-6
+model: sonnet
 temperature: 0.2
 tools:
   write: false

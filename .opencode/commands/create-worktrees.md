@@ -1,7 +1,7 @@
 ---
 description: Create worktrees for all open PR branches
 subtask: true
-model: anthropic/claude-haiku-4-5-20251001
+model: haiku
 ---
 
 Create git worktrees for every open GitHub PR branch in `./tree/<branch>`.

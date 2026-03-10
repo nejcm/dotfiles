@@ -1,7 +1,7 @@
 ---
 description: Build and debug Model Context Protocol servers and clients with secure, reliable integrations
 mode: subagent
-model: anthropic/claude-sonnet-4-6
+model: sonnet
 temperature: 0.2
 tools:
   write: true

@@ -1,7 +1,7 @@
 ---
 description: Design and optimize Git workflows, branch strategy, PR process, and release hygiene
 mode: subagent
-model: anthropic/claude-haiku-4-5-20251001
+model: haiku
 temperature: 0.1
 tools:
   write: true

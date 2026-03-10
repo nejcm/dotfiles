@@ -1,7 +1,7 @@
 ---
 description: Database migration agent for schema diffs and dry-run migrations
 mode: subagent
-model: anthropic/claude-sonnet-4-6
+model: sonnet
 temperature: 0
 tools:
   write: true

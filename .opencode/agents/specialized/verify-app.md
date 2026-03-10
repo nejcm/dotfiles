@@ -1,7 +1,7 @@
 ---
 description: End-to-end application verification. Starts app, runs E2E/integration tests, checks key flows. Use for full app validation. Reports only; does not fix.
 mode: subagent
-model: anthropic/claude-sonnet-4-6
+model: sonnet
 temperature: 0.1
 tools:
   write: false
@@ -30,12 +30,12 @@ Start the app (or use existing dev server), run E2E or integration tests, and va
 ```markdown
 ## App verification
 
-| Check              | Status | Notes                    |
-| ------------------ | ------ | ------------------------- |
-| Dev server start   | pass   | Port 3000                 |
-| Health endpoint    | pass   | GET /health 200           |
-| E2E: login         | fail   | Timeout on submit button  |
-| API: list items    | pass   | 200, 5 items             |
+| Check            | Status | Notes                    |
+| ---------------- | ------ | ------------------------ |
+| Dev server start | pass   | Port 3000                |
+| Health endpoint  | pass   | GET /health 200          |
+| E2E: login       | fail   | Timeout on submit button |
+| API: list items  | pass   | 200, 5 items             |
 ```
 
 Include command run and relevant error output for failures. Keep output scoped; do not run unrelated commands.

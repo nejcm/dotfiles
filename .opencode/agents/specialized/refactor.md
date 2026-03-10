@@ -1,7 +1,7 @@
 ---
 description: Code refactoring specialist for improvements and restructuring
 mode: subagent
-model: anthropic/claude-haiku-4-5-20251001
+model: haiku
 temperature: 0.1
 tools:
   write: false

@@ -1,7 +1,7 @@
 ---
 description: Implementation agent that writes code strictly against specifications
 mode: subagent
-model: anthropic/claude-sonnet-4-6
+model: sonnet
 temperature: 0.1
 tools:
   write: true

@@ -1,7 +1,7 @@
 ---
 description: System design specialist. Analyzes architecture, module boundaries, API contracts, data flow. Use for design decisions and ADRs. Read-only.
 mode: subagent
-model: anthropic/claude-sonnet-4-6
+model: sonnet
 temperature: 0.3
 tools:
   write: false

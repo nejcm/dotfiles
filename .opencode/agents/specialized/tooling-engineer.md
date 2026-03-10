@@ -1,7 +1,7 @@
 ---
 description: Build and improve developer tooling with a primary focus on CLI UX, automation, and integrations
 mode: subagent
-model: anthropic/claude-sonnet-4-6
+model: sonnet
 temperature: 0.2
 tools:
   write: true

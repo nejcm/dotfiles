@@ -1,7 +1,7 @@
 ---
 description: Performance optimization specialist
 mode: subagent
-model: anthropic/claude-sonnet-4-6
+model: sonnet
 temperature: 0.2
 tools:
   write: false

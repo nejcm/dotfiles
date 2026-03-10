@@ -1,7 +1,7 @@
 ---
 description: Manage dependencies for security, compatibility, and performance across language ecosystems
 mode: subagent
-model: anthropic/claude-haiku-4-5-20251001
+model: haiku
 temperature: 0.1
 tools:
   write: true

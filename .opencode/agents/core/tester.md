@@ -1,7 +1,7 @@
 ---
 description: Test execution agent that runs tests and returns structured results
 mode: subagent
-model: anthropic/claude-haiku-4-5-20251001
+model: haiku
 temperature: 0
 tools:
   write: false

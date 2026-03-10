@@ -1,7 +1,7 @@
 ---
 description: Build and improve CI/CD, infrastructure automation, deployment safety, and observability
 mode: subagent
-model: anthropic/claude-sonnet-4-6
+model: sonnet
 temperature: 0.2
 tools:
   write: true

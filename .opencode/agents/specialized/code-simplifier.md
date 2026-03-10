@@ -1,7 +1,7 @@
 ---
 description: Post-implementation cleanup agent; simplifies code after coding sessions. Use proactively at end of long sessions or to clean up complex PRs.
 mode: subagent
-model: anthropic/claude-haiku-4-5-20251001
+model: haiku
 temperature: 0.1
 tools:
   write: false

@@ -398,7 +398,7 @@ Step-by-step implementation
   "agent": {
     "planner": {
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-20250514",
+      "model": "sonnet",
       "tools": { "write": false, "read": true }
     }
   },

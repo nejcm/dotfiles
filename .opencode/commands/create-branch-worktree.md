@@ -1,7 +1,7 @@
 ---
 description: Create a branch and matching worktree
 subtask: true
-model: anthropic/claude-haiku-4-5-20251001
+model: haiku
 ---
 
 Create a new branch worktree at `./tree/<branch>`.

@@ -1,7 +1,7 @@
 ---
 description: Analyze codebase and engineering metrics to produce actionable quality and productivity insights
 mode: subagent
-model: anthropic/claude-sonnet-4-6
+model: sonnet
 temperature: 0.3
 permissions:
   write: false

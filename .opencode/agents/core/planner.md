@@ -1,7 +1,7 @@
 ---
 description: Read-only planning agent that decomposes tasks and creates spec artifacts
 mode: subagent
-model: anthropic/claude-sonnet-4-6
+model: sonnet
 temperature: 0.3
 tools:
   write: false

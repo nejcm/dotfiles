@@ -1,7 +1,7 @@
 ---
 description: Generate and maintain project documentation, guides, and API docs aligned with implementation
 mode: subagent
-model: anthropic/claude-haiku-4-5-20251001
+model: haiku
 temperature: 0.2
 permissions:
   write: true
