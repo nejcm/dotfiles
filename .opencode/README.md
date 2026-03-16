@@ -639,7 +639,9 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for complete system design, agent interac
 
 ---
 
-## Get shit done
+## Other tools, libraries, mcps, ...
+
+### Get shit done
 
 > [https://github.com/gsd-build/get-shit-done](https://github.com/gsd-build/get-shit-done)
 
@@ -647,6 +649,12 @@ Staying Updated:
 
 ```bash
 npx get-shit-done-cc@latest
+```
+
+### Vercel MCP
+
+```bash
+npx add-mcp https://mcp.vercel.com
 ```
 
 ---
