@@ -1,15 +1,15 @@
 ---
 name: token-efficiency
-description: Token optimization best practices for cost-effective Claude Code usage. Automatically applies efficient file reading, command execution, and output handling strategies. Includes model selection guidance (Opus for learning, Sonnet for development/debugging). Prefers bash commands over reading files.
+description: Token optimization best practices for cost-effective OpenCode usage. Automatically applies efficient file reading, command execution, and output handling strategies. Prefers search-first retrieval, scoped reads, and quiet commands over large raw outputs.
 compatibility: opencode
 metadata:
-  version: "1.4.0"
+  version: "1.5.0"
   category: efficiency
 ---
 
-# Token Efficiency Expert
+# Token Efficiency
 
-This skill provides token optimization strategies for cost-effective Claude Code usage across all projects. These guidelines help minimize token consumption while maintaining high-quality assistance.
+This skill provides token optimization strategies for cost-effective OpenCode usage across all projects. These guidelines help minimize token consumption while maintaining high-quality assistance.
 
 ## Core Principle
 
@@ -19,66 +19,44 @@ Default assumption: **Users prefer efficient, cost-effective assistance.**
 
 ---
 
-## Model Selection Strategy
+## Effort Selection Strategy
 
-**Use the right model for the task to optimize cost and performance:**
+**Use the lightest approach that still preserves correctness.**
 
-### Opus - For Learning and Deep Understanding
+### Start Narrow by Default
 
-**Use Opus when:**
-- 🎓 **Learning new codebases** - Understanding architecture, code structure, design patterns
-- 📚 **Broad exploration** - Identifying key files, understanding repository organization
-- 🔍 **Deep analysis** - Analyzing complex algorithms, performance optimization
-- 📖 **Reading and understanding** - When you need to comprehend existing code before making changes
-- 🧠 **Very complex debugging** - Only when Sonnet can't solve it or issue is architectural
+Begin with small, cheap steps:
+- Search before reading
+- Read slices before full files
+- Use quiet command output
+- Summarize findings instead of dumping raw content
 
-**Why Opus:** More powerful reasoning for understanding complex systems and relationships
+This is the default for:
+- Writing code
+- Editing and fixing
+- Standard debugging
+- Running tests
+- Documentation work
+- General questions
 
-**Example prompts:**
-```
-"Use Opus to understand the architecture of this codebase"
-"Switch to Opus - I need help understanding how this component works"
-"Use Opus for this deep dive into the authentication system"
-```
+### Expand Only When Needed
 
-### Sonnet - For Regular Development Tasks (DEFAULT)
-
-**Use Sonnet (default) for:**
-- ✏️ **Writing code** - Creating new files, implementing features
-- 🔧 **Editing and fixing** - Updating configurations, fixing bugs
-- 🐛 **Debugging** - Standard debugging, error analysis, troubleshooting (use Sonnet unless very complex)
-- 🧪 **Testing** - Writing tests, running test suites
-- 📝 **Documentation** - Writing READMEs, comments, docstrings
-- 🚀 **Deployment tasks** - Running builds, deploying code
-- 💬 **General questions** - Quick clarifications, simple explanations
-
-**Why Sonnet:** Faster and more cost-effective for straightforward tasks, handles most debugging well
-
-**Example workflow:**
-```
-1. [Opus] Learn codebase structure and identify key components (one-time)
-2. [Sonnet] Implement the feature based on understanding
-3. [Sonnet] Debug and fix issues as they arise
-4. [Sonnet] Write tests and documentation
-5. [Opus] Only if stuck on architectural or very complex issues
-6. [Sonnet] Final cleanup and deployment
-```
+Escalate when the narrow path is not enough:
+- The user is learning a new codebase
+- You need to understand architecture or control flow
+- The bug spans multiple files or layers
+- Filtered output removed the root cause
+- A review requires full-context inspection
 
 ### Cost Optimization Strategy
 
 **Typical session pattern:**
-1. **Start with Opus** - Spend 10-15 minutes understanding the codebase (one-time investment)
-2. **Switch to Sonnet** - Use for ALL implementation, debugging, and routine work
-3. **Return to Opus** - Only when explicitly needed for deep architectural understanding
+1. Search to find likely files and symbols
+2. Read only the relevant sections
+3. Implement or debug with focused context
+4. Expand to broader reads only if the task still is not clear
 
-**Savings example:**
-- 2 hours of work = 120 minutes
-- Opus for learning: 15 minutes (~5K tokens)
-- Sonnet for everything else: 105 minutes (~15K tokens)
-- **vs all Opus: ~40K tokens**
-- **Savings: ~50% token cost**
-
-**Remember:** Sonnet is very capable - use it by default, including for debugging. Only escalate to Opus when the problem requires deep architectural insight.
+**Remember:** broad context is a tool, not the default. Start small and expand once.
 
 ---
 
@@ -86,18 +64,18 @@ Default assumption: **Users prefer efficient, cost-effective assistance.**
 
 ### Common Misconception
 
-**Myth:** Having many skills in `.claude/skills/` increases token usage.
+**Myth:** Having many skills in `.opencode/skills/` increases token usage.
 
-**Reality:** Skills use **progressive disclosure** - Claude loads them intelligently:
+**Reality:** Skills use **progressive disclosure**:
 
-1. **At session start**: Claude sees only skill **descriptions** (minimal tokens)
+1. **At session start**: the agent sees only skill **descriptions** (minimal tokens)
 2. **When activated**: Full skill content loaded only for skills being used
 3. **Unused skills**: Consume almost no tokens (just the description line)
 
 ### Example Token Usage
 
 ```
-.claude/skills/
+.opencode/skills/
 ├── vgp-pipeline/          # ~50 tokens (description only)
 ├── galaxy-tool-wrapping/  # ~40 tokens (description only)
 ├── token-efficiency/      # ~30 tokens (description only)
@@ -110,18 +88,18 @@ Default assumption: **Users prefer efficient, cost-effective assistance.**
 
 ### Implication for Centralized Skills
 
-**It's safe to symlink multiple skills to a project!**
+**It's safe to keep multiple skills available in a project.**
 
-- Link 10+ skills from `$CLAUDE_METADATA` → only ~500 tokens overhead
+- Even 10+ skills add little overhead when only descriptions are loaded initially
 - Only activate skills you need by mentioning them by name
 - Example: "Use the vgp-pipeline skill to check status" → loads only that skill
 
 **Best practice:**
 ```bash
-# Link all potentially useful skills
-ln -s $CLAUDE_METADATA/skills/vgp-pipeline .claude/skills/vgp-pipeline
-ln -s $CLAUDE_METADATA/skills/galaxy-tool-wrapping .claude/skills/galaxy-tool-wrapping
-ln -s $CLAUDE_METADATA/skills/python-testing .claude/skills/python-testing
+# Keep useful skills in the project skill directory
+.opencode/skills/vgp-pipeline
+.opencode/skills/galaxy-tool-wrapping
+.opencode/skills/python-testing
 
 # Activate selectively during session
 "Use the vgp-pipeline skill to debug this workflow"  # Only VGP skill fully loaded
@@ -156,7 +134,7 @@ command --silent
 ```
 
 **Common commands with quiet modes:**
-- `grep -q` (quiet, exit status only)
+- `rg -q` (quiet, exit status only)
 - `git --quiet` or `git -q`
 - `curl -s` or `curl --silent`
 - `wget -q`
@@ -237,7 +215,7 @@ Read: /var/log/syslog
 
 ---
 
-### 4. Use Grep Instead of Reading Files
+### 4. Use `rg` Instead of Reading Files
 
 **When searching for specific content:**
 
@@ -246,24 +224,24 @@ Read: /var/log/syslog
 Read: large_file.py  # 30K tokens
 # Then manually look for "def my_function"
 
-# ✅ DO: Use Grep to find it
-Grep: "def my_function" large_file.py
+# ✅ DO: Use ripgrep to find it
+rg -n "def my_function" large_file.py
 # Then only read relevant sections if needed
 ```
 
-**Advanced grep usage:**
+**Advanced `rg` usage:**
 ```bash
 # Find with context
-Bash: grep -A 5 -B 5 "pattern" file.py  # 5 lines before/after
+Bash: rg -n -A 5 -B 5 "pattern" file.py  # 5 lines before/after
 
 # Case-insensitive search
-Bash: grep -i "error" logfile.txt
+Bash: rg -n -i "error" logfile.txt
 
 # Recursive search in directory
-Bash: grep -r "TODO" src/ | head -20
+Bash: rg -n "TODO" src | head -20
 
 # Count matches
-Bash: grep -c "import" *.py
+Bash: rg -c "import" *.py
 ```
 
 ---
@@ -422,7 +400,7 @@ Bash: head -110 large_file.txt | tail -11
 #### Rename Files in Bulk
 
 ```bash
-# ❌ DON'T: Read directory, loop in Claude, execute renames
+# ❌ DON'T: Read directory, loop manually, execute renames one by one
 Read directory listing...
 For each file: mv old_name new_name
 
@@ -846,27 +824,27 @@ Read: file3.py  # 30K tokens
 
 ---
 
-### 11. Use Task Tool for Exploratory Searches
+### 11. Use Exploration Agents for Broad Searches
 
 When exploring a codebase to understand patterns or find information (not needle queries for specific files):
 
 **❌ Inefficient approach (many tool calls, large context)**:
 ```python
-# Direct grep through many files
-Grep(pattern="some_pattern", path=".", output_mode="content")
+# Direct search through many files
+rg("some_pattern")
 # Followed by multiple Read calls to understand context
 Read("file1.py")
 Read("file2.py")
-# Followed by more Grep calls for related patterns
-Grep(pattern="related_pattern", path=".", output_mode="content")
+# Followed by more searches for related patterns
+rg("related_pattern")
 # Results in dozens of tool calls and accumulating context
 ```
 
 **✅ Efficient approach (single consolidated response)**:
 ```python
-# Use Task tool with Explore subagent
-Task(
-    subagent_type="Explore",
+# Use an exploration agent or equivalent broad-search workflow
+Subagent(
+    subagent_type="explore",
     description="Research how Galaxy API works",
     prompt="""Explore the codebase to understand how Galaxy API calls are made.
     I need to know:
@@ -877,7 +855,7 @@ Task(
 )
 ```
 
-**When to use Task/Explore**:
+**When to use an exploration agent**:
 - "How does X work in this codebase?"
 - "Where are errors from Y handled?"
 - "What is the structure of Z?"
@@ -887,12 +865,12 @@ Task(
 
 **When to use direct tools instead**:
 - "Read file at specific path X" → Use `Read`
-- "Find class definition Foo" → Use `Glob("**/foo.py")` or `Grep("class Foo")`
-- "Search for specific string in file X" → Use `Grep(pattern, path="file.py")`
+- "Find class definition Foo" → Use `Glob("**/foo.py")` or `rg "class Foo"`
+- "Search for specific string in file X" → Use `rg` scoped to that file
 - You know exactly which file to check
 
 **Token savings**:
-- Task tool: ~5-10K tokens for consolidated response
+- Exploration agent: ~5-10K tokens for consolidated response
 - Direct exploration: ~30-50K tokens (many tool calls + context accumulation)
 - **Savings: 70-80%** for exploratory searches
 
@@ -900,15 +878,15 @@ Task(
 
 ```python
 # ❌ Inefficient: Exploring workflow patterns manually
-Grep("workflow", output_mode="content")  # 15K tokens
+rg("workflow")  # 15K tokens
 Read("workflow1.py")  # 20K tokens
 Read("workflow2.py")  # 18K tokens
-Grep("error handling", output_mode="content")  # 12K tokens
+rg("error handling")  # 12K tokens
 # Total: ~65K tokens
 
-# ✅ Efficient: Using Task tool
-Task(
-    subagent_type="Explore",
+# ✅ Efficient: Using an exploration agent
+Subagent(
+    subagent_type="explore",
     description="Understand workflow error handling",
     prompt="Explore how workflows handle errors. Return patterns and file locations."
 )
@@ -1852,17 +1830,17 @@ grep -r "\"creator\"" . | head -5
 
 ## Quick Reference Card
 
-**Model Selection (First Priority):**
-- 🎓 **Learning/Understanding** → Use Opus
-- 🔧 **Development/Debugging/Implementation** → Use Sonnet (default)
+**Effort Selection (First Priority):**
+- 🎓 **Learning/Understanding** → Read more broadly, but still start with search
+- 🔧 **Development/Debugging/Implementation** → Stay narrow by default
 
 **Before ANY file operation, ask yourself:**
 
-1. **Can I use bash commands instead?** (cp, sed, awk, grep) → 99%+ token savings
+1. **Can I use shell commands instead?** (`cp`, `sed`, `awk`, `rg`) → 99%+ token savings
 2. **Is this a simple text operation?** → Use sed/awk, not Read/Edit
 3. **Am I copying/merging files?** → Use cp/cat, not Read/Write
 4. **Can I check metadata first?** (file size, line count, modification time)
-5. **Can I filter before reading?** (grep, head, tail)
+5. **Can I filter before reading?** (`rg`, `head`, `tail`)
 6. **Can I read just the structure?** (first 50 lines, function names)
 7. **Can I summarize instead of showing raw data?**
 8. **Does the user really need the full content?**
@@ -1878,7 +1856,7 @@ echo "text" >> file.txt                  # Instead of Read + Write (append)
 # ONLY IF NEEDED: Read files
 wc -l file.txt                           # Check size first
 head -20 file.txt                        # Read sample
-grep "pattern" file.txt | head -50       # Filter before reading
+rg "pattern" file.txt | head -50         # Filter before reading
 
 # LAST RESORT: Full file read
 # Only when you need to understand code structure or complex logic
@@ -1890,11 +1868,11 @@ grep "pattern" file.txt | head -50       # Filter before reading
 
 **Conservative estimate for typical usage:**
 
-| Approach | Tokens/Week | Claude Pro | Claude Team | Notes |
-|----------|-------------|------------|-------------|-------|
-| **Wasteful** (Read/Edit/Write everything) | 500K | ⚠️ At risk of limits | ✅ OK | Reading files unnecessarily |
-| **Moderate** (filtered reads only) | 200K | ✅ Comfortable | ✅ Very comfortable | Grep/head/tail usage |
-| **Efficient** (bash commands + filters) | 30-50K | ✅ Very comfortable | ✅ Excellent | Using cp/sed/awk instead of Read |
+| Approach | Tokens/Week | Notes |
+|----------|-------------|-------|
+| **Wasteful** (Read/Edit/Write everything) | 500K | Reading files unnecessarily |
+| **Moderate** (filtered reads only) | 200K | `rg`/`head`/`tail` usage |
+| **Efficient** (shell commands + filters) | 30-50K | Using `cp`/`sed`/`awk` instead of full reads |
 
 **Applying these rules reduces costs by 90-95% on average.**
 
@@ -1928,24 +1906,24 @@ grep "pattern" file.txt | head -50       # Filter before reading
 
 When running scripts that take hours, properly manage background processes to prevent resource leaks and enable clean session transitions:
 
-**1. Run in background** with Bash tool `run_in_background: true`
+**1. Run in background** with the shell tool's background mode or equivalent long-running-process support
 
 **2. Document the process** in status files:
 ```markdown
 ## Background Processes
 - Script: comprehensive_search.py
-- Process ID: Available via BashOutput tool
+- Process ID: Capture the process ID from the shell output or terminal metadata
 - Status: Running (~6% complete)
-- How to check: BashOutput tool with bash_id
+- How to check: Re-open the running terminal or inspect the background process output
 ```
 
 **3. Kill cleanly** before session end:
 ```python
 # Before ending session:
 # 1. Kill all background processes
-KillShell(shell_id="abc123")
+kill <pid>
 
-# 2. Create resume documentation (see claude-collaboration skill)
+# 2. Create resume documentation
 # 3. Document current progress (files, counts, status)
 # 4. Save intermediate results
 ```
@@ -2035,22 +2013,22 @@ mv *_intermediate.csv *_backup.csv *_old.csv tables/
 
 ## Summary
 
-**Core motto: Right model. Bash over Read. Filter first. Read selectively. Summarize intelligently.**
+**Core motto: Start narrow. Shell over full reads. Filter first. Read selectively. Summarize intelligently.**
 
-**Model selection (highest impact):**
-- **Use Opus for learning/understanding** (one-time investment)
-- **Use Sonnet for development/debugging/implementation** (default)
-- This alone can save ~50% cost vs using Opus for everything
+**Effort selection (highest impact):**
+- **Read more broadly for learning/understanding** when the user needs architecture or patterns
+- **Stay narrow for development/debugging/implementation** by default
+- Expand only when filtered output or partial reads are not enough
 
 **Primary optimization rule:**
-- **Use bash commands for file operations** (cp, sed, awk, grep) instead of Read/Edit/Write
+- **Use shell commands for file operations** (`cp`, `sed`, `awk`, `rg`) instead of full Read/Edit/Write loops
 - This alone can save 99%+ tokens on file operations
 
 **Secondary rules:**
-- Filter before reading (grep, head, tail)
+- Filter before reading (`rg`, `head`, `tail`)
 - Read with limits when needed
 - Summarize instead of showing raw output
 - Use quiet modes for commands
 - Strategic file selection for learning
 
-By following these guidelines, users can get 5-10x more value from their Claude subscription while maintaining high-quality assistance.
+By following these guidelines, users can get much more value from their OpenCode sessions while maintaining high-quality assistance.
