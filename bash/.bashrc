@@ -1,38 +1,29 @@
-# Linux: ~/.bashrc
-# .bashrc
+# If not running interactively, don't do anything (leave this at the top of this file)
+[[ $- != *i* ]] && return
+
+# All the default Omarchy aliases and functions
+# (don't mess with these directly, just overwrite them here!)
+if [ -f ~/.local/share/omarchy/default/bash/rc ]; then
+    source ~/.local/share/omarchy/default/bash/rc
+fi
+
+# Add your own exports, aliases, and functions here.
+#
+# Make an alias for invoking commands you use constantly
+# alias p='python'
+
+# opencode
+export PATH=/home/nejcm/.opencode/bin:$PATH
+
 
 eval "$(starship init bash)"
 source <(starship completions bash)
 
-# Source global definitions
-if [ -f /etc/bashrc ]; then
-    . /etc/bashrc
-fi
-
-# User specific environment
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
-    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-fi
-export PATH
-
-# Uncomment the following line if you don't like systemctl's auto-paging feature:
-# export SYSTEMD_PAGER=
-
-# User specific aliases and functions
-if [ -d ~/.bashrc.d ]; then
-    for rc in ~/.bashrc.d/*; do
-        if [ -f "$rc" ]; then
-            . "$rc"
-        fi
-    done
-fi
-unset rc
-
 export GH_TOKEN=
 export FONTAWESOME_TOKEN=
 export FIGMA_API_KEY=
-export LINEAR_API_KEY=
 export CONTEXT7_API_KEY=
+export LINEAR_API_KEY=
 
 export ENCORE_INSTALL="$HOME/.encore"
 export PATH="$ENCORE_INSTALL/bin:$PATH"
@@ -80,3 +71,11 @@ if command -v fish &> /dev/null
 then
     alias tofish='exec fish'
 fi
+
+# pnpm
+export PNPM_HOME="/home/nejcm/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

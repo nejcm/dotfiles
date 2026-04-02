@@ -1,0 +1,4 @@
+#!/bin/bash
+# Fix quiet audio by setting ALSA hardware Master to 100% on card 2 (HD-Audio Generic)
+amixer -c 2 sset Master 87
+sudo alsactl store
