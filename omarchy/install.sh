@@ -21,3 +21,7 @@ curl -fsSL https://claude.ai/install.sh | bash
     
 # Install openai codex
 npm i -g @openai/codex
+
+
+git config --global user.name "nejcm"
+git config --global user.email nejcm@users.noreply.github.com

@@ -10,11 +10,18 @@ source ~/.local/share/omarchy/default/bash/rc
 # Make an alias for invoking commands you use constantly
 # alias p='python'
 
+# opencode
+export PATH=/home/nejcm/.opencode/bin:$PATH
+
+
+eval "$(starship init bash)"
+source <(starship completions bash)
+
 export GH_TOKEN=
 export FONTAWESOME_TOKEN=
 export FIGMA_API_KEY=
-export LINEAR_API_KEY=
 export CONTEXT7_API_KEY=
+export LINEAR_API_KEY=
 
 export ENCORE_INSTALL="$HOME/.encore"
 export PATH="$ENCORE_INSTALL/bin:$PATH"
@@ -23,7 +30,7 @@ export PATH="$ENCORE_INSTALL/bin:$PATH"
 alias cls='clear'
 alias cd..='cd ..'
 # GIT LIASES
-alias gff='gpr && git pull --ff-only'
+alias ff='gpr && git pull --ff-only'
 alias ga='git add'
 alias gb='git branch'
 alias gba='git branch --all'
@@ -57,7 +64,16 @@ alias gu='git reset --soft HEAD~1'
 alias lg='lazygit'
 alias ai-usage='bunx tokscale@latest' # security concerns
 
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export PATH="$HOME/.local/bin:$PATH"
+# Fish shell alias - use 'fish' or 'tofish' to start fish shell
+if command -v fish &> /dev/null
+then
+    alias tofish='exec fish'
+fi
+
+# pnpm
+export PNPM_HOME="/home/nejcm/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
