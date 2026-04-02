@@ -178,6 +178,9 @@ if (( ${#SKIPPED[@]} > 0 )); then
     done
 fi
 
+# Disable Asus slash lighting
+asusctl slash --disable -B false -S false -s false -b false -w false
+
 echo
 echo "Next steps:"
 echo "  - hyprctl reload"
