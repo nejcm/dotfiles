@@ -142,8 +142,9 @@ install_system_file "$SCRIPT_DIR/sudoers-touchpad-toggle" "/etc/sudoers.d/touchp
 if [[ "$SUDO_AVAILABLE" == true && -f "$SCRIPT_DIR/sudoers-touchpad-toggle" ]]; then
     sudo visudo -cf /etc/sudoers.d/touchpad-toggle >/dev/null
 fi
+
 git config --global user.name "nejcm"
-git config --global user.email nejcm@users.noreply.github.com
+git config --global user.email "1865210+nejcm@users.noreply.github.com"
 
 # Install encore
 curl -fsSL https://encore.dev/install.sh | bash
