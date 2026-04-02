@@ -26,39 +26,39 @@
     "key": "ctrl+shift+a",
     "command": "-notification.acceptPrimaryAction",
     "when": "notificationFocus || notificationToastsVisible"
-},
-{
+  },
+  {
     "key": "shift+enter",
     "command": "workbench.action.terminal.sendSequence",
     "args": {
-        "text": "\\\r\n"
+      "text": "\\\r\n"
     },
     "when": "terminalFocus"
-},
-{
-  "key": "ctrl+a",
-  "command": "-notebook.cell.output.selectAll",
-  "when": "notebookEditorFocused && notebookOutputFocused"
-},
-{
-  "key": "ctrl+shift+[Semicolon]",
-  "command": "composer.newAgentChat"
-},
-{
-  "key": "ctrl+shift+l",
-  "command": "-composer.newAgentChat"
-},
-{
-  "key": "ctrl+shift+k",
-  "command": "-aipopup.action.modal.generate",
-  "when": "editorFocus && !composerBarIsVisible"
-},
-{
-  "key": "ctrl+m",
-  "command": "explorer.newFolder"
-},
-{
-  "key": "ctrl+n",
-  "command": "explorer.newFile"
-}
+  },
+  {
+    "key": "ctrl+a",
+    "command": "-notebook.cell.output.selectAll",
+    "when": "notebookEditorFocused && notebookOutputFocused"
+  },
+  {
+    "key": "ctrl+shift+[Semicolon]",
+    "command": "composer.newAgentChat"
+  },
+  {
+    "key": "ctrl+shift+l",
+    "command": "-composer.newAgentChat"
+  },
+  {
+    "key": "ctrl+shift+k",
+    "command": "-aipopup.action.modal.generate",
+    "when": "editorFocus && !composerBarIsVisible"
+  },
+  {
+    "key": "ctrl+m",
+    "command": "explorer.newFolder"
+  },
+  {
+    "key": "ctrl+n",
+    "command": "explorer.newFile"
+  }
 ]

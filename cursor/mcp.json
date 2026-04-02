@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "Linear": {
+      "url": "https://mcp.linear.app/sse",
+      "headers": {}
+    }
+  }
+}

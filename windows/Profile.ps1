@@ -28,9 +28,9 @@ function grs  	{git restore --staged $args}
 function gst  	{git rev-parse --git-dir > /dev/null 2>&1 && git status || exa $args}
 function gu   	{git reset --soft HEAD~1}
 
-function cua  		{choco upgrade all -y}
+function cua  		    {choco upgrade all -y}
 function update-all 	{winget upgrade --all && choco upgrade all -y}
-function ups  		{winget install --id Microsoft.PowerShell --source winget}
+function ups  		    {winget install --id Microsoft.PowerShell --source winget}
 
 function gff-all 	{& "C:\Scripts\gff-all.ps1" @Args}
 function ai-usage 	{bunx tokscale@latest}

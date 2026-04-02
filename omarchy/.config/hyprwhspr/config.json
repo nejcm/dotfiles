@@ -1,10 +1,13 @@
 {
+  "$schema": "https://raw.githubusercontent.com/goodroot/hyprwhspr/main/share/config.schema.json",
+  "use_hypr_bindings": true,
   "primary_shortcut": "SUPER+ALT+D",
   "model": "base.en",
+  "transcription_backend": "onnx-asr",
   "audio_feedback": true,
   "start_sound_volume": 0.5,
   "stop_sound_volume": 0.5,
   "start_sound_path": "ping-up.ogg",
   "stop_sound_path": "ping-down.ogg",
-  "word_overrides": {}
+  "audio_ducking": true
 }
