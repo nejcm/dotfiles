@@ -29,7 +29,7 @@ function gst  	{git rev-parse --git-dir > /dev/null 2>&1 && git status || exa $a
 function gu   	{git reset --soft HEAD~1}
 
 function cua  		    {choco upgrade all -y}
-function update-all 	{winget upgrade --all && choco upgrade all -y}
+function update-all 	{winget upgrade --all && choco upgrade all -y && bun update -g}
 function ups  		    {winget install --id Microsoft.PowerShell --source winget}
 
 function gff-all 	{& "C:\Scripts\gff-all.ps1" @Args}

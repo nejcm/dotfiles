@@ -1,1 +1,1 @@
-corepack knip rimraf @anthropic-ai/claude-code @openai/codex opencode-ai @mixedbread/mgrep eas-cli
+corepack knip rimraf @anthropic-ai/claude-code @openai/codex opencode-ai @mixedbread/mgrep eas-cli forgecode
