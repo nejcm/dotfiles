@@ -31,8 +31,9 @@ function gu   	{git reset --soft HEAD~1}
 function cua  		    {choco upgrade all -y}
 function update-all 	{winget upgrade --all && choco upgrade all -y && bun update -g}
 function ups  		    {winget install --id Microsoft.PowerShell --source winget}
-
 function gff-all 	{& "C:\Scripts\gff-all.ps1" @Args}
+function cpr      { param([string]$Repo) $root = if ($env:REPO_ROOT) { $env:REPO_ROOT } elseif ($env:WORK_ROOT) { $env:WORK_ROOT } else { "C:\Work" }; $target = if ([string]::IsNullOrWhiteSpace($Repo)) { $root } else { Join-Path $root $Repo }; if (Test-Path -LiteralPath $target -PathType Container) { Set-Location -LiteralPath $target } else { Write-Error "Repository folder not found: $target" } }
+
 function ai-usage 	{bunx tokscale@latest}
 
 Remove-Alias gal -Force

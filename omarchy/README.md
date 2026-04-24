@@ -23,6 +23,7 @@ chmod +x omarchy/install.sh
 - Installs packages listed in `omarchy/pkg-list.txt`
 - Copies everything under `omarchy/.config/` into the matching paths under `~/.config/`
 - Copies `bash/.bashrc` to `~/.bashrc`
+- Ensures `export REPO_ROOT="$HOME/Work"` exists in `~/.bashrc` (used by scripts like `bash/gff-all`)
 - Copies `ghostty/config` to `~/.config/ghostty/config`
 - Copies `starship/starship.toml` to `~/.config/starship.toml`
 - Installs `omarchy/scripts/toggle-touchpad` into `~/.local/bin/toggle-touchpad`

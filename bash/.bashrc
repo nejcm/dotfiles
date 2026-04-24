@@ -15,6 +15,9 @@ fi
 # opencode
 export PATH=/home/nejcm/.opencode/bin:$PATH
 
+# repo root environment variable
+export REPO_ROOT="$HOME/Work"
+
 
 eval "$(starship init bash)"
 source <(starship completions bash)
@@ -63,6 +66,7 @@ alias grs='git restore --staged'
 alias gst='git rev-parse --git-dir > /dev/null 2>&1 && git status || exa'
 alias gu='git reset --soft HEAD~1'
 # OTHER
+function cpr(){ local repo="${1:-}"; local root="${REPO_ROOT:-${WORK_ROOT:-$HOME/Work}}"; local target="$root"; [[ -n "$repo" ]] && target="$root/$repo"; [[ -d "$target" ]] && cd "$target" || echo "Repository folder not found: $target"; }
 alias lg='lazygit'
 alias ai-usage='bunx tokscale@latest' # security concerns
 

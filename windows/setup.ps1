@@ -41,6 +41,13 @@ if (-not (Test-Path $scriptsDir)) {
     New-Item -ItemType Directory -Path $scriptsDir -Force | Out-Null
 }
 
+Write-Host "Configuring REPO_ROOT environment variable..." -ForegroundColor Yellow
+$workRootDefault = "C:\Work"
+$currentWorkRoot = [Environment]::GetEnvironmentVariable("REPO_ROOT", "User")
+if ([string]::IsNullOrWhiteSpace($currentWorkRoot)) {
+    [Environment]::SetEnvironmentVariable("REPO_ROOT", $workRootDefault, "User")
+}
+
 $currentUserPath = [Environment]::GetEnvironmentVariable("Path", "User")
 if ($null -eq $currentUserPath -or -not ($currentUserPath.Split(';') -contains $scriptsDir)) {
     if ($null -eq $currentUserPath) {

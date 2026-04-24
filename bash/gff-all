@@ -3,7 +3,7 @@
 set -uo pipefail
 
 # The folder where all git repos live
-WORKDIR="$HOME/Work"
+WORKDIR="${REPO_ROOT:-$HOME/Work}"
 
 # Enable safer globbing
 shopt -s nullglob dotglob
@@ -17,6 +17,11 @@ run_gff_in_folder() {
     return 1
   }
 }
+
+if [[ ! -d "$WORKDIR" ]]; then
+  echo "Root folder not found: $WORKDIR"
+  exit 1
+fi
 
 cd "$WORKDIR"
 

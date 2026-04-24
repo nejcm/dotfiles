@@ -1,7 +1,12 @@
 param(
-  [string]$Root = "C:\Work",
+  [string]$Root = $env:REPO_ROOT,
   [switch]$StopOnError
 )
+
+# Default to C:\Work when REPO_ROOT is not set
+if ([string]::IsNullOrWhiteSpace($Root)) {
+  $Root = "C:\Work"
+}
 
 # Validate root
 if (-not (Test-Path -LiteralPath $Root)) {
@@ -32,7 +37,6 @@ function Invoke-GFFInFolder {
     }
 
     # Run gff
-    gff
     $exit = if ($LASTEXITCODE -ne $null) { $LASTEXITCODE } else { if ($?) { 0 } else { 1 } }
 
     if ($exit -ne 0) {
