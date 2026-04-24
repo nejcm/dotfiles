@@ -37,6 +37,7 @@ function Invoke-GFFInFolder {
     }
 
     # Run gff
+    gff
     $exit = if ($LASTEXITCODE -ne $null) { $LASTEXITCODE } else { if ($?) { 0 } else { 1 } }
 
     if ($exit -ne 0) {
