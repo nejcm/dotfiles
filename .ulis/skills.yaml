@@ -17,6 +17,11 @@
       args:
         - --skill
         - skill-creator
+    - name: https://github.com/obra/superpowers
+      key: obra/superpowers/requesting-code-review
+      args:
+        - --skill
+        - requesting-code-review
     - name: microsoft/playwright-cli
       args:
         - --skill
