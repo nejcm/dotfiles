@@ -3,8 +3,8 @@ description: Systematic debugging of high-severity issues with evidence-first ro
 temperature: 0.3
 tools:
   read: true
-  write: false
-  edit: false
+  write: true
+  edit: true
   bash: true
   search: true
 tags: [core, read-only]
@@ -13,7 +13,7 @@ platforms:
   claude:
     model: sonnet
   codex:
-    model: gpt-5.4-mini
+    model: gpt-5.4
   opencode:
     mode: subagent
     rate_limit_per_hour: 15
