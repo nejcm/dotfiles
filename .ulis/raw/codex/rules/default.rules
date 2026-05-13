@@ -1,0 +1,38 @@
+prefix_rule(
+    # The prefix to match.
+    pattern = ["gh", "pr", "view"],
+    # The action to take when Codex requests to run a matching command.
+    decision = "prompt",
+    # Optional rationale for why this rule exists.
+    justification = "Viewing PRs is allowed with approval",
+)
+prefix_rule(
+    pattern=["bun vitest *"], 
+    decision="allow"
+)
+prefix_rule(
+    pattern=["bun run lint *"], 
+    decision="allow"
+)
+prefix_rule(
+    pattern=["bun run test *"], 
+    decision="allow"
+)
+prefix_rule(
+    pattern=["bun run build"], 
+    decision="allow"
+)
+prefix_rule(
+    pattern=["bun playwright *"], 
+    decision="allow"
+)
+prefix_rule(
+    pattern=["bun add *"], 
+    decision="prompt",
+    justification = "Adding dependencies is allowed with approval",
+)
+prefix_rule(
+    pattern=["bun remove *"], 
+    decision="prompt",
+    justification = "Removing dependencies is allowed with approval",
+)
