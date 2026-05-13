@@ -15,9 +15,6 @@ platforms:
   codex:
     model: gpt-5.4
     model_reasoning_effort: high
-  opencode:
-    mode: subagent
-    rate_limit_per_hour: 10
   cursor:
     readonly: true
 ---

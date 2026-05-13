@@ -13,10 +13,7 @@ platforms:
   claude:
     model: claude-haiku-4-5-20251001
   codex:
-    model: gpt-5.4-mini
-  opencode:
-    mode: subagent
-    rate_limit_per_hour: 15
+    model: gpt-5.4
 ---
 
 # Refactor Agent

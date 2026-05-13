@@ -14,9 +14,6 @@ platforms:
     model: sonnet
   codex:
     model: gpt-5.4-mini
-  opencode:
-    mode: subagent
-    rate_limit_per_hour: 10
 ---
 
 # DevOps Agent

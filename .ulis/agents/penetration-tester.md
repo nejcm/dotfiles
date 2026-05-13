@@ -12,9 +12,8 @@ tags: [specialized, security]
 platforms:
   claude:
     model: opus
-  opencode:
-    mode: subagent
-    rate_limit_per_hour: 5
+  codex:
+    model: gpt-5.5
 ---
 
 # Penetration Tester Agent

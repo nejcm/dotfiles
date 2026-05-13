@@ -12,9 +12,8 @@ tags: [specialized, read-write]
 platforms:
   claude:
     model: sonnet
-  opencode:
-    mode: subagent
-    rate_limit_per_hour: 10
+  codex:
+    model: gpt-5.4
 ---
 
 # Database Optimizer Agent

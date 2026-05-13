@@ -12,9 +12,8 @@ tags: [specialized, research]
 platforms:
   claude:
     model: sonnet
-  opencode:
-    mode: subagent
-    rate_limit_per_hour: 10
+  codex:
+    model: gpt-5.4
 ---
 
 # Competitive Analyst Agent

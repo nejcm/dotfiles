@@ -1,3 +1,4 @@
+pnpm.pnpm
 Docker.DockerDesktop
 GoLang.Go
 Surfshark.Surfshark
@@ -7,3 +8,5 @@ Termius.Termius
 SST.OpenCodeDesktop
 ImputNet.Helium
 ZedIndustries.Zed
+T3Tools.T3Code
+jqlang.jq

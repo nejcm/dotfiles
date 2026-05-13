@@ -13,10 +13,7 @@ platforms:
   claude:
     model: opus
   codex:
-    model: gpt-5.4
-  opencode:
-    mode: subagent
-    rate_limit_per_hour: 10
+    model: gpt-5.5
 ---
 
 # Architect Agent
