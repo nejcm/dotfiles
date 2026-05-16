@@ -3,10 +3,11 @@ name: code-quality
 description: Automated code quality checks including linting, formatting, and type checking
 category: quality
 version: "1.0.0"
-model: claude-haiku-4-5-20251001
 platforms:
+  claude:
+    model: sonnet
   codex:
-    model: gpt-5.4-mini
+    model: gpt-5.5
 ---
 
 # Code Quality Skill

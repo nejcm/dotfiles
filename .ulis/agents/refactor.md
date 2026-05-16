@@ -11,9 +11,9 @@ tags: [specialized, read-write]
 
 platforms:
   claude:
-    model: claude-haiku-4-5-20251001
+    model: sonnet
   codex:
-    model: gpt-5.4
+    model: gpt-5.5
 ---
 
 # Refactor Agent

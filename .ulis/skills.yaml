@@ -22,6 +22,11 @@
       args:
         - --skill
         - requesting-code-review
+    - name: https://github.com/github/awesome-copilot
+      key: github/awesome-copilot
+      args:
+        - --skill
+        - sql-optimization
     - name: microsoft/playwright-cli
       args:
         - --skill

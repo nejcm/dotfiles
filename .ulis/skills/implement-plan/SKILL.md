@@ -1,6 +1,11 @@
 ---
 name: implement-plan
 description: Execute an approved, existing implementation plan from a file, issue, PRD, pasted checklist or plan from current chat. Use this skill whenever the user asks to implement a plan, continue a plan, execute phases, work through checkboxes, or resume planned development, even if they only say "do the next phase" or "continue from the plan."
+platforms:
+  claude:
+    model: sonnet
+  codex:
+    model: gpt-5.5
 ---
 
 # Implement Plan

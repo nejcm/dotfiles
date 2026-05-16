@@ -11,9 +11,9 @@ tags: [core, read-only]
 
 platforms:
   claude:
-    model: claude-haiku-4-5-20251001
+    model: sonnet
   codex:
-    model: gpt-5.4-mini
+    model: gpt-5.4
 ---
 
 # Tester Agent
