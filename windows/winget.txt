@@ -9,3 +9,4 @@ SST.OpenCodeDesktop
 ImputNet.Helium
 ZedIndustries.Zed
 jqlang.jq
+beekeeper-studio.beekeeper-studio

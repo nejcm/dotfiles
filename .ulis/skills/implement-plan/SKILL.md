@@ -69,11 +69,11 @@ Question: [specific decision needed]
 
 Work in natural batches:
 
-- Small plan: finish the whole plan if verification stays tight.
-- Medium plan: finish one phase or 2-3 related tasks, then verify.
-- Large plan: finish one dependency layer at a time.
+- Small plan (1-2 tasks): finish the whole plan if verification stays tight.
+- Medium plan (3-8 tasks): finish one phase or 2-3 related tasks, then verify.
+- Large plan (8+ tasks): finish one dependency layer at a time.
 
-Pause after each phase in large (7+ phases) plans unless the user explicitly asked for continuous execution.
+Pause after each phase in large (8+ phases) plans unless the user explicitly asked for continuous execution.
 
 Prefer this dependency order when the plan does not specify one:
 
@@ -86,10 +86,11 @@ For each active task:
 1. Mark it in progress in the todo list.
 2. Implement only the requested scope.
 3. Keep edits close to existing patterns.
-4. Run the plan's verification for that task or phase.
+4. Run the plan's verification and code review for that task or phase.
 5. Fix failures before moving forward.
-6. Mark the task complete in the todo list.
-7. If the plan file uses checkboxes and editing it is appropriate, check off completed items there too.
+6. Commit code
+7. Mark the task complete in the todo list.
+8. If the plan file uses checkboxes and editing it is appropriate, check off completed items there too.
 
 Use subagents only when the user has allowed delegation and the work can be split into independent, bounded tasks. Keep blocking or tightly coupled work local.
 
