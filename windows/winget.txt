@@ -1,12 +1,11 @@
 pnpm.pnpm
 Docker.DockerDesktop
 GoLang.Go
-Surfshark.Surfshark
-Anysphere.Cursor
+ImputNet.Helium
 Tailscale.Tailscale
 Termius.Termius
-SST.OpenCodeDesktop
-ImputNet.Helium
-ZedIndustries.Zed
-jqlang.jq
 beekeeper-studio.beekeeper-studio
+jqlang.jq
+Surfshark.Surfshark
+ZedIndustries.Zed
+Anysphere.Cursor
