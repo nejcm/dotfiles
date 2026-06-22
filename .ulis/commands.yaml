@@ -1,0 +1,2 @@
+commands:
+  - bunx -y firecrawl-cli@latest init --all -k $FIRECLAW_KEY

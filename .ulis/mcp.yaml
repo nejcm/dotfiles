@@ -13,14 +13,6 @@ servers:
         - "@upstash/context7-mcp"
         - --api-key
         - ${CONTEXT7_API_KEY}
-  github:
-    type: local
-    command: npx
-    args:
-      - -y
-      - "@modelcontextprotocol/server-github"
-    env:
-      GITHUB_PERSONAL_ACCESS_TOKEN: ${GITHUB_PAT}
   gh_grep:
     type: remote
     url: https://mcp.grep.app
