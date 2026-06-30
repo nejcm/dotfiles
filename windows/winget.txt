@@ -2,10 +2,14 @@ pnpm.pnpm
 Docker.DockerDesktop
 GoLang.Go
 ImputNet.Helium
-Tailscale.Tailscale
-Termius.Termius
 beekeeper-studio.beekeeper-studio
 jqlang.jq
 Surfshark.Surfshark
 ZedIndustries.Zed
 Anysphere.Cursor
+Codex -s msstore
+Anthropic.Claude
+
+
+# Tailscale.Tailscale
+# Termius.Termius

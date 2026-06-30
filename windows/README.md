@@ -44,13 +44,6 @@ bun list -g --depth=0 >> packages.txt
 
 bunx playwright install --with-deps
 
-<https://github.com/imputnet/helium-windows/releases>
-<https://cursor.com/download>
-<https://claude.com/download>
-<https://opencode.ai/download>
-<https://account.termius.com/>
-<https://tailscale.com/download>
-<https://letsvpn.world/>
 
 ## Running `.ps1` scripts globally
 
