@@ -128,6 +128,42 @@ git config --global user.name "nejcm"
 git config --global merge.tool kdiff3
 git config --global credential.helper manager-core
 
+# ---
+
+# Sets Maximum processor state to 99% for every Windows power scheme.
+# Run from an elevated PowerShell window for best results.
+$ErrorActionPreference = "Stop"
+$processorSettings = "SUB_PROCESSOR"
+$maxProcessorState = "PROCTHROTTLEMAX"
+$schemeGuids = powercfg /list |
+    Select-String -Pattern "[a-fA-F0-9-]{36}" |
+    ForEach-Object { $_.Matches[0].Value }
+if (-not $schemeGuids) {
+    Write-Host "Failed to find power schemes."
+}
+foreach ($schemeGuid in $schemeGuids) {
+    powercfg /setacvalueindex $schemeGuid $processorSettings $maxProcessorState 99
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Failed to set AC CPU max state for scheme $schemeGuid."
+    }
+
+    powercfg /setdcvalueindex $schemeGuid $processorSettings $maxProcessorState 99
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Failed to set DC CPU max state for scheme $schemeGuid."
+    }
+
+    Write-Host "Set CPU max state to 99% for scheme $schemeGuid"
+}
+$activeLine = powercfg /getactivescheme
+if ($activeLine -match "([a-fA-F0-9-]{36})") {
+    powercfg /setactive $Matches[1]
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Failed to reactivate power scheme $($Matches[1])."
+    }
+}
+Write-Host "Done. CPU Maximum processor state is now 99% on AC and battery for all power schemes."
+
+# ---
 
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Green
@@ -140,5 +176,3 @@ Write-Host "1. Restart your system" -ForegroundColor White
 Write-Host "2. Log in to your applications (GitHub, Docker, etc.)" -ForegroundColor White
 Write-Host "3. Configure VSCode/Cursor extensions" -ForegroundColor White
 Write-Host "4. Verify all applications work correctly" -ForegroundColor White
-
-
