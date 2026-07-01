@@ -4,6 +4,7 @@ GoLang.Go
 ImputNet.Helium
 beekeeper-studio.beekeeper-studio
 jqlang.jq
+raycast
 Surfshark.Surfshark
 ZedIndustries.Zed
 Anysphere.Cursor
